@@ -1,7 +1,7 @@
 document.getElementById('start-button').addEventListener('click', () => {
   // creating Assets to load
   const cupBoardImg = new Image()
-  cupBoardImg.src = '../images/cupBoard.png'
+  cupBoardImg.src = './images/cupBoard.png'
   const cupBoard = new Component(cupBoardImg, 0, 0, 100, 200)
   gameBoard.components.push(cupBoard)
 
@@ -13,7 +13,7 @@ document.getElementById('start-button').addEventListener('click', () => {
   // top counters
   // counter 51*74 px
   const mainCounterImg = new Image()
-  mainCounterImg.src = '../images/counterMain.png'
+  mainCounterImg.src = './images/counterMain.png'
 
   const mainCounter = new Component(
     mainCounterImg,
@@ -44,13 +44,13 @@ document.getElementById('start-button').addEventListener('click', () => {
 
   //checkout counter 1200*1200 px
   const checkoutImg = new Image()
-  checkoutImg.src = '../images/checkout.png'
+  checkoutImg.src = './images/checkout.png'
 
   const checkout = new Component(checkoutImg, 400, 0, 150, 150)
   gameBoard.components.push(checkout)
 
   const playerImg = new Image()
-  playerImg.src = '../images/leoBeo.png'
+  playerImg.src = './images/leoBeo.png'
   player = new Player(playerImg, 400, 225, 84, 72)
   gameBoard.components.push(player)
 
