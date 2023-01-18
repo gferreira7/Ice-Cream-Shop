@@ -1,0 +1,42 @@
+#main-game-container{
+    border: 10px solid red;
+}
+
+canvas{
+    border: 10px dashed gray;
+}
+#top-container{
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    border: 2px dashed green;
+    margin-bottom: 2px;
+}
+
+#pending-orders-display{
+    display: flex;
+    
+}
+
+
+.order-container{
+    display: flex;
+    flex-direction: column;
+    border: 2px dashed blue;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.order-container img{
+    height: 50px;
+    width: 50px
+}
+
+
+/* #time-left-display{
+    border: 3px dashed red;
+}
+#score-display{
+    border: 3px dashed blue;
+} */

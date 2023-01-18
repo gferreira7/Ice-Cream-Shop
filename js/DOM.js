@@ -5,54 +5,91 @@ document.getElementById('start-button').addEventListener('click', () => {
   const cupBoard = new Component(cupBoardImg, 0, 0, 100, 200)
   gameBoard.components.push(cupBoard)
 
-  // will probably have small repeatable kitchen counters so this will make it easier later?
-  const counterStart = 100
-  const counterWidth = 100
-  const counterHeight = 150
-
-  // top counters
+  // top counter
   // counter 51*74 px
   const mainCounterImg = new Image()
   mainCounterImg.src = './images/counterMain.png'
 
-  const mainCounter = new Component(
-    mainCounterImg,
-    counterStart,
-    0,
-    counterWidth,
-    counterHeight
-  )
+  const mainCounter = new Component(mainCounterImg, 300, 0, 100, 150)
   gameBoard.components.push(mainCounter)
-
-  const mainCounter2 = new Component(
-    mainCounterImg,
-    counterStart + counterWidth,
-    0,
-    counterWidth,
-    counterHeight
-  )
-  gameBoard.components.push(mainCounter2)
-
-  const mainCounter3 = new Component(
-    mainCounterImg,
-    counterStart + counterWidth * 2,
-    0,
-    counterWidth,
-    counterHeight
-  )
-  gameBoard.components.push(mainCounter3)
 
   //checkout counter 1200*1200 px
   const checkoutImg = new Image()
   checkoutImg.src = './images/checkout.png'
 
-  const checkout = new Component(checkoutImg, 400, 0, 150, 150)
+  const checkout = new Component(checkoutImg, 550, 0, 150, 150)
   gameBoard.components.push(checkout)
+
+  const bottomCounterLeft = new Component(
+    mainCounterImg,
+    0,
+    gameBoard.canvas.height - 150,
+    100,
+    150
+  )
+  gameBoard.components.push(bottomCounterLeft)
+  const bottomCounterMiddle = new Component(
+    mainCounterImg,
+    300,
+    gameBoard.canvas.height - 150,
+    100,
+    150
+  )
+  gameBoard.components.push(bottomCounterMiddle)
+  const bottomCounterRight = new Component(
+    mainCounterImg,
+    550,
+    gameBoard.canvas.height - 150,
+    100,
+    150
+  )
+  gameBoard.components.push(bottomCounterRight)
 
   const playerImg = new Image()
   playerImg.src = './images/leoBeo.png'
   player = new Player(playerImg, 400, 225, 84, 72)
   gameBoard.components.push(player)
+
+  //every second each recipe timer is updated 1s and it tries to add a new order (MAX.4)
+
+  const orderflowInterval = setInterval(() => {
+    const pendingOrdersDisplay = document.getElementById(
+      'pending-orders-display'
+    )
+    pendingOrdersDisplay.innerHTML = ''
+
+    gameBoard.orders.forEach((order) => {
+      order.timeLeft--
+      if (order.timeLeft === 0) {
+        gameBoard.orders.shift()
+      }
+    })
+    gameBoard.addOrder()
+
+    //update the DOM , add/remove new orders
+
+    gameBoard.orders.forEach((order) => {
+      const singlePendingOrderDiv = document.createElement('div')
+      singlePendingOrderDiv.className = 'order-container'
+      singlePendingOrderDiv.innerHTML = `${order.flavour}
+      <img src="./images/${order.flavour}.png"><img /> 
+      time left: ${order.timeLeft}`
+
+      pendingOrdersDisplay.appendChild(singlePendingOrderDiv)
+    })
+
+    gameBoard.gameTimeLeft--
+    if (gameBoard.gameTimeLeft <= 0) {
+      gameBoard.isGameOver = true
+    }
+
+    const timeLeftDisplay = document.getElementById('time-left-display')
+    timeLeftDisplay.innerHTML = ''
+    timeLeftDisplay.innerHTML = gameBoard.isGameOver
+      ? `GAME OVER`
+      : `TIME LEFT ${gameBoard.gameTimeLeft}s`
+    gameBoard.score += 20
+  }, 1000)
 
   const refreshRate = setInterval(gameBoard.updateCanvas, 20)
 })
