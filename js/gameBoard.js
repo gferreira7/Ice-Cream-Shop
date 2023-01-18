@@ -30,8 +30,7 @@ const gameBoard = {
     const context = gameBoard.ctx
 
     //temp floor
-    const background = new Image()
-    background.src = '/images/kitchen_floor.png'
+    
     gameBoard.ctx.drawImage(
       background,
       0,
