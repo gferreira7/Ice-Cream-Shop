@@ -1,5 +1,7 @@
+
 document.getElementById('start-button').addEventListener('click', () => {
-  gameBoard.createCanvas()
+  
+  startGame()
 
   // creating Assets to load
   const cupBoardImg = new Image()
@@ -81,6 +83,8 @@ document.getElementById('start-button').addEventListener('click', () => {
     updateOrders()
     updateTimeLeft()
     updateScore()
+    updateInventory()
+    updateAssemblyCounter()
   }, 1000)
 
   const refreshRate = setInterval(gameBoard.updateCanvas, 20)
@@ -176,7 +180,6 @@ const updateTimeLeft = () => {
 }
 
 const updateScore = () => {
-  gameBoard.score += 20
   const scoreDisplay = document.getElementById('score-display')
   scoreDisplay.innerHTML = ''
   scoreDisplay.innerHTML = `<h2>Score ${gameBoard.score}$</h2>
@@ -188,15 +191,38 @@ const updateInventory = () => {
   inventory.innerHTML = ''
   const itemList = document.createElement('ul')
 
-  for (const key in player.heldItems) {
-    if(player.heldItems[key]){
-      const heldItem = document.createElement('li')
-      heldItem.innerHTML = `${key}`
+  for (let key in player.heldItems) {
+    if (player.heldItems[key]) {
+      let heldItem = document.createElement('li')
+      heldItem.innerHTML = `In Hand: ${key}`
       itemList.appendChild(heldItem)
     }
   }
 
   inventory.appendChild(itemList)
+}
+
+const updateAssemblyCounter = () => {
+  const assemblyCounter = document.getElementById('assembly-container')
+  assemblyCounter.innerHTML = ''
   
+  if (assemblyCounterItems.hasCone || assemblyCounterItems.flavour) {
+    assemblyCounter.innerHTML = `<h2>In the Counter:</h2>`
   
+  if (assemblyCounterItems.hasCone) {
+    const coneItem = document.createElement('p')
+    coneItem.innerHTML = 'Cone'
+    assemblyCounter.appendChild(coneItem)
+  } 
+  if (assemblyCounterItems.flavour) {
+    const flavouritem = document.createElement('p')
+    flavouritem.innerHTML = `${assemblyCounterItems.flavour}`
+    assemblyCounter.appendChild(flavouritem)
+  }
+  if(assemblyCounterItems.hasCone && assemblyCounterItems.flavour){
+    const readyToDeliver = document.createElement('h3')
+    readyToDeliver.innerHTML = `Ready to deliver: ${player.readyToDeliver}`
+    assemblyCounter.appendChild(readyToDeliver)
+  }
+}
 }

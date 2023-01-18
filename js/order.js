@@ -3,7 +3,7 @@ class Order {
     constructor(flavour, imgUrl){
         this.flavour = flavour
         this.imgUrl = imgUrl
-        this.timeLeft = 20
+        this.timeLeft = 100
     }
 }
 

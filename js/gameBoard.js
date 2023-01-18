@@ -60,16 +60,18 @@ const gameBoard = {
         //after Key Press
         if (gameBoard.isActionKeyPressed) {
           player.action(component)
-          if (gameBoard.isAtAssemblyStation) {
+          if (gameBoard.isAtAssemblyStation && component.name === 'assemblyCounter') {
             assembleOrder()
+            gameBoard.isAtAssemblyStation = false
+            updateInventory()
+            updateAssemblyCounter()
           }
-          updateInventory()
-          if (gameBoard.isAtCheckout) {
+          if (gameBoard.isAtCheckout && component.name === 'checkoutCounter') {
             submitOrder()
           }
-          console.log(gameBoard, player)
         }
       }
     })
+   
   },
 }

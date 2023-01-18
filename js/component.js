@@ -21,6 +21,8 @@ class Component {
             return true
         }
         else {
+            gameBoard.isAtAssemblyStation = false
+            gameBoard.isAtCheckout = false
             return false
         }
     }
