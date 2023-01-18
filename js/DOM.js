@@ -181,6 +181,7 @@ const updateTimeLeft = () => {
 
 const updateScore = () => {
   const scoreDisplay = document.getElementById('score-display')
+
   scoreDisplay.innerHTML = ''
   scoreDisplay.innerHTML = `<h2>Score ${gameBoard.score}$</h2>
   <h2>Combo: ${gameBoard.combo} X</h2>`

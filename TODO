@@ -1,7 +1,7 @@
 // player Movement = done
 // recipeArray logic = done
+//Ingredients Logic = done
+//Timer For level = done 
 //player boundaries
-//Ingredients Logic
-//Timer For level 
 // toggle active DIVS before game starts or ends
-
+// backlog enemies after X (fires, mice)
