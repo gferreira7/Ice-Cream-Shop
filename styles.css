@@ -1,31 +1,30 @@
 #main-game-container{
-    border: 10px solid red;
+    display: flex;
+}
+canvas{
+    border: 5px dashed gray;
 }
 
-canvas{
-    border: 10px dashed gray;
-}
-#top-container{
+#info-container{
     display: flex;
-    flex-direction: row;
-    gap: 2px;
-    border: 2px dashed green;
-    margin-bottom: 2px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
 }
 
 #pending-orders-display{
     display: flex;
-    
+    justify-content: space-between;
 }
 
 
 .order-container{
     display: flex;
     flex-direction: column;
-    border: 2px dashed blue;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    padding: 15px;
+    
 }
 
 .order-container img{
@@ -33,10 +32,3 @@ canvas{
     width: 50px
 }
 
-
-/* #time-left-display{
-    border: 3px dashed red;
-}
-#score-display{
-    border: 3px dashed blue;
-} */

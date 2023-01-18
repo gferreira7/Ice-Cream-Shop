@@ -8,16 +8,13 @@ const generateNewOrder = () => {
   gameBoard.orders.push(order)
 }
 
+const assembleOrder = () => {
+
+}
+const submitOrder = () => {
+  
+}
 const startGame = () => {
-  console.log('game started')
+  // console.log('game started')
 }
 
-// const getTimer = () => {
-//     const creationDate = Date.now()
-//     setTimeout(() => {
-//        const newTime = Date.now()
-
-//        const timeElapsed = newTime - creationDate
-//        console.log(timeElapsed/1000)
-//     }, 2000);
-// }
