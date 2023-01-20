@@ -1,6 +1,6 @@
 let player
 let playerImg = new Image()
-playerImg.src = '/images/playerImgs/idle0.png'
+playerImg.src = 'images/playerImgs/idle0.png'
 
 let playerFramesPath = '/images/playerImgs/'
 
