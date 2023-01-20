@@ -1,83 +1,64 @@
-
 document.getElementById('start-button').addEventListener('click', () => {
-  
   startGame()
 
   // creating Assets to load
-  const cupBoardImg = new Image()
-  cupBoardImg.src = './images/cupBoard.png'
-  const cupBoard = new Component('cupboard', cupBoardImg, 0, 0, 100, 200)
-  gameBoard.components.push(cupBoard)
+  background = new Image()
+  background.src = './images/bluewall.png'
 
-  // top counter
-  // counter 51*74 px
-  const mainCounterImg = new Image()
-  mainCounterImg.src = './images/counterMain.png'
-  const vanillaCounter = new Image()
-  vanillaCounter.src = './images/vanillaCounter.png'
-  const chocolateCounter = new Image()
-  chocolateCounter.src = './images/chocolateCounter.png'
-  const strawberryCounter = new Image()
-  strawberryCounter.src = './images/strawberryCounter.png'
+  const freezerImg = new Image()
+  freezerImg.src = './images/fridgeclosed.png'
 
-  const mainCounter = new Component(
+  const coneStorageImg = new Image()
+  coneStorageImg.src = './images/conestorage.png'
+
+  const assemblyCounterImg = new Image()
+  assemblyCounterImg.src = '/images/assemblycounter.png'
+  const assemblyCounter = new Component(
     'assemblyCounter',
-    mainCounterImg,
-    300,
-    0,
-    100,
-    150
+    assemblyCounterImg,
+    150,
+    260,
+    350,
+    175
   )
-  gameBoard.components.push(mainCounter)
 
-  //checkout counter 1200*1200 px
+  const multiStorage = new Component(
+    'multistorage',
+    freezerImg,
+    450,
+    230,
+    180,
+    200
+  )
+  const coneStorage = new Component(
+    'coneStorage',
+    coneStorageImg,
+    5,
+    170,
+    150,
+    250
+  )
+
+  player = new Player('player', playerImg, 400, 225, 100, 200)
+
   const checkoutImg = new Image()
-  checkoutImg.src = './images/checkout.png'
+  checkoutImg.src = './images/checkoutcounter.png'
 
   const checkout = new Component(
     'checkoutCounter',
     checkoutImg,
-    550,
-    0,
-    150,
-    150
+    gameBoard.canvas.width - 320,
+    200,
+    350,
+    350
   )
-  gameBoard.components.push(checkout)
 
-  const bottomCounterLeft = new Component(
-    'vanilla',
-    vanillaCounter,
-    0,
-    gameBoard.canvas.height - 150,
-    100,
-    150
-  )
-  gameBoard.components.push(bottomCounterLeft)
-  const bottomCounterMiddle = new Component(
-    'chocolate',
-    chocolateCounter,
-    300,
-    gameBoard.canvas.height - 150,
-    100,
-    150
-  )
-  gameBoard.components.push(bottomCounterMiddle)
-  const bottomCounterRight = new Component(
-    'strawberry',
-    strawberryCounter,
-    550,
-    gameBoard.canvas.height - 150,
-    100,
-    150
-  )
-  gameBoard.components.push(bottomCounterRight)
-
-  const playerImg = new Image()
-  playerImg.src = './images/leoBeo.png'
-  player = new Player('player', playerImg, 400, 225, 84, 72)
+  gameBoard.components.push(coneStorage)
+  gameBoard.components.push(assemblyCounter)
+  gameBoard.components.push(multiStorage)
   gameBoard.components.push(player)
 
-  //every second each recipe timer is updated 1s and it tries to add a new order (MAX.4)
+  gameBoard.components.push(checkout)
 
   const orderflowInterval = setInterval(() => {
     updateOrders()
@@ -87,31 +68,48 @@ document.getElementById('start-button').addEventListener('click', () => {
     updateAssemblyCounter()
   }, 1000)
 
-  const refreshRate = setInterval(gameBoard.updateCanvas, 20)
+  const refreshRate = setInterval(gameBoard.updateCanvas, 10)
 })
 
 //handle Movement Keys
-//TODO Action Key, pause menu
+
 document.addEventListener('keydown', ({ key }) => {
   switch (key) {
-    case 'Up':
-    case 'ArrowUp':
+    case 'w':
       gameBoard.isUpKeyPressed = true
+      player.isPlayerMoving = true
       break
-    case 'Down':
-    case 'ArrowDown':
+    case 's':
       gameBoard.isDownKeyPressed = true
+      player.isPlayerMoving = true
       break
-    case 'Left':
-    case 'ArrowLeft':
+    case 'a':
       gameBoard.isLeftKeyPressed = true
+      player.isPlayerMoving = true
+      player.isFacingLeft = true
+      player.isFacingRight = false
+
       break
-    case 'Right':
-    case 'ArrowRight':
+    case 'd':
       gameBoard.isRightKeyPressed = true
+      player.isPlayerMoving = true
+      player.isFacingLeft = false
+      player.isFacingRight = true
+
       break
     case 'p':
       gameBoard.isActionKeyPressed = true
+      break
+    case '1':
+    case '2':
+    case '3':
+      if (player.isChoosingFlavour) {
+        chooseFlavour(key)
+      }
+      break
+    case ' ':
+    case 'enter':
+      return
     default:
       return
   }
@@ -119,24 +117,33 @@ document.addEventListener('keydown', ({ key }) => {
 
 document.addEventListener('keyup', ({ key }) => {
   switch (key) {
-    case 'Up':
-    case 'ArrowUp':
+    case 'w':
       gameBoard.isUpKeyPressed = false
+      player.isPlayerMoving = false
       break
-    case 'Down':
-    case 'ArrowDown':
+    case 's':
       gameBoard.isDownKeyPressed = false
+      player.isPlayerMoving = false
       break
-    case 'Left':
-    case 'ArrowLeft':
+    case 'a':
       gameBoard.isLeftKeyPressed = false
+      player.isPlayerMoving = false
+
       break
-    case 'Right':
-    case 'ArrowRight':
+    case 'd':
       gameBoard.isRightKeyPressed = false
+      player.isPlayerMoving = false
       break
     case 'p':
       gameBoard.isActionKeyPressed = false
+      break
+    case '1':
+    case '2':
+    case '3':
+      player.isChoosingFlavour = false
+    case ' ':
+    case 'enter':
+      return
     default:
       return
   }
@@ -206,24 +213,24 @@ const updateInventory = () => {
 const updateAssemblyCounter = () => {
   const assemblyCounter = document.getElementById('assembly-container')
   assemblyCounter.innerHTML = ''
-  
+
   if (assemblyCounterItems.hasCone || assemblyCounterItems.flavour) {
     assemblyCounter.innerHTML = `<h2>In the Counter:</h2>`
-  
-  if (assemblyCounterItems.hasCone) {
-    const coneItem = document.createElement('p')
-    coneItem.innerHTML = 'Cone'
-    assemblyCounter.appendChild(coneItem)
-  } 
-  if (assemblyCounterItems.flavour) {
-    const flavouritem = document.createElement('p')
-    flavouritem.innerHTML = `${assemblyCounterItems.flavour}`
-    assemblyCounter.appendChild(flavouritem)
+
+    if (assemblyCounterItems.hasCone) {
+      const coneItem = document.createElement('p')
+      coneItem.innerHTML = 'Cone'
+      assemblyCounter.appendChild(coneItem)
+    }
+    if (assemblyCounterItems.flavour) {
+      const flavouritem = document.createElement('p')
+      flavouritem.innerHTML = `${assemblyCounterItems.flavour}`
+      assemblyCounter.appendChild(flavouritem)
+    }
+    if (assemblyCounterItems.hasCone && assemblyCounterItems.flavour) {
+      const readyToDeliver = document.createElement('h3')
+      readyToDeliver.innerHTML = `Ready to deliver: ${player.readyToDeliver}`
+      assemblyCounter.appendChild(readyToDeliver)
+    }
   }
-  if(assemblyCounterItems.hasCone && assemblyCounterItems.flavour){
-    const readyToDeliver = document.createElement('h3')
-    readyToDeliver.innerHTML = `Ready to deliver: ${player.readyToDeliver}`
-    assemblyCounter.appendChild(readyToDeliver)
-  }
-}
 }

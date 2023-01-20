@@ -1,7 +1,51 @@
 let player
+let playerImg = new Image()
+playerImg.src = '/images/playerImgs/idle0.png'
+
+let playerFramesPath = './images/playerImgs/'
+
+let playerWalkFramesArray = [
+  [
+    `${playerFramesPath}walk0.png`,
+    `${playerFramesPath}walk1.png`,
+    `${playerFramesPath}walk2.png`,
+    `${playerFramesPath}walk3.png`,
+    `${playerFramesPath}walk4.png`,
+    `${playerFramesPath}walk5.png`,
+    `${playerFramesPath}walk6.png`,
+    `${playerFramesPath}walk7.png`,
+  ],
+  [
+    `${playerFramesPath}walkLeft0.png`,
+    `${playerFramesPath}walkLeft1.png`,
+    `${playerFramesPath}walkLeft2.png`,
+    `${playerFramesPath}walkLeft3.png`,
+    `${playerFramesPath}walkLeft4.png`,
+    `${playerFramesPath}walkLeft5.png`,
+    `${playerFramesPath}walkLeft6.png`,
+    `${playerFramesPath}walkLeft7.png`,
+  ],
+]
+
+let playerIdleFramesArray = [
+  [
+    `${playerFramesPath}idle0.png`,
+    `${playerFramesPath}idle1.png`,
+    `${playerFramesPath}idle2.png`,
+    `${playerFramesPath}idle3.png`,
+  ],
+  [
+    `${playerFramesPath}idleLeft0.png`,
+    `${playerFramesPath}idleLeft1.png`,
+    `${playerFramesPath}idleLeft2.png`,
+    `${playerFramesPath}idleLeft3.png`,
+  ],
+]
+
 let flavourOptions = ['vanilla', 'chocolate', 'strawberry']
-const background = new Image()
-background.src = './images/kitchen_floor.png'
+
+let background
+
 let assemblyCounterItems = {
   hasCone: false,
   flavour: '',
@@ -61,14 +105,53 @@ const submitOrder = () => {
     updateScore()
     submitFunctionRan++
   } else {
-    if(submitFunctionRan === 0){
+    if (submitFunctionRan === 0) {
       updateScore()
       gameBoard.combo = 0
     }
     submitFunctionRan++
   }
-  console.log(pendingOrders, gameBoard.score, gameBoard.combo)
 }
+
 const startGame = () => {
   gameBoard.createCanvas()
 }
+
+const chooseFlavour = (flavourChosen) => {
+  //player will choose via key
+  switch (flavourChosen) {
+    case '1':
+      if (assemblyCounterItems.flavour === 'vanilla') {
+        return
+      }
+      player.heldItems.vanilla = true
+      player.heldItems.chocolate = false
+      player.heldItems.strawberry = false
+      gameBoard.isAtAssemblyStation = false
+      gameBoard.isAtCheckout = false
+      break
+    case '2':
+      if (assemblyCounterItems.flavour === 'chocolate') {
+        return
+      }
+      this.heldItems.vanilla = false
+      player.heldItems.chocolate = true
+      player.heldItems.strawberry = false
+      gameBoard.isAtAssemblyStation = false
+      gameBoard.isAtCheckout = false
+      break
+    case '3':
+      if (assemblyCounterItems.flavour === 'strawberry') {
+        return
+      }
+      player.heldItems.vanilla = false
+      player.heldItems.chocolate = false
+      player.heldItems.strawberry = true
+      gameBoard.isAtAssemblyStation = false
+      gameBoard.isAtCheckout = false
+      break
+    default:
+      break
+  }
+}
+

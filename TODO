@@ -2,6 +2,9 @@
 // recipeArray logic = done
 //Ingredients Logic = done
 //Timer For level = done 
-//player boundaries
+// freezer opens and closes
+//player boundaries = done
 // toggle active DIVS before game starts or ends
 // backlog enemies after X (fires, mice)
+
+// alert when user tries to assemble flavour without cone

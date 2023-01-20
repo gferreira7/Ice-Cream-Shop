@@ -1,8 +1,8 @@
 
 class Order {
-    constructor(flavour, imgUrl){
+    constructor(flavour, img){
         this.flavour = flavour
-        this.imgUrl = imgUrl
+        this.img = img
         this.timeLeft = 100
     }
 }

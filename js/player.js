@@ -1,8 +1,8 @@
 class Player extends Component {
-  constructor(name, imgURL, posX, posY, width, height) {
-    super(name, imgURL, posX, posY, width, height)
-    this.ySpeed = 4
-    this.xSpeed = 4
+  constructor(name, img, posX, posY, width, height) {
+    super(name, img, posX, posY, width, height)
+    this.ySpeed = 10
+    this.xSpeed = 10
     this.heldItems = {
       cone: false,
       vanilla: false,
@@ -10,8 +10,33 @@ class Player extends Component {
       strawberry: false,
     }
     this.readyToDeliver = ''
+    this.speechBubble = ''
+    this.isChoosingFlavour = false
+    this.isPlayerMoving = false
+    this.isFacingLeft = false
+    this.isFacingRight = true
+    this.moveTimer = 0
   }
 
+  idle() {
+    if(player.isFacingLeft){
+
+      player.img.src = playerIdleFramesArray[1][this.moveTimer]
+      if(this.moveTimer<3){
+        this.moveTimer++
+      } else{
+        this.moveTimer = 0
+      }
+    } else{
+      player.img.src = playerIdleFramesArray[0][this.moveTimer]
+      if(this.moveTimer<3){
+        this.moveTimer++
+      } else{
+        this.moveTimer = 0
+      }
+    } 
+    
+  }
   moveUp() {
     this.posY -= this.ySpeed
   }
@@ -19,11 +44,27 @@ class Player extends Component {
     this.posY += this.ySpeed
   }
   moveLeft() {
+    this.isFacingLeft = true
+    this.isFacingRight = false
     this.posX -= this.xSpeed
+    player.img.src = playerWalkFramesArray[1][this.moveTimer]
+    if(this.moveTimer<6){
+      this.moveTimer++
+    } else{
+      this.moveTimer = 0
+    }
   }
 
   moveRight() {
+    this.isFacingLeft = false
+    this.isFacingRight = true
     this.posX += this.xSpeed
+    player.img.src = playerWalkFramesArray[0][this.moveTimer]
+    if(this.moveTimer<6){
+      this.moveTimer++
+    } else{
+      this.moveTimer = 0
+    }    
   }
   action(component) {
     switch (component.name) {
@@ -31,50 +72,23 @@ class Player extends Component {
         gameBoard.isAtAssemblyStation = true
         gameBoard.isAtCheckout = false
         break
-      case 'cupboard':
-        if(assemblyCounterItems.hasCone){
-          console.log('you already have a cone you dum dum') 
-          return  
+      case 'coneStorage':
+        if (assemblyCounterItems.hasCone) {
+          return
         }
         this.heldItems.cone = true
         this.heldItems.vanilla = false
         this.heldItems.chocolate = false
         this.heldItems.strawberry = false
+
         gameBoard.isAtAssemblyStation = false
         gameBoard.isAtCheckout = false
         break
-      case 'vanilla':
-        if(assemblyCounterItems.flavour === 'vanilla'){
-          console.log('you already have this flavour you dum dum') 
-          return  
-        }
-        this.heldItems.vanilla = true
-        this.heldItems.chocolate = false
-        this.heldItems.strawberry = false
+      case 'multistorage':
+        player.isChoosingFlavour = true
         gameBoard.isAtAssemblyStation = false
         gameBoard.isAtCheckout = false
         break
-      case 'chocolate':
-        if(assemblyCounterItems.flavour === 'chocolate'){
-          console.log('you already have this flavour you dum dum') 
-          return  
-        }  
-      this.heldItems.vanilla = false
-        this.heldItems.chocolate = true
-        this.heldItems.strawberry = false
-        gameBoard.isAtAssemblyStation = false
-        gameBoard.isAtCheckout = false
-        break
-      case 'strawberry':
-        if(assemblyCounterItems.flavour === 'strawberry'){
-          console.log('you already have this flavour you dum dum') 
-          return  
-        }
-        this.heldItems.vanilla = false
-        this.heldItems.chocolate = false
-        this.heldItems.strawberry = true
-        gameBoard.isAtAssemblyStation = false
-        gameBoard.isAtCheckout = false
       case 'checkoutCounter':
         gameBoard.isAtCheckout = true
         gameBoard.isAtAssemblyStation = false

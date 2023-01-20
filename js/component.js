@@ -1,6 +1,6 @@
 class Component {
-    constructor(name,imgURL, posX, posY, width, height){
-        this.imgURL = imgURL
+    constructor(name,img, posX, posY, width, height){
+        this.img = img
         this.width = width
         this.height = height
         this.posX = posX
@@ -9,7 +9,7 @@ class Component {
     }
     render(){
         const ctx = gameBoard.ctx
-        ctx.drawImage(this.imgURL, this.posX, this.posY, this.width, this.height)
+        ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height)        
     }
     checkCollision(otherComponent) {
         if (

@@ -11,15 +11,15 @@ const gameBoard = {
   isAtCheckout: false,
   isAtAssemblyStation: false,
   isGameOver: false,
+  isGameStarted: false,
   score: 0,
   combo: 0,
   createCanvas: function () {
-    this.canvas.width = 800
-    this.canvas.height = 600
+    this.canvas.width = 1200
+    this.canvas.height = 500
     this.ctx = this.canvas.getContext('2d')
     const mainDiv = document.getElementById('main-game-container')
     mainDiv.insertBefore(this.canvas, mainDiv.childNodes[0])
-    // document.getElementById('main-game-container').appendChild(this.canvas)
   },
   addOrder: function () {
     if (gameBoard.orders.length < 4) {
@@ -27,39 +27,48 @@ const gameBoard = {
     }
   },
   updateCanvas: function () {
-    const context = gameBoard.ctx
-
-    //temp floor
-    
     gameBoard.ctx.drawImage(
       background,
       0,
       0,
       gameBoard.canvas.width,
-      gameBoard.canvas.height + 200
+      gameBoard.canvas.height
     )
 
+    if(!this.isPlayerMoving){
+      player.idle()
+    }
+
     if (gameBoard.isUpKeyPressed) {
-      player.moveUp()
+      if (player.posY > 230) {
+        player.moveUp()
+      }
     }
     if (gameBoard.isDownKeyPressed) {
-      player.moveDown()
+      if (player.posY < gameBoard.canvas.height - 200) {
+        player.moveDown()
+      }
     }
     if (gameBoard.isLeftKeyPressed) {
-      player.moveLeft()
+      if (player.posX > 0) {
+        player.moveLeft()
+      }
     }
     if (gameBoard.isRightKeyPressed) {
-      player.moveRight()
+      if (player.posX <gameBoard.canvas.width -100) {
+        player.moveRight()
+      }
     }
 
     gameBoard.components.forEach((component) => {
       component.render()
       if (component !== player && component.checkCollision(player)) {
-        // component.canUseAction = true
-        //after Key Press
         if (gameBoard.isActionKeyPressed) {
           player.action(component)
-          if (gameBoard.isAtAssemblyStation && component.name === 'assemblyCounter') {
+          if (
+            gameBoard.isAtAssemblyStation &&
+            component.name === 'assemblyCounter'
+          ) {
             assembleOrder()
             gameBoard.isAtAssemblyStation = false
             updateInventory()
@@ -71,6 +80,5 @@ const gameBoard = {
         }
       }
     })
-   
   },
 }
