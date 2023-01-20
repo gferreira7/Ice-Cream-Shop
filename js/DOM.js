@@ -3,16 +3,16 @@ document.getElementById('start-button').addEventListener('click', () => {
 
   // creating Assets to load
   background = new Image()
-  background.src = '/images/bluewall.png'
+  background.src = './images/bluewall.png'
 
   const freezerImg = new Image()
-  freezerImg.src = '/images/fridgeclosed.png'
+  freezerImg.src = './images/fridgeclosed.png'
 
   const coneStorageImg = new Image()
-  coneStorageImg.src = '/images/conestorage.png'
+  coneStorageImg.src = './images/conestorage.png'
 
   const assemblyCounterImg = new Image()
-  assemblyCounterImg.src = '/images/assemblycounter.png'
+  assemblyCounterImg.src = './images/assemblycounter.png'
   const assemblyCounter = new Component(
     'assemblyCounter',
     assemblyCounterImg,
@@ -42,7 +42,7 @@ document.getElementById('start-button').addEventListener('click', () => {
   player = new Player('player', playerImg, 400, 225, 100, 200)
 
   const checkoutImg = new Image()
-  checkoutImg.src = '/images/checkoutcounter.png'
+  checkoutImg.src = './images/checkoutcounter.png'
 
   const checkout = new Component(
     'checkoutCounter',
