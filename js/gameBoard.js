@@ -3,7 +3,7 @@ const gameBoard = {
   components: [],
   nonCollisionComponents: [],
   orders: [],
-  gameTimeLeft: 120,
+  gameTimeLeft: 60,
   isUpKeyPressed: false,
   isDownKeyPressed: false,
   isLeftKeyPressed: false,
@@ -12,6 +12,7 @@ const gameBoard = {
   isAtCheckout: false,
   isGameOver: false,
   isGameStarted: false,
+  isInstructionsKeyPressed: false,
   score: 0,
   combo: 0,
   createCanvas: function () {
@@ -49,6 +50,7 @@ const gameBoard = {
       gameBoard.canvas.height -95
     )
 
+    if(gameBoard.isInstructionsKeyPressed){
       gameBoard.ctx.font = "32px Roboto Mono";
       gameBoard.ctx.fillStyle = 'yellow'
 
@@ -63,6 +65,7 @@ const gameBoard = {
       gameBoard.ctx.fillText("Cone + Flavour", 500, 160);
       gameBoard.ctx.fillText("+ checkout = Cash ", 500, 200);
 
+    }
 
     if (!this.isPlayerMoving) {
       player.idle()

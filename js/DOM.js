@@ -119,6 +119,7 @@ document.getElementById('start-button').addEventListener('click', () => {
 })
 
 const startGame = () => {
+  gameBoard.isGameStarted = true
   document.getElementById('start-button').style.display = 'none'
   document.getElementById('game-title').style.display = 'none'
   document.getElementById('main-game-container').style.display = 'flex'
@@ -161,6 +162,9 @@ document.addEventListener('keydown', ({ key }) => {
         chooseFlavour(key)
       }
       break
+    case 'i':
+      gameBoard.isInstructionsKeyPressed = true
+      break
     case ' ':
     case 'enter':
       return
@@ -191,7 +195,9 @@ document.addEventListener('keyup', ({ key }) => {
       break
     case 'p':
       gameBoard.isActionKeyPressed = false
-
+      break
+    case 'i':
+      gameBoard.isInstructionsKeyPressed = false
       break
     case '1':
     case '2':
@@ -232,7 +238,7 @@ const updateOrders = () => {
     progressBar.style.backgroundColor = 'green'
     singlePendingOrderDiv.innerHTML = `<img src="./images/${order.flavour}.png">`
     singlePendingOrderDiv.appendChild(progressBar)
-    order.timerPercentageDecrement+=2.5
+    order.timerPercentageDecrement += 2.5
     pendingOrdersDisplay.appendChild(singlePendingOrderDiv)
   })
 }
@@ -262,7 +268,7 @@ const updateInventory = () => {
   inventory.innerHTML = ''
   const itemList = document.createElement('ul')
   const inventoryTitle = document.createElement('h2')
-  inventoryTitle.innerHTML ='Inventory:'
+  inventoryTitle.innerHTML = 'Inventory:'
   itemList.appendChild(inventoryTitle)
 
   for (let key in player.heldItems) {

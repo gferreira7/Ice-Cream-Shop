@@ -3,7 +3,11 @@
 //Ingredients Logic = done
 //Timer For level = done 
 //player boundaries = done
-// toggle active DIVS before game starts or ends
+// work on intro page and game over - restart
 // backlog enemies after X (fires, mice)
 // randomise ingredients, add toppings
-// alert when user tries to assemble flavour without cone
+
+// alerts for:
+// 1. incorrect orders
+// 2. getting the flavor before the cone
+// (garbage bin moves)

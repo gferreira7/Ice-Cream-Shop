@@ -23,14 +23,6 @@
 
 }
 
-#info-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.5em;
-    padding: 5px;
-}
 
 #pending-orders-display{
     display: flex;
@@ -52,6 +44,15 @@
     width: 110px
 }
 
+#info-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5em;
+    padding: 5px;
+    color: purple;
+}
 #inventory-container{
     display: flex;
     flex-grow: 1;
@@ -61,5 +62,6 @@
     font-weight: 400;
     font-size: 1.3em;
     border-right: 5px solid purple;
+    color: purple;
 }
 
