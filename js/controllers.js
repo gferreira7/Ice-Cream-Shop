@@ -1,7 +1,9 @@
 let player
+
 let playerImg = new Image()
 playerImg.src = './images/heroImages/idle/right/hero1.png'
 let playerFramesPath = './images/heroImages/'
+
 let playerWalkFramesArray = [
   [
     `${playerFramesPath}/walk/right/hero1.png`,
@@ -36,6 +38,11 @@ let playerIdleFramesArray = [
     `${playerFramesPath}/idle/right/hero5.png`,
     `${playerFramesPath}/idle/right/hero6.png`,
     `${playerFramesPath}/idle/right/hero7.png`,
+    `${playerFramesPath}/idle/right/hero8.png`,
+    `${playerFramesPath}/idle/right/hero9.png`,
+    `${playerFramesPath}/idle/right/hero10.png`,
+    `${playerFramesPath}/idle/right/hero11.png`,
+    `${playerFramesPath}/idle/right/hero12.png`,
   ],
   [
     `${playerFramesPath}/idle/left/hero1.png`,
@@ -45,6 +52,11 @@ let playerIdleFramesArray = [
     `${playerFramesPath}/idle/left/hero5.png`,
     `${playerFramesPath}/idle/left/hero6.png`,
     `${playerFramesPath}/idle/left/hero7.png`,
+    `${playerFramesPath}/idle/left/hero8.png`,
+    `${playerFramesPath}/idle/left/hero9.png`,
+    `${playerFramesPath}/idle/left/hero10.png`,
+    `${playerFramesPath}/idle/left/hero11.png`,
+    `${playerFramesPath}/idle/left/hero12.png`,
   ],
 ]
 
@@ -90,10 +102,9 @@ const submitOrder = () => {
       gameBoard.combo = 0
     } else {
       //order found
-      if (gameBoard.orders[orderFound].timeLeft > 15) {
+      if (gameBoard.orders[orderFound].currentTimeLeft > 15) {
         gameBoard.combo++
       }
-      console.log(gameBoard.orders)
       gameBoard.orders.splice(orderFound, 1)
       console.log(gameBoard.orders)
 
@@ -110,7 +121,6 @@ const submitOrder = () => {
     player.heldItems.strawberry = false
   }
 }
-
 
 const chooseFlavour = (flavourChosen) => {
   //player will choose via key

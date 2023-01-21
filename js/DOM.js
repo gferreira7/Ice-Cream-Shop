@@ -33,7 +33,7 @@ document.getElementById('start-button').addEventListener('click', () => {
   const checkoutImg = new Image()
   checkoutImg.src = './images/counter.png'
 
-  const speechBubbleImg = new Image ()
+  const speechBubbleImg = new Image()
   speechBubbleImg.src = './images/speechBubble.png'
 
   const iceCreamTable = new Component(
@@ -93,7 +93,14 @@ document.getElementById('start-button').addEventListener('click', () => {
     300
   )
 
-  const speech = new Component('speech', speechBubbleImg, player.posX, player.aapaposY, 200,150)
+  const speech = new Component(
+    'speech',
+    speechBubbleImg,
+    player.posX,
+    player.aapaposY,
+    200,
+    150
+  )
 
   gameBoard.nonCollisionComponents.push(iceCreamTable)
   gameBoard.components.push(iceCreamMachine)
@@ -106,19 +113,21 @@ document.getElementById('start-button').addEventListener('click', () => {
   gameBoard.nonCollisionComponents.push(tray3)
   gameBoard.nonCollisionComponents.push(tray4)
   gameBoard.nonCollisionComponents.push(tray5)
-  gameBoard.nonCollisionComponents.push(bin)
   gameBoard.nonCollisionComponents.push(wallSign)
 
   //
   gameBoard.components.push(player)
   gameBoard.components.push(speech)
+  gameBoard.nonCollisionComponents.push(bin)
   gameBoard.components.push(checkout)
 
   const orderflowInterval = setInterval(() => {
-    updateOrders()
-    updateTimeLeft()
-    updateScore()
-    updateInventory()
+    if (!gameBoard.isGamePaused) {
+      updateOrders()
+      updateTimeLeft()
+      updateScore()
+      updateInventory()
+    }
   }, 1000)
 
   const refreshRate = setInterval(gameBoard.updateCanvas, 20)
@@ -135,6 +144,13 @@ const startGame = () => {
 //handle Movement Keys
 
 document.addEventListener('keydown', ({ key }) => {
+  if (
+    !gameBoard.isGameStarted ||
+    gameBoard.isGameOver ||
+    gameBoard.isGamePaused
+  ) {
+    return
+  }
   switch (key) {
     case 'w':
       gameBoard.isUpKeyPressed = true
@@ -149,14 +165,12 @@ document.addEventListener('keydown', ({ key }) => {
       player.isPlayerMoving = true
       player.isFacingLeft = true
       player.isFacingRight = false
-
       break
     case 'd':
       gameBoard.isRightKeyPressed = true
       player.isPlayerMoving = true
       player.isFacingLeft = false
       player.isFacingRight = true
-
       break
     case 'p':
       gameBoard.isActionKeyPressed = true
@@ -180,6 +194,13 @@ document.addEventListener('keydown', ({ key }) => {
 })
 
 document.addEventListener('keyup', ({ key }) => {
+  if (
+    !gameBoard.isGameStarted ||
+    gameBoard.isGameOver ||
+    gameBoard.isGamePaused
+  ) {
+    return
+  }
   switch (key) {
     case 'w':
       gameBoard.isUpKeyPressed = false
@@ -222,11 +243,13 @@ const updateOrders = () => {
   pendingOrdersDisplay.innerHTML = ''
 
   gameBoard.orders.forEach((order) => {
-    order.timeLeft--
-    if (order.timeLeft === 0) {
+    order.currentTimeLeft--
+    if (order.currentTimeLeft === 0) {
       gameBoard.orders.shift()
       gameBoard.combo = 0
     }
+    console.log(gameBoard.orders)
+
   })
   gameBoard.addOrder()
 
@@ -234,20 +257,23 @@ const updateOrders = () => {
 
   gameBoard.orders.forEach((order) => {
     const singlePendingOrderDiv = document.createElement('div')
+    singlePendingOrderDiv.innerHTML = ''
     singlePendingOrderDiv.className = 'order-container'
 
     const progressBar = document.createElement('div')
     progressBar.classList = 'progress-bar'
     progressBar.style.height = '10px'
-    let currentTimeLeft = 100 - order.timerPercentageDecrement
-    progressBar.style.width = `${currentTimeLeft}%`
+    progressBar.style.width = `${order.currentTimeLeft}%`
     progressBar.style.backgroundColor = 'green'
     singlePendingOrderDiv.innerHTML = `<img src="./images/${order.flavour}.png">`
     singlePendingOrderDiv.appendChild(progressBar)
-    order.timerPercentageDecrement += 2.5
     pendingOrdersDisplay.appendChild(singlePendingOrderDiv)
+    console.log(gameBoard.orders)
+    order.updateProgressBar()
+    order.secondsElapsed++
   })
 }
+
 const updateTimeLeft = () => {
   gameBoard.gameTimeLeft--
   if (gameBoard.gameTimeLeft <= 0) {
@@ -270,20 +296,20 @@ const updateScore = () => {
 }
 
 const updateInventory = () => {
-  const inventory = document.getElementById('inventory-container')
+  const inventory = document.getElementById('inventory-list')
   inventory.innerHTML = ''
-  const itemList = document.createElement('ul')
-  const inventoryTitle = document.createElement('h2')
-  inventoryTitle.innerHTML = 'Inventory:'
-  itemList.appendChild(inventoryTitle)
-
   for (let key in player.heldItems) {
     if (player.heldItems[key]) {
-      let heldItem = document.createElement('li')
-      heldItem.innerHTML = `${key}`
-      itemList.appendChild(heldItem)
+      let heldItemImg = document.createElement('img')
+      heldItemImg.src = `./images/${key}.png`
+      heldItemImg.style.objectFit = 'cover'
+      inventory.appendChild(heldItemImg)
     }
   }
-
-  inventory.appendChild(itemList)
 }
+
+document.getElementById('pause-button').addEventListener('click', () => {
+  gameBoard.isGamePaused = !gameBoard.isGamePaused
+
+  console.log(gameBoard.isGamePaused)
+})

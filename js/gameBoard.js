@@ -12,6 +12,7 @@ const gameBoard = {
   isAtCheckout: false,
   isGameOver: false,
   isGameStarted: false,
+  isGamePaused: false,
   isInstructionsKeyPressed: false,
   score: 0,
   combo: 0,
@@ -28,6 +29,9 @@ const gameBoard = {
     }
   },
   updateCanvas: function () {
+
+    if (gameBoard.isGamePaused) return
+
     gameBoard.ctx.clearRect(
       0,
       0,
@@ -103,7 +107,6 @@ const gameBoard = {
           updateInventory()
         }
         if (gameBoard.isAtCheckout && component.name === 'checkoutCounter') {
-          // console.log(player.readyToDeliver)
           submitOrder()
         }
       }

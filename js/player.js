@@ -1,8 +1,8 @@
 class Player extends Component {
   constructor(name, img, posX, posY, width, height) {
     super(name, img, posX, posY, width, height)
-    this.ySpeed = 8
-    this.xSpeed = 8
+    this.ySpeed = 4
+    this.xSpeed = 4 
     this.heldItems = {
       cone: false,
       vanilla: false,
@@ -17,21 +17,21 @@ class Player extends Component {
     this.isFacingRight = true
     this.moveTimer = 0
     this.hasRanFunction = 0
-    this.frameSkip = 8
+    this.frameSkip = 4
   }
 
   idle() {
     this.hasRanFunction++
     if (this.hasRanFunction % this.frameSkip === 0) {
       if (player.isFacingLeft) {
-        if (this.moveTimer <= 6) {
+        if (this.moveTimer <= 11) {
           player.img.src = playerIdleFramesArray[1][this.moveTimer]
           this.moveTimer++
         } else {
           this.moveTimer = 0
         }
       } else {
-        if (this.moveTimer <= 6) {
+        if (this.moveTimer <= 11) {
           player.img.src = playerIdleFramesArray[0][this.moveTimer]
           this.moveTimer++
         } else {
@@ -39,12 +39,12 @@ class Player extends Component {
         }
       }
     }
-    console.group(`player is moving ${player.isPlayerMoving}`)
-    console.log(`face left ${player.isFacingLeft}`)
-    console.log(`face right ${player.isFacingRight}`)
-    console.log(`frameskip ${player.hasRanFunction}`)
-    console.log(`img frame ${player.moveTimer}`)
-    console.groupEnd()
+    // console.group(`player is moving ${player.isPlayerMoving}`)
+    // console.log(`face left ${player.isFacingLeft}`)
+    // console.log(`face right ${player.isFacingRight}`)
+    // console.log(`frameskip ${player.hasRanFunction}`)
+    // console.log(`img frame ${player.moveTimer}`)
+    // console.groupEnd()
   }
   moveUp() {
     this.posY -= this.ySpeed
@@ -65,12 +65,12 @@ class Player extends Component {
         this.moveTimer = 0
       }
     }
-    console.group(`player is moving ${player.isPlayerMoving}`)
-    console.log(`face left ${player.isFacingLeft}`)
-    console.log(`face right ${player.isFacingRight}`)
-    console.log(`frameskip ${player.hasRanFunction}`)
-    console.log(`img frame ${player.moveTimer}`)
-    console.groupEnd()
+    // console.group(`player is moving ${player.isPlayerMoving}`)
+    // console.log(`face left ${player.isFacingLeft}`)
+    // console.log(`face right ${player.isFacingRight}`)
+    // console.log(`frameskip ${player.hasRanFunction}`)
+    // console.log(`img frame ${player.moveTimer}`)
+    // console.groupEnd()
   }
 
   moveRight() {
@@ -86,12 +86,12 @@ class Player extends Component {
         this.moveTimer = 0
       }
     }
-    console.group(`player is moving ${player.isPlayerMoving}`)
-    console.log(`face left ${player.isFacingLeft}`)
-    console.log(`face right ${player.isFacingRight}`)
-    console.log(`frameskip ${player.hasRanFunction}`)
-    console.log(`img frame ${player.moveTimer}`)
-    console.groupEnd()
+    // console.group(`player is moving ${player.isPlayerMoving}`)
+    // console.log(`face left ${player.isFacingLeft}`)
+    // console.log(`face right ${player.isFacingRight}`)
+    // console.log(`frameskip ${player.hasRanFunction}`)
+    // console.log(`img frame ${player.moveTimer}`)
+    // console.groupEnd()
   }
   action(component) {
     switch (component.name) {

@@ -20,7 +20,7 @@
       crossorigin
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
     <link
@@ -33,11 +33,21 @@
     <h1 id="game-title">OverCooked</h1>
     <div id="main-game-container">
       <div id="top-panel">
-        <div id="pending-orders-display"></div>
-        <div id="inventory-container"></div>
+        <div id="pending-orders-display"><p>No Orders to deliver</p></div>
+        <div id="inventory-container">
+          <h2>Inventory:</h2>
+          <div id="inventory-list"></div>
+        </div>
         <div id="info-container">
-          <div id="time-left-display"></div>
-          <div id="score-display"></div>
+          <div id="time-left-display"><h2>TIME LEFT:</h2></div>
+          <div id="score-display">
+            <h2>Score: 0</h2>
+            <h2>Combo: 0</h2>
+          </div>
+        </div>
+        <div id="menu-buttons">
+          <button id="pause-button">Pause</button>
+          <button id="restart-button">Restart</button>
         </div>
       </div>
     </div>
