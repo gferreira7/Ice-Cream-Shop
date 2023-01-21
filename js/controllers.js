@@ -1,55 +1,58 @@
 let player
 let playerImg = new Image()
-playerImg.src = './images/playerImgs/idle0.png'
-
-let playerFramesPath = './images/playerImgs/'
-
+playerImg.src = './images/heroImages/idle/right/hero1.png'
+let playerFramesPath = './images/heroImages/'
 let playerWalkFramesArray = [
   [
-    `${playerFramesPath}walk0.png`,
-    `${playerFramesPath}walk1.png`,
-    `${playerFramesPath}walk2.png`,
-    `${playerFramesPath}walk3.png`,
-    `${playerFramesPath}walk4.png`,
-    `${playerFramesPath}walk5.png`,
-    `${playerFramesPath}walk6.png`,
-    `${playerFramesPath}walk7.png`,
+    `${playerFramesPath}/walk/right/hero1.png`,
+    `${playerFramesPath}/walk/right/hero2.png`,
+    `${playerFramesPath}/walk/right/hero3.png`,
+    `${playerFramesPath}/walk/right/hero4.png`,
+    `${playerFramesPath}/walk/right/hero5.png`,
+    `${playerFramesPath}/walk/right/hero6.png`,
+    `${playerFramesPath}/walk/right/hero7.png`,
+    `${playerFramesPath}/walk/right/hero8.png`,
+    `${playerFramesPath}/walk/right/hero9.png`,
   ],
   [
-    `${playerFramesPath}walkLeft0.png`,
-    `${playerFramesPath}walkLeft1.png`,
-    `${playerFramesPath}walkLeft2.png`,
-    `${playerFramesPath}walkLeft3.png`,
-    `${playerFramesPath}walkLeft4.png`,
-    `${playerFramesPath}walkLeft5.png`,
-    `${playerFramesPath}walkLeft6.png`,
-    `${playerFramesPath}walkLeft7.png`,
+    `${playerFramesPath}/walk/left/hero1.png`,
+    `${playerFramesPath}/walk/left/hero2.png`,
+    `${playerFramesPath}/walk/left/hero3.png`,
+    `${playerFramesPath}/walk/left/hero4.png`,
+    `${playerFramesPath}/walk/left/hero5.png`,
+    `${playerFramesPath}/walk/left/hero6.png`,
+    `${playerFramesPath}/walk/left/hero7.png`,
+    `${playerFramesPath}/walk/left/hero8.png`,
+    `${playerFramesPath}/walk/left/hero9.png`,
   ],
 ]
 
 let playerIdleFramesArray = [
   [
-    `${playerFramesPath}idle0.png`,
-    `${playerFramesPath}idle1.png`,
-    `${playerFramesPath}idle2.png`,
-    `${playerFramesPath}idle3.png`,
+    `${playerFramesPath}/idle/right/hero1.png`,
+    `${playerFramesPath}/idle/right/hero2.png`,
+    `${playerFramesPath}/idle/right/hero3.png`,
+    `${playerFramesPath}/idle/right/hero4.png`,
+    `${playerFramesPath}/idle/right/hero5.png`,
+    `${playerFramesPath}/idle/right/hero6.png`,
+    `${playerFramesPath}/idle/right/hero7.png`,
   ],
   [
-    `${playerFramesPath}idleLeft0.png`,
-    `${playerFramesPath}idleLeft1.png`,
-    `${playerFramesPath}idleLeft2.png`,
-    `${playerFramesPath}idleLeft3.png`,
+    `${playerFramesPath}/idle/left/hero1.png`,
+    `${playerFramesPath}/idle/left/hero2.png`,
+    `${playerFramesPath}/idle/left/hero3.png`,
+    `${playerFramesPath}/idle/left/hero4.png`,
+    `${playerFramesPath}/idle/left/hero5.png`,
+    `${playerFramesPath}/idle/left/hero6.png`,
+    `${playerFramesPath}/idle/left/hero7.png`,
   ],
 ]
 
 let flavourOptions = ['vanilla', 'chocolate', 'strawberry']
 
-let background
+let ceramicBacksplash
+let purpleFloor
 
-let assemblyCounterItems = {
-  hasCone: false,
-  flavour: '',
-}
 const generateNewOrder = () => {
   let randomFlavour = Math.floor(Math.random() * 3)
   let newFlavour = flavourOptions[randomFlavour]
@@ -59,99 +62,78 @@ const generateNewOrder = () => {
 
 const assembleOrder = () => {
   if (player.heldItems.cone) {
-    player.heldItems.cone = false
-    assemblyCounterItems.hasCone = true
-  }
-  if (assemblyCounterItems.hasCone) {
     if (player.heldItems.vanilla) {
       player.readyToDeliver = 'vanilla'
-      player.heldItems.vanilla = false
-      assemblyCounterItems.flavour = 'vanilla'
     } else if (player.heldItems.chocolate) {
       player.readyToDeliver = 'chocolate'
-      player.heldItems.chocolate = false
-      assemblyCounterItems.flavour = 'chocolate'
     } else if (player.heldItems.strawberry) {
       player.readyToDeliver = 'strawberry'
-      player.heldItems.strawberry = false
-      assemblyCounterItems.flavour = 'strawberry'
     }
+  }
+}
+
+let submitFunctionRan = 0
+
+const submitOrder = () => {
+  if (submitFunctionRan > 0) {
+    return
   } else {
+    let pendingOrders = []
+
+    gameBoard.orders.forEach((order) => {
+      pendingOrders.push(order.flavour)
+    })
+
+    let orderFound = pendingOrders.indexOf(player.readyToDeliver)
+    if (orderFound === -1) {
+      // order not found
+      gameBoard.combo = 0
+    } else {
+      //order found
+      if (gameBoard.orders[orderFound].timeLeft > 15) {
+        gameBoard.combo++
+      }
+      console.log(gameBoard.orders)
+      gameBoard.orders.splice(orderFound, 1)
+      console.log(gameBoard.orders)
+
+      gameBoard.score += 20 + gameBoard.combo
+      updateOrders()
+      updateScore()
+      submitFunctionRan = 1
+    }
+    // cleanup whether order is valid or not
+    player.readyToDeliver = ''
+    player.heldItems.cone = false
     player.heldItems.vanilla = false
     player.heldItems.chocolate = false
     player.heldItems.strawberry = false
   }
 }
 
-let submitFunctionRan = 0
-const submitOrder = () => {
-  let pendingOrders = []
-  gameBoard.orders.forEach((order, index) => {
-    if (order.flavour === player.readyToDeliver) {
-      pendingOrders.push(index)
-    }
-  })
-  if (pendingOrders.length !== 0) {
-    if (gameBoard.orders[pendingOrders[0]].timeLeft > 70) {
-      gameBoard.combo += 3
-    }
-    gameBoard.orders.splice(pendingOrders[0], 1)
-    assemblyCounterItems.flavour = ''
-    assemblyCounterItems.hasCone = false
-    player.readyToDeliver = ''
-
-    gameBoard.score += 20 + gameBoard.combo
-    updateOrders()
-    updateScore()
-    submitFunctionRan++
-  } else {
-    if (submitFunctionRan === 0) {
-      updateScore()
-      gameBoard.combo = 0
-    }
-    submitFunctionRan++
-  }
-}
-
-const startGame = () => {
-  gameBoard.createCanvas()
-}
 
 const chooseFlavour = (flavourChosen) => {
   //player will choose via key
   switch (flavourChosen) {
     case '1':
-      if (assemblyCounterItems.flavour === 'vanilla') {
-        return
-      }
       player.heldItems.vanilla = true
       player.heldItems.chocolate = false
       player.heldItems.strawberry = false
-      gameBoard.isAtAssemblyStation = false
       gameBoard.isAtCheckout = false
       break
     case '2':
-      if (assemblyCounterItems.flavour === 'chocolate') {
-        return
-      }
-      this.heldItems.vanilla = false
+      player.heldItems.vanilla = false
       player.heldItems.chocolate = true
       player.heldItems.strawberry = false
-      gameBoard.isAtAssemblyStation = false
       gameBoard.isAtCheckout = false
       break
     case '3':
-      if (assemblyCounterItems.flavour === 'strawberry') {
-        return
-      }
       player.heldItems.vanilla = false
       player.heldItems.chocolate = false
       player.heldItems.strawberry = true
-      gameBoard.isAtAssemblyStation = false
       gameBoard.isAtCheckout = false
       break
     default:
       break
   }
 }
-

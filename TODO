@@ -2,9 +2,8 @@
 // recipeArray logic = done
 //Ingredients Logic = done
 //Timer For level = done 
-// freezer opens and closes
 //player boundaries = done
 // toggle active DIVS before game starts or ends
 // backlog enemies after X (fires, mice)
-
+// randomise ingredients, add toppings
 // alert when user tries to assemble flavour without cone

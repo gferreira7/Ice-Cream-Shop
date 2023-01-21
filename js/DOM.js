@@ -1,63 +1,111 @@
 document.getElementById('start-button').addEventListener('click', () => {
+  document.getElementById('start-button').style.visibility = 'none'
   startGame()
 
   // creating Assets to load
-  background = new Image()
-  background.src = './images/bluewall.png'
+  purpleFloor = new Image()
+  purpleFloor.src = './images/purplefloor.png'
 
-  const freezerImg = new Image()
-  freezerImg.src = './images/fridgeclosed.png'
+  ceramicBacksplash = new Image()
+  ceramicBacksplash.src = './images/brightpurplebacksplash.png'
+
+  const tableImg = new Image()
+  tableImg.src = './images/table.png'
+
+  const iceCreamMachineImg = new Image()
+  iceCreamMachineImg.src = './images/icecreammachine.png'
 
   const coneStorageImg = new Image()
-  coneStorageImg.src = './images/conestorage.png'
+  coneStorageImg.src = './images/waffle.png'
 
-  const assemblyCounterImg = new Image()
-  assemblyCounterImg.src = './images/assemblycounter.png'
-  const assemblyCounter = new Component(
-    'assemblyCounter',
-    assemblyCounterImg,
-    150,
+  const binImg = new Image()
+  binImg.src = './images/bin.png'
+
+  const wallSignImg = new Image()
+  wallSignImg.src = './images/wallsign.png'
+
+  const trayImg = new Image()
+  trayImg.src = './images/bakingtray.png'
+
+  const dishesImg = new Image()
+  dishesImg.src = './images/dishes.png'
+
+  const checkoutImg = new Image()
+  checkoutImg.src = './images/counter.png'
+
+  const iceCreamTable = new Component(
+    'icecreamtable',
+    tableImg,
+    10,
     260,
-    350,
-    175
+    260,
+    169
+  )
+  const coneTable = new Component('conetable', tableImg, 225, 260, 260, 169)
+
+  const iceCreamMachine = new Component(
+    'multistorage',
+    iceCreamMachineImg,
+    135,
+    145,
+    100,
+    118
   )
 
-  const multiStorage = new Component(
-    'multistorage',
-    freezerImg,
-    450,
-    230,
-    180,
-    200
+  //stack of trays
+  const tray1 = new Component('tray1', trayImg, 265, 243, 100, 20)
+  const tray2 = new Component('tray2', trayImg, 265, 233, 100, 20)
+  const tray3 = new Component('tray3', trayImg, 265, 223, 100, 20)
+  const tray4 = new Component('tray4', trayImg, 265, 213, 100, 20)
+  const tray5 = new Component('tray5', trayImg, 265, 203, 100, 20)
+
+  const bin = new Component('bin', binImg, 770, 310, 140, 150)
+  const wallSign = new Component(
+    'wallsign',
+    wallSignImg,
+    gameBoard.canvas.width - 125,
+    25,
+    125,
+    125
   )
+
   const coneStorage = new Component(
     'coneStorage',
     coneStorageImg,
-    5,
-    170,
-    150,
-    250
+    400,
+    193,
+    55,
+    70
   )
 
-  player = new Player('player', playerImg, 400, 225, 100, 200)
-
-  const checkoutImg = new Image()
-  checkoutImg.src = './images/checkoutcounter.png'
+  const dishes = new Component('dishes', dishesImg, 35, 205, 85, 60)
+  player = new Player('player', playerImg, 450, 225, 120, 240)
 
   const checkout = new Component(
     'checkoutCounter',
     checkoutImg,
-    gameBoard.canvas.width - 320,
-    200,
-    350,
-    350
+    gameBoard.canvas.width - 300,
+    175,
+    300,
+    300
   )
 
+  gameBoard.nonCollisionComponents.push(iceCreamTable)
+  gameBoard.components.push(iceCreamMachine)
+  gameBoard.nonCollisionComponents.push(coneTable)
+  gameBoard.nonCollisionComponents.push(dishes)
   gameBoard.components.push(coneStorage)
-  gameBoard.components.push(assemblyCounter)
-  gameBoard.components.push(multiStorage)
-  gameBoard.components.push(player)
+  // tray stack
+  gameBoard.nonCollisionComponents.push(tray1)
+  gameBoard.nonCollisionComponents.push(tray2)
+  gameBoard.nonCollisionComponents.push(tray3)
+  gameBoard.nonCollisionComponents.push(tray4)
+  gameBoard.nonCollisionComponents.push(tray5)
+  gameBoard.nonCollisionComponents.push(bin)
+  gameBoard.nonCollisionComponents.push(wallSign)
 
+  //
+  gameBoard.components.push(player)
   gameBoard.components.push(checkout)
 
   const orderflowInterval = setInterval(() => {
@@ -65,11 +113,17 @@ document.getElementById('start-button').addEventListener('click', () => {
     updateTimeLeft()
     updateScore()
     updateInventory()
-    updateAssemblyCounter()
   }, 1000)
 
-  const refreshRate = setInterval(gameBoard.updateCanvas, 10)
+  const refreshRate = setInterval(gameBoard.updateCanvas, 20)
 })
+
+const startGame = () => {
+  document.getElementById('start-button').style.display = 'none'
+  document.getElementById('game-title').style.display = 'none'
+  document.getElementById('main-game-container').style.display = 'flex'
+  gameBoard.createCanvas()
+}
 
 //handle Movement Keys
 
@@ -127,15 +181,17 @@ document.addEventListener('keyup', ({ key }) => {
       break
     case 'a':
       gameBoard.isLeftKeyPressed = false
+      player.hasRanFunction = 0
       player.isPlayerMoving = false
-
       break
     case 'd':
       gameBoard.isRightKeyPressed = false
+      player.hasRanFunction = 0
       player.isPlayerMoving = false
       break
     case 'p':
       gameBoard.isActionKeyPressed = false
+
       break
     case '1':
     case '2':
@@ -157,6 +213,7 @@ const updateOrders = () => {
     order.timeLeft--
     if (order.timeLeft === 0) {
       gameBoard.orders.shift()
+      gameBoard.combo = 0
     }
   })
   gameBoard.addOrder()
@@ -166,10 +223,16 @@ const updateOrders = () => {
   gameBoard.orders.forEach((order) => {
     const singlePendingOrderDiv = document.createElement('div')
     singlePendingOrderDiv.className = 'order-container'
-    singlePendingOrderDiv.innerHTML = `${order.flavour}
-    <img src="./images/${order.flavour}.png"><img /> 
-    time left: ${order.timeLeft}`
 
+    const progressBar = document.createElement('div')
+    progressBar.classList = 'progress-bar'
+    progressBar.style.height = '10px'
+    let currentTimeLeft = 100 - order.timerPercentageDecrement
+    progressBar.style.width = `${currentTimeLeft}%`
+    progressBar.style.backgroundColor = 'green'
+    singlePendingOrderDiv.innerHTML = `<img src="./images/${order.flavour}.png">`
+    singlePendingOrderDiv.appendChild(progressBar)
+    order.timerPercentageDecrement+=2.5
     pendingOrdersDisplay.appendChild(singlePendingOrderDiv)
   })
 }
@@ -191,46 +254,24 @@ const updateScore = () => {
 
   scoreDisplay.innerHTML = ''
   scoreDisplay.innerHTML = `<h2>Score ${gameBoard.score}$</h2>
-  <h2>Combo: ${gameBoard.combo} X</h2>`
+  <h2>Combo: X${gameBoard.combo}</h2>`
 }
 
 const updateInventory = () => {
   const inventory = document.getElementById('inventory-container')
   inventory.innerHTML = ''
   const itemList = document.createElement('ul')
+  const inventoryTitle = document.createElement('h2')
+  inventoryTitle.innerHTML ='Inventory:'
+  itemList.appendChild(inventoryTitle)
 
   for (let key in player.heldItems) {
     if (player.heldItems[key]) {
       let heldItem = document.createElement('li')
-      heldItem.innerHTML = `In Hand: ${key}`
+      heldItem.innerHTML = `${key}`
       itemList.appendChild(heldItem)
     }
   }
 
   inventory.appendChild(itemList)
-}
-
-const updateAssemblyCounter = () => {
-  const assemblyCounter = document.getElementById('assembly-container')
-  assemblyCounter.innerHTML = ''
-
-  if (assemblyCounterItems.hasCone || assemblyCounterItems.flavour) {
-    assemblyCounter.innerHTML = `<h2>In the Counter:</h2>`
-
-    if (assemblyCounterItems.hasCone) {
-      const coneItem = document.createElement('p')
-      coneItem.innerHTML = 'Cone'
-      assemblyCounter.appendChild(coneItem)
-    }
-    if (assemblyCounterItems.flavour) {
-      const flavouritem = document.createElement('p')
-      flavouritem.innerHTML = `${assemblyCounterItems.flavour}`
-      assemblyCounter.appendChild(flavouritem)
-    }
-    if (assemblyCounterItems.hasCone && assemblyCounterItems.flavour) {
-      const readyToDeliver = document.createElement('h3')
-      readyToDeliver.innerHTML = `Ready to deliver: ${player.readyToDeliver}`
-      assemblyCounter.appendChild(readyToDeliver)
-    }
-  }
 }
