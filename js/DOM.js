@@ -34,7 +34,7 @@ document.getElementById('start-button').addEventListener('click', () => {
   checkoutImg.src = './images/counter.png'
 
   const speechBubbleImg = new Image()
-  speechBubbleImg.src = './images/speechBubble.png'
+  speechBubbleImg.src = './images/speechbubble.png'
 
   const iceCreamTable = new Component(
     'icecreamtable',
