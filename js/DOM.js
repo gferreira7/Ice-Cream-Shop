@@ -97,7 +97,7 @@ document.getElementById('start-button').addEventListener('click', () => {
     'speech',
     speechBubbleImg,
     player.posX,
-    player.aapaposY,
+    player.posY,
     200,
     150
   )
