@@ -47,24 +47,22 @@ const gameBoard = {
       0,
       0,
       gameBoard.canvas.width,
-      gameBoard.canvas.height -95
+      gameBoard.canvas.height - 95
     )
 
-    if(gameBoard.isInstructionsKeyPressed){
-      gameBoard.ctx.font = "32px Roboto Mono";
+    if (gameBoard.isInstructionsKeyPressed) {
+      gameBoard.ctx.font = '32px Roboto Mono'
       gameBoard.ctx.fillStyle = 'yellow'
 
-      gameBoard.ctx.fillText("Flavors", 100, 350);
-      gameBoard.ctx.fillText("Cones", 300, 350);
-      gameBoard.ctx.fillText("Checkout", 1050, 495);
+      gameBoard.ctx.fillText('Flavors', 100, 350)
+      gameBoard.ctx.fillText('Cones', 300, 350)
+      gameBoard.ctx.fillText('Checkout', 1050, 495)
 
-
-      gameBoard.ctx.fillText("WASD to Move", 500, 40);
-      gameBoard.ctx.fillText("P to pick up Items", 500, 80);
-      gameBoard.ctx.fillText("P + 1,2,3 for flavor", 500, 120);
-      gameBoard.ctx.fillText("Cone + Flavour", 500, 160);
-      gameBoard.ctx.fillText("+ checkout = Cash ", 500, 200);
-
+      gameBoard.ctx.fillText('WASD to Move', 500, 40)
+      gameBoard.ctx.fillText('P to pick up Items', 500, 80)
+      gameBoard.ctx.fillText('P + 1,2,3 for flavor', 500, 120)
+      gameBoard.ctx.fillText('Cone + Flavour', 500, 160)
+      gameBoard.ctx.fillText('+ checkout = Cash ', 500, 200)
     }
 
     if (!this.isPlayerMoving) {
@@ -72,12 +70,12 @@ const gameBoard = {
     }
 
     if (gameBoard.isUpKeyPressed) {
-      if (player.posY > 150) {
+      if (player.posY > 200) {
         player.moveUp()
       }
     }
     if (gameBoard.isDownKeyPressed) {
-      if (player.posY < gameBoard.canvas.height - 300) {
+      if (player.posY < gameBoard.canvas.height - 250) {
         player.moveDown()
       }
     }
@@ -91,25 +89,24 @@ const gameBoard = {
         player.moveRight()
       }
     }
-    gameBoard.nonCollisionComponents.forEach(component => {
+    gameBoard.nonCollisionComponents.forEach((component) => {
       component.render()
     })
-      
+
     gameBoard.components.forEach((component) => {
       component.render()
+
       if (component !== player && component.checkCollision(player)) {
         if (gameBoard.isActionKeyPressed) {
           player.action(component)
-            assembleOrder()
-            updateInventory()
-          }
-          if (gameBoard.isAtCheckout && component.name === 'checkoutCounter') {
-            // console.log(player.readyToDeliver)
-            submitOrder()
-          }
-        } 
-      
+          assembleOrder()
+          updateInventory()
+        }
+        if (gameBoard.isAtCheckout && component.name === 'checkoutCounter') {
+          // console.log(player.readyToDeliver)
+          submitOrder()
+        }
+      }
     })
   },
-
 }

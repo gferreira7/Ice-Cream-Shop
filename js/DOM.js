@@ -33,6 +33,9 @@ document.getElementById('start-button').addEventListener('click', () => {
   const checkoutImg = new Image()
   checkoutImg.src = './images/counter.png'
 
+  const speechBubbleImg = new Image ()
+  speechBubbleImg.src = './images/speechBubble.png'
+
   const iceCreamTable = new Component(
     'icecreamtable',
     tableImg,
@@ -90,6 +93,8 @@ document.getElementById('start-button').addEventListener('click', () => {
     300
   )
 
+  const speech = new Component('speech', speechBubbleImg, player.posX, player.aapaposY, 200,150)
+
   gameBoard.nonCollisionComponents.push(iceCreamTable)
   gameBoard.components.push(iceCreamMachine)
   gameBoard.nonCollisionComponents.push(coneTable)
@@ -106,6 +111,7 @@ document.getElementById('start-button').addEventListener('click', () => {
 
   //
   gameBoard.components.push(player)
+  gameBoard.components.push(speech)
   gameBoard.components.push(checkout)
 
   const orderflowInterval = setInterval(() => {

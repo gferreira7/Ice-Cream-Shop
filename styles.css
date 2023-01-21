@@ -15,7 +15,7 @@
 }
 
 #top-panel{
- height: 200px;
+ height: 15%;
  display: flex;
  justify-content: space-between;
  background-color: antiquewhite;

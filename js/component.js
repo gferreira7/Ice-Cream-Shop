@@ -10,6 +10,15 @@ class Component {
   }
   render() {
     const ctx = gameBoard.ctx
+
+    if(this.name === 'speech' && gameBoard.isActionKeyPressed){
+      this.posX = player.posX + 100
+      this.posY = player.posY -100
+    } 
+    else if(this.name === 'speech'){
+      this.posX = gameBoard.canvas.width + 300
+      this.posY = gameBoard.canvas.height + 300
+    }
     ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height)
   }
   checkCollision(otherComponent) {

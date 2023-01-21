@@ -17,7 +17,7 @@ class Player extends Component {
     this.isFacingRight = true
     this.moveTimer = 0
     this.hasRanFunction = 0
-    this.frameSkip = 6
+    this.frameSkip = 8
   }
 
   idle() {
@@ -39,11 +39,12 @@ class Player extends Component {
         }
       }
     }
-    // console.log(`player is moving ${player.isPlayerMoving}
-    // face left ${player.isFacingLeft}
-    // face right ${player.isFacingRight}
-    // frameskip ${player.hasRanFunction}
-    // img frame ${player.moveTimer}`)
+    console.group(`player is moving ${player.isPlayerMoving}`)
+    console.log(`face left ${player.isFacingLeft}`)
+    console.log(`face right ${player.isFacingRight}`)
+    console.log(`frameskip ${player.hasRanFunction}`)
+    console.log(`img frame ${player.moveTimer}`)
+    console.groupEnd()
   }
   moveUp() {
     this.posY -= this.ySpeed
@@ -64,11 +65,12 @@ class Player extends Component {
         this.moveTimer = 0
       }
     }
-    // console.log(`player is moving ${player.isPlayerMoving}
-    // face left ${player.isFacingLeft}
-    // face right ${player.isFacingRight}
-    // frameskip ${player.hasRanFunction}
-    // img frame ${player.moveTimer}`)
+    console.group(`player is moving ${player.isPlayerMoving}`)
+    console.log(`face left ${player.isFacingLeft}`)
+    console.log(`face right ${player.isFacingRight}`)
+    console.log(`frameskip ${player.hasRanFunction}`)
+    console.log(`img frame ${player.moveTimer}`)
+    console.groupEnd()
   }
 
   moveRight() {
@@ -84,11 +86,12 @@ class Player extends Component {
         this.moveTimer = 0
       }
     }
-    // console.log(`player is moving ${player.isPlayerMoving}
-    // face left ${player.isFacingLeft}
-    // face right ${player.isFacingRight}
-    // frameskip ${player.hasRanFunction}
-    // img frame ${player.moveTimer}`)
+    console.group(`player is moving ${player.isPlayerMoving}`)
+    console.log(`face left ${player.isFacingLeft}`)
+    console.log(`face right ${player.isFacingRight}`)
+    console.log(`frameskip ${player.hasRanFunction}`)
+    console.log(`img frame ${player.moveTimer}`)
+    console.groupEnd()
   }
   action(component) {
     switch (component.name) {
