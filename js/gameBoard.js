@@ -1,9 +1,12 @@
 const gameBoard = {
   canvas: document.createElement('canvas'),
+  // key items that have to be checked for collision
   components: [],
+  //all other items that are used for background and will always render behind the player
   nonCollisionComponents: [],
   orders: [],
   gameTimeLeft: 200,
+  //key triggers
   isUpKeyPressed: false,
   isDownKeyPressed: false,
   isLeftKeyPressed: false,
@@ -11,10 +14,17 @@ const gameBoard = {
   isActionKeyPressed: false,
   isInstructionsKeyPressed: false,
   isPauseKeyPressed: false,
+  //player action triggers
   isAtCheckout: false,
+  isAtMultistorage:false,
+  isAtConeStorage: false,
+  // game states
   isGameOver: false,
   isGameStarted: false,
   isGamePaused: false,
+  isAtTutorial: false,
+  isAtIntroScreen: false,
+  //score keeping
   score: 0,
   combo: 0,
   createCanvas: function () {
@@ -30,7 +40,7 @@ const gameBoard = {
     }
   },
   updateCanvas: function () {
-
+    console.log(player.frameSkip)
     if (gameBoard.isGamePaused) return
 
     gameBoard.ctx.clearRect(
@@ -90,7 +100,6 @@ const gameBoard = {
     if (gameBoard.isRightKeyPressed) {
       if (player.posX < gameBoard.canvas.width - 150) {
         if(player.posX)
-        console.log(player.posX, player.posY)
         player.moveRight()
       }
     }

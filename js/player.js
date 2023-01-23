@@ -108,8 +108,6 @@ class Player extends Component {
   }
 
   moveRight() {
-
-   
     this.isFacingLeft = false
     this.isFacingRight = true
     this.posX += this.xSpeed

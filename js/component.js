@@ -10,6 +10,7 @@ class Component {
   }
   render() {
     const ctx = gameBoard.ctx
+    
 
     if(this.name === 'speech' && gameBoard.isActionKeyPressed){
       this.posX = player.posX + 100
@@ -30,9 +31,7 @@ class Component {
     ) {
       return true
     } else {
-      gameBoard.isAtAssemblyStation = false
       gameBoard.isAtCheckout = false
-
       return false
     }
   }

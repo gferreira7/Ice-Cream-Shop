@@ -8,6 +8,8 @@ let flavourOptions = ['vanilla', 'chocolate', 'strawberry']
 let ceramicBacksplash
 let purpleFloor
 
+let currentTutorialImage = 1 
+
 const generateNewOrder = () => {
   let randomFlavour = Math.floor(Math.random() * 3)
   let newFlavour = flavourOptions[randomFlavour]

@@ -14,33 +14,64 @@
   height: 100vh;
 }
 #game-title {
-  font-size: 12vh;
+  font-size: 15vh;
   animation: blinker 1s linear infinite;
 }
-
 
 @keyframes blinker {
   50% {
     opacity: 0;
-    -webkit-transform: scale(0.99) ;
-    -moz-transform: ;
-    -o-transform: ;  }
+    -webkit-transform: scale(0.99);
+    -moz-transform: scale(0.99);
+    -o-transform: scale(0.99);
+  }
 }
-#start-button {
+
+button {
   text-align: center;
   display: inline-block;
   margin: 5px;
   font-weight: bold;
   padding: 10px 0 10px 10px;
-  background-color: lightgray;
-  text-shadow: -1px -1px black, 1px 1px white;
-  color: gray;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   -o-border-radius: 7px;
   border-radius: 7px;
   box-shadow: 0 0.2em gray;
+  text-shadow: -1px -1px black, 1px 1px white;
   cursor: pointer;
+}
+
+#start-button{
+  font-size: 7vh;  
+  background-color: lightgray;
+  color: gray;
+}
+
+#tutorial-button{
+  font-size: 5vh;
+  background-color: gray;
+  color: lightgray;
+}
+
+#tutorial-screen {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  padding: 5% 10%;
+}
+
+#tutorial-buttons-container{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#tutorial-buttons-container button{
+  font-size: 2vh;  
+  background-color: lightgray;
+  color: gray;
+  padding: 2% 5%;
 }
 
 #main-game-container {

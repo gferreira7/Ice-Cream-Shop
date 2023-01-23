@@ -1,7 +1,18 @@
 document.getElementById('start-button').addEventListener('click', () => {
   document.getElementById('start-button').style.visibility = 'none'
+  document.getElementById('tutorial-button').style.visibility = 'none'
 
   startGame()
+
+  })
+
+const startGame = () => {
+  gameBoard.isGameStarted = true
+
+  document.getElementById('start-screen').style.display = 'none'
+
+  document.getElementById('main-game-container').style.display = 'flex'
+  gameBoard.createCanvas()
 
   // creating Assets to load
   purpleFloor = new Image()
@@ -136,16 +147,37 @@ document.getElementById('start-button').addEventListener('click', () => {
 
   const refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
   const animatePlayerInterval = setInterval(player.animate, 1000 / 10)
+
+}
+
+document.getElementById('tutorial-button').addEventListener('click', () => {
+  tutorial()
 })
 
-const startGame = () => {
-  gameBoard.isGameStarted = true
-
+const tutorial = () => {
   document.getElementById('start-screen').style.display = 'none'
- 
-  document.getElementById('main-game-container').style.display = 'flex'
-  gameBoard.createCanvas()
+  document.getElementById('tutorial-screen').style.display = 'flex'
 }
+
+document.getElementById('next-button').addEventListener('click', () => {
+  nextSlide()
+  document.getElementById('tutorial-img').src = `./images/tutorial/tutorial${currentTutorialImage}.png`
+})
+
+document.getElementById('skip-button').addEventListener('click', () => {
+  document.getElementById('tutorial-screen').style.display = 'none'
+  startGame()
+})
+
+const nextSlide = () => {
+  if(currentTutorialImage === 4){
+    currentTutorialImage = 1
+  } else{
+    currentTutorialImage++
+  }
+}
+
+
 
 //handle Movement Keys
 document.addEventListener('keydown', ({ key }) => {
@@ -319,7 +351,3 @@ const updateScore = () => {
   scoreDisplay.innerHTML = `<h3>SCORE ${gameBoard.score}$</h3>
   <h3>COMBO: ${gameBoard.combo}</h3>`
 }
-
-// const pauseGame = () => {
-//   gameBoard.isGamePaused = !gameBoard.isGamePaused
-// }
