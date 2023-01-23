@@ -20,7 +20,7 @@ class Player extends Component {
 
   render() {
     if (gameBoard.isLeftKeyPressed) {
-      this.img.src = '/images/heroImages/walk/spritesheet.png'
+      this.img.src = './images/heroImages/walk/spritesheet.png'
 
       gameBoard.ctx.save()
 
@@ -39,7 +39,7 @@ class Player extends Component {
 
       gameBoard.ctx.restore()
     } else if (gameBoard.isRightKeyPressed) {
-      this.img.src = '/images/heroImages/walk/spritesheet.png'
+      this.img.src = './images/heroImages/walk/spritesheet.png'
 
       gameBoard.ctx.drawImage(
         player.img,
