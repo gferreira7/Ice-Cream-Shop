@@ -3,7 +3,7 @@ const gameBoard = {
   components: [],
   nonCollisionComponents: [],
   orders: [],
-  gameTimeLeft: 60,
+  gameTimeLeft: 200,
   isUpKeyPressed: false,
   isDownKeyPressed: false,
   isLeftKeyPressed: false,

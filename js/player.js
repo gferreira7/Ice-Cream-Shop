@@ -55,8 +55,8 @@ class Player extends Component {
     } else {
       // Drawing the idle player involves knowing where
       // it was turning last
-      player.img.src = '/images/heroImages/idle/spritesheet.png'
       if (this.isFacingRight) {
+        player.img.src = './images/heroImages/idle/spritesheet.png'
         gameBoard.ctx.drawImage(
           player.img,
           (this.img.width * this.frameSkip) / 12,
@@ -69,6 +69,7 @@ class Player extends Component {
           this.height
         )
       } else if (this.isFacingLeft) {
+        this.img.src = './images/heroImages/idle/spritesheet.png'
         // save the context as it is to do some fancy inversion
         gameBoard.ctx.save()
 
