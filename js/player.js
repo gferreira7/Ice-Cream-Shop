@@ -55,7 +55,7 @@ class Player extends Component {
     } else {
       // Drawing the idle player involves knowing where
       // it was turning last
-      this.img.src = './images/heroImages/idle/spritesheet.png'
+      player.img.src = '/images/heroImages/idle/spritesheet.png'
       if (this.isFacingRight) {
         gameBoard.ctx.drawImage(
           player.img,
