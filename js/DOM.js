@@ -1,5 +1,6 @@
 document.getElementById('start-button').addEventListener('click', () => {
   document.getElementById('start-button').style.visibility = 'none'
+
   startGame()
 
   // creating Assets to load
@@ -62,7 +63,7 @@ document.getElementById('start-button').addEventListener('click', () => {
   const tray4 = new Component('tray4', trayImg, 265, 213, 100, 20)
   const tray5 = new Component('tray5', trayImg, 265, 203, 100, 20)
 
-  const bin = new Component('bin', binImg, 770, 310, 140, 150)
+  const bin = new Component('bin', binImg, 770, 350, 140, 150)
   const wallSign = new Component(
     'wallsign',
     wallSignImg,
@@ -82,13 +83,13 @@ document.getElementById('start-button').addEventListener('click', () => {
   )
 
   const dishes = new Component('dishes', dishesImg, 35, 205, 85, 60)
-  player = new Player('player', playerImg, 450, 225, 120, 240)
+  player = new Player('player', playerImg, 450, 225, 256, 256)
 
   const checkout = new Component(
     'checkoutCounter',
     checkoutImg,
     gameBoard.canvas.width - 300,
-    175,
+    240,
     300,
     300
   )
@@ -114,11 +115,10 @@ document.getElementById('start-button').addEventListener('click', () => {
   gameBoard.nonCollisionComponents.push(tray4)
   gameBoard.nonCollisionComponents.push(tray5)
   gameBoard.nonCollisionComponents.push(wallSign)
-
   //
   gameBoard.components.push(player)
   gameBoard.components.push(speech)
-  gameBoard.nonCollisionComponents.push(bin)
+  gameBoard.components.push(bin)
   gameBoard.components.push(checkout)
 
   const orderflowInterval = setInterval(() => {
@@ -130,27 +130,37 @@ document.getElementById('start-button').addEventListener('click', () => {
     }
   }, 1000)
 
-  const refreshRate = setInterval(gameBoard.updateCanvas, 20)
+  const newOrderInterval = setInterval(() => {
+    gameBoard.addOrder()
+  }, 3000)
+
+  const refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
+  const animatePlayerInterval = setInterval(player.animate, 1000 / 10)
 })
 
 const startGame = () => {
   gameBoard.isGameStarted = true
-  document.getElementById('start-button').style.display = 'none'
-  document.getElementById('game-title').style.display = 'none'
+
+  document.getElementById('start-screen').style.display = 'none'
+ 
   document.getElementById('main-game-container').style.display = 'flex'
   gameBoard.createCanvas()
 }
 
 //handle Movement Keys
-
 document.addEventListener('keydown', ({ key }) => {
   if (
     !gameBoard.isGameStarted ||
     gameBoard.isGameOver ||
     gameBoard.isGamePaused
   ) {
+    if (key === 'p') {
+      gameBoard.isGamePaused = false
+    }
+
     return
   }
+
   switch (key) {
     case 'w':
       gameBoard.isUpKeyPressed = true
@@ -172,8 +182,11 @@ document.addEventListener('keydown', ({ key }) => {
       player.isFacingLeft = false
       player.isFacingRight = true
       break
-    case 'p':
+    case 'e':
       gameBoard.isActionKeyPressed = true
+      break
+    case 'p':
+      gameBoard.isGamePaused = true
       break
     case '1':
     case '2':
@@ -212,24 +225,23 @@ document.addEventListener('keyup', ({ key }) => {
       break
     case 'a':
       gameBoard.isLeftKeyPressed = false
-      player.hasRanFunction = 0
       player.isPlayerMoving = false
       break
     case 'd':
       gameBoard.isRightKeyPressed = false
-      player.hasRanFunction = 0
       player.isPlayerMoving = false
       break
-    case 'p':
+    case 'e':
       gameBoard.isActionKeyPressed = false
-      break
-    case 'i':
-      gameBoard.isInstructionsKeyPressed = false
       break
     case '1':
     case '2':
     case '3':
       player.isChoosingFlavour = false
+    case 'i':
+      gameBoard.isInstructionsKeyPressed = false
+      break
+
     case ' ':
     case 'enter':
       return
@@ -240,21 +252,19 @@ document.addEventListener('keyup', ({ key }) => {
 
 const updateOrders = () => {
   const pendingOrdersDisplay = document.getElementById('pending-orders-display')
-  pendingOrdersDisplay.innerHTML = ''
-
+  if (gameBoard.orders.length === 0) {
+    pendingOrdersDisplay.innerHTML = '<p>No Orders to deliver</p>'
+  } else {
+    pendingOrdersDisplay.innerHTML = ''
+  }
   gameBoard.orders.forEach((order) => {
-    order.currentTimeLeft--
     if (order.currentTimeLeft === 0) {
       gameBoard.orders.shift()
       gameBoard.combo = 0
     }
-    console.log(gameBoard.orders)
-
   })
-  gameBoard.addOrder()
 
   //update the DOM , add/remove new orders
-
   gameBoard.orders.forEach((order) => {
     const singlePendingOrderDiv = document.createElement('div')
     singlePendingOrderDiv.innerHTML = ''
@@ -264,35 +274,18 @@ const updateOrders = () => {
     progressBar.classList = 'progress-bar'
     progressBar.style.height = '10px'
     progressBar.style.width = `${order.currentTimeLeft}%`
-    progressBar.style.backgroundColor = 'green'
+    if (order.currentTimeLeft <= order.timerRedZone) {
+      progressBar.style.backgroundColor = 'red'
+    } else {
+      progressBar.style.backgroundColor = 'green'
+    }
     singlePendingOrderDiv.innerHTML = `<img src="./images/${order.flavour}.png">`
     singlePendingOrderDiv.appendChild(progressBar)
+    pendingOrdersDisplay, (innerHTML = '')
     pendingOrdersDisplay.appendChild(singlePendingOrderDiv)
-    console.log(gameBoard.orders)
     order.updateProgressBar()
     order.secondsElapsed++
   })
-}
-
-const updateTimeLeft = () => {
-  gameBoard.gameTimeLeft--
-  if (gameBoard.gameTimeLeft <= 0) {
-    gameBoard.isGameOver = true
-  }
-
-  const timeLeftDisplay = document.getElementById('time-left-display')
-  timeLeftDisplay.innerHTML = ''
-  timeLeftDisplay.innerHTML = gameBoard.isGameOver
-    ? `<h1>GAME OVER</h1>`
-    : `<h2>TIME LEFT ${gameBoard.gameTimeLeft}s</h2>`
-}
-
-const updateScore = () => {
-  const scoreDisplay = document.getElementById('score-display')
-
-  scoreDisplay.innerHTML = ''
-  scoreDisplay.innerHTML = `<h2>Score ${gameBoard.score}$</h2>
-  <h2>Combo: X${gameBoard.combo}</h2>`
 }
 
 const updateInventory = () => {
@@ -308,8 +301,25 @@ const updateInventory = () => {
   }
 }
 
-document.getElementById('pause-button').addEventListener('click', () => {
-  gameBoard.isGamePaused = !gameBoard.isGamePaused
+const updateTimeLeft = () => {
+  gameBoard.gameTimeLeft--
+  if (gameBoard.gameTimeLeft <= 0) {
+    gameBoard.isGameOver = true
+  }
+  const timeLeftDisplay = document.getElementById('time-left-display')
+  timeLeftDisplay.innerHTML = ''
+  timeLeftDisplay.innerHTML = gameBoard.isGameOver
+    ? `<h3>GAME OVER</h3>`
+    : `<h3>TIME LEFT</h3><h3> ${gameBoard.gameTimeLeft}s</h3>`
+}
 
-  console.log(gameBoard.isGamePaused)
-})
+const updateScore = () => {
+  const scoreDisplay = document.getElementById('score-display')
+  scoreDisplay.innerHTML = ''
+  scoreDisplay.innerHTML = `<h3>SCORE ${gameBoard.score}$</h3>
+  <h3>COMBO: ${gameBoard.combo}</h3>`
+}
+
+// const pauseGame = () => {
+//   gameBoard.isGamePaused = !gameBoard.isGamePaused
+// }

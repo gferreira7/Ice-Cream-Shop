@@ -2,7 +2,7 @@ class Player extends Component {
   constructor(name, img, posX, posY, width, height) {
     super(name, img, posX, posY, width, height)
     this.ySpeed = 4
-    this.xSpeed = 4 
+    this.xSpeed = 4
     this.heldItems = {
       cone: false,
       vanilla: false,
@@ -15,84 +15,112 @@ class Player extends Component {
     this.isPlayerMoving = false
     this.isFacingLeft = false
     this.isFacingRight = true
-    this.moveTimer = 0
-    this.hasRanFunction = 0
-    this.frameSkip = 4
+    this.frameSkip = 0
   }
 
-  idle() {
-    this.hasRanFunction++
-    if (this.hasRanFunction % this.frameSkip === 0) {
-      if (player.isFacingLeft) {
-        if (this.moveTimer <= 11) {
-          player.img.src = playerIdleFramesArray[1][this.moveTimer]
-          this.moveTimer++
-        } else {
-          this.moveTimer = 0
-        }
-      } else {
-        if (this.moveTimer <= 11) {
-          player.img.src = playerIdleFramesArray[0][this.moveTimer]
-          this.moveTimer++
-        } else {
-          this.moveTimer = 0
-        }
+  render() {
+    if (gameBoard.isLeftKeyPressed) {
+      this.img.src = '/images/heroImages/walk/spritesheet.png'
+
+      gameBoard.ctx.save()
+
+      gameBoard.ctx.scale(-1, 1)
+      gameBoard.ctx.drawImage(
+        player.img,
+        (this.img.width * this.frameSkip) / 9,
+        0,
+        this.img.width / 9,
+        this.img.height,
+        -(this.posX + this.width),
+        this.posY,
+        this.width,
+        this.height
+      )
+
+      gameBoard.ctx.restore()
+    } else if (gameBoard.isRightKeyPressed) {
+      this.img.src = '/images/heroImages/walk/spritesheet.png'
+
+      gameBoard.ctx.drawImage(
+        player.img,
+        (this.img.width * this.frameSkip) / 9,
+        0,
+        this.img.width / 9,
+        this.img.height,
+        this.posX,
+        this.posY,
+        this.width,
+        this.height
+      )
+    } else {
+      // Drawing the idle player involves knowing where
+      // it was turning last
+      this.img.src = './images/heroImages/idle/spritesheet.png'
+      if (this.isFacingRight) {
+        gameBoard.ctx.drawImage(
+          player.img,
+          (this.img.width * this.frameSkip) / 12,
+          0,
+          this.img.width / 12,
+          this.img.height,
+          this.posX,
+          this.posY,
+          this.width,
+          this.height
+        )
+      } else if (this.isFacingLeft) {
+        // save the context as it is to do some fancy inversion
+        gameBoard.ctx.save()
+
+        gameBoard.ctx.scale(-1, 1)
+        gameBoard.ctx.drawImage(
+          player.img,
+          (this.img.width * this.frameSkip) / 12,
+          0,
+          this.img.width / 12,
+          this.img.height,
+          -(this.posX + this.width),
+          this.posY,
+          this.width,
+          this.height
+        )
+
+        gameBoard.ctx.restore()
       }
     }
-    // console.group(`player is moving ${player.isPlayerMoving}`)
-    // console.log(`face left ${player.isFacingLeft}`)
-    // console.log(`face right ${player.isFacingRight}`)
-    // console.log(`frameskip ${player.hasRanFunction}`)
-    // console.log(`img frame ${player.moveTimer}`)
-    // console.groupEnd()
   }
+  animate() {
+    this.isFacingRight = true
+    // animate in a different time scale than 60fps
+    player.frameSkip++
+    if (player.isPlayerMoving) {
+      player.frameSkip = player.frameSkip % 9
+    } else {
+      player.frameSkip = player.frameSkip % 12
+    }
+  }
+
+  moveLeft() {
+    this.isFacingLeft = true
+    this.isFacingRight = false
+    this.posX -= this.xSpeed
+  }
+
+  moveRight() {
+
+   
+    this.isFacingLeft = false
+    this.isFacingRight = true
+    this.posX += this.xSpeed
+  }
+
   moveUp() {
     this.posY -= this.ySpeed
   }
   moveDown() {
     this.posY += this.ySpeed
   }
-  moveLeft() {
-    this.hasRanFunction++
-    this.isFacingLeft = true
-    this.isFacingRight = false
-    this.posX -= this.xSpeed
-    if (this.hasRanFunction % this.frameSkip === 0) {
-      if (this.moveTimer <= 8) {
-        player.img.src = playerWalkFramesArray[1][this.moveTimer]
-        this.moveTimer++
-      } else {
-        this.moveTimer = 0
-      }
-    }
-    // console.group(`player is moving ${player.isPlayerMoving}`)
-    // console.log(`face left ${player.isFacingLeft}`)
-    // console.log(`face right ${player.isFacingRight}`)
-    // console.log(`frameskip ${player.hasRanFunction}`)
-    // console.log(`img frame ${player.moveTimer}`)
-    // console.groupEnd()
-  }
 
-  moveRight() {
-    this.hasRanFunction++
-    this.isFacingLeft = false
-    this.isFacingRight = true
-    this.posX += this.xSpeed
-    if (this.hasRanFunction % this.frameSkip === 0) {
-      if (this.moveTimer <= 8) {
-        player.img.src = playerWalkFramesArray[0][this.moveTimer]
-        this.moveTimer++
-      } else {
-        this.moveTimer = 0
-      }
-    }
-    // console.group(`player is moving ${player.isPlayerMoving}`)
-    // console.log(`face left ${player.isFacingLeft}`)
-    // console.log(`face right ${player.isFacingRight}`)
-    // console.log(`frameskip ${player.hasRanFunction}`)
-    // console.log(`img frame ${player.moveTimer}`)
-    // console.groupEnd()
-  }
   action(component) {
     switch (component.name) {
       case 'coneStorage':
@@ -101,7 +129,6 @@ class Player extends Component {
         this.heldItems.chocolate = false
         this.heldItems.strawberry = false
         gameBoard.isAtCheckout = false
-        submitFunctionRan = 0
         break
       case 'multistorage':
         this.isChoosingFlavour = true

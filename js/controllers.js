@@ -1,64 +1,7 @@
 let player
 
 let playerImg = new Image()
-playerImg.src = './images/heroImages/idle/right/hero1.png'
-let playerFramesPath = './images/heroImages/'
-
-let playerWalkFramesArray = [
-  [
-    `${playerFramesPath}/walk/right/hero1.png`,
-    `${playerFramesPath}/walk/right/hero2.png`,
-    `${playerFramesPath}/walk/right/hero3.png`,
-    `${playerFramesPath}/walk/right/hero4.png`,
-    `${playerFramesPath}/walk/right/hero5.png`,
-    `${playerFramesPath}/walk/right/hero6.png`,
-    `${playerFramesPath}/walk/right/hero7.png`,
-    `${playerFramesPath}/walk/right/hero8.png`,
-    `${playerFramesPath}/walk/right/hero9.png`,
-  ],
-  [
-    `${playerFramesPath}/walk/left/hero1.png`,
-    `${playerFramesPath}/walk/left/hero2.png`,
-    `${playerFramesPath}/walk/left/hero3.png`,
-    `${playerFramesPath}/walk/left/hero4.png`,
-    `${playerFramesPath}/walk/left/hero5.png`,
-    `${playerFramesPath}/walk/left/hero6.png`,
-    `${playerFramesPath}/walk/left/hero7.png`,
-    `${playerFramesPath}/walk/left/hero8.png`,
-    `${playerFramesPath}/walk/left/hero9.png`,
-  ],
-]
-
-let playerIdleFramesArray = [
-  [
-    `${playerFramesPath}/idle/right/hero1.png`,
-    `${playerFramesPath}/idle/right/hero2.png`,
-    `${playerFramesPath}/idle/right/hero3.png`,
-    `${playerFramesPath}/idle/right/hero4.png`,
-    `${playerFramesPath}/idle/right/hero5.png`,
-    `${playerFramesPath}/idle/right/hero6.png`,
-    `${playerFramesPath}/idle/right/hero7.png`,
-    `${playerFramesPath}/idle/right/hero8.png`,
-    `${playerFramesPath}/idle/right/hero9.png`,
-    `${playerFramesPath}/idle/right/hero10.png`,
-    `${playerFramesPath}/idle/right/hero11.png`,
-    `${playerFramesPath}/idle/right/hero12.png`,
-  ],
-  [
-    `${playerFramesPath}/idle/left/hero1.png`,
-    `${playerFramesPath}/idle/left/hero2.png`,
-    `${playerFramesPath}/idle/left/hero3.png`,
-    `${playerFramesPath}/idle/left/hero4.png`,
-    `${playerFramesPath}/idle/left/hero5.png`,
-    `${playerFramesPath}/idle/left/hero6.png`,
-    `${playerFramesPath}/idle/left/hero7.png`,
-    `${playerFramesPath}/idle/left/hero8.png`,
-    `${playerFramesPath}/idle/left/hero9.png`,
-    `${playerFramesPath}/idle/left/hero10.png`,
-    `${playerFramesPath}/idle/left/hero11.png`,
-    `${playerFramesPath}/idle/left/hero12.png`,
-  ],
-]
+playerImg.src = './images/heroImages/idle/spritesheet.png'
 
 let flavourOptions = ['vanilla', 'chocolate', 'strawberry']
 
@@ -106,7 +49,6 @@ const submitOrder = () => {
         gameBoard.combo++
       }
       gameBoard.orders.splice(orderFound, 1)
-      console.log(gameBoard.orders)
 
       gameBoard.score += 20 + gameBoard.combo
       updateOrders()

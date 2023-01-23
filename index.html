@@ -30,28 +30,32 @@
     <title>Document</title>
   </head>
   <body>
-    <h1 id="game-title">OverCooked</h1>
+    <div id="start-screen">
+      <h1 id="game-title">OverCooked</h1>
+      <button id="start-button">START</button>
+    </div>
     <div id="main-game-container">
       <div id="top-panel">
-        <div id="pending-orders-display"><p>No Orders to deliver</p></div>
+        <div id="pending-orders-display"></div>
         <div id="inventory-container">
-          <h2>Inventory:</h2>
+          <h3>INVENTORY:</h3>
           <div id="inventory-list"></div>
         </div>
         <div id="info-container">
-          <div id="time-left-display"><h2>TIME LEFT:</h2></div>
+          <div id="time-left-display">
+            <h3>TIME LEFT</h3>
+          </div>
           <div id="score-display">
-            <h2>Score: 0</h2>
-            <h2>Combo: 0</h2>
+            <h3>SCORE: 0</h3>
+            <h3>COMBO: 0</h3>
           </div>
         </div>
         <div id="menu-buttons">
-          <button id="pause-button">Pause</button>
-          <button id="restart-button">Restart</button>
+          <button id="pause-button">PAUSE</button>
+          <button id="restart-button">RESTART</button>
         </div>
       </div>
     </div>
-    <button id="start-button">START</button>
 
     <script
       type="text/javascript"
