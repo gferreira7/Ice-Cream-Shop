@@ -43,10 +43,6 @@ const gameBoard = {
   updateCanvas: function () {
     if (gameBoard.isGamePaused) return
 
-    if(gameBoard.isGameOver){
-      reset()
-    }
-
     gameBoard.ctx.clearRect(
       0,
       0,
