@@ -1,14 +1,20 @@
-// player Movement = done
-// recipeArray logic = done
-//Ingredients Logic = done
-//Timer For level = done 
-//player boundaries = done
-// work on intro page and game over - restart
-// backlog enemies after X (fires, mice)
-// randomise ingredients, add toppings
+// player Movement = DONE
+// recipeArray logic = DONE
+// Ingredients Logic = DONE
+// Timer For level = DONE 
+// player boundaries = DONE
+// work on intro page = DONE
+// game over screen 
+// - restart
+//TIMER DONE
 
 // alerts for:
 // 1. incorrect orders
-// 2. getting the flavor before the cone
-// (garbage bin moves)
-// 3. dollar signs when order is ok
+// 2. getting the flavor before the cone - (garbage bin moves)
+// 3. dollar signs when order is ok - DONE
+
+<!-- BACKLOG -->
+// add some enemies or obstacles (random fires, mice)
+// randomise ingredients, add toppings to ice cream or change to pizzas and burguers
+
+

@@ -18,15 +18,6 @@
   animation: blinker 1s linear infinite;
 }
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
-    -webkit-transform: scale(0.99);
-    -moz-transform: scale(0.99);
-    -o-transform: scale(0.99);
-  }
-}
-
 button {
   text-align: center;
   display: inline-block;
@@ -42,18 +33,35 @@ button {
   cursor: pointer;
 }
 
-#start-button{
-  font-size: 7vh;  
+#start-button {
+  font-size: 7vh;
   background-color: lightgray;
   color: gray;
 }
 
-#tutorial-button{
+#tutorial-button {
   font-size: 5vh;
   background-color: gray;
   color: lightgray;
 }
 
+#game-countdown-screen {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 25vh;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+    -webkit-transform: scale(0.99);
+    -moz-transform: scale(0.99);
+    -o-transform: scale(0.99);
+  }
+}
 #tutorial-screen {
   display: none;
   position: relative;
@@ -63,13 +71,13 @@ button {
   padding: 5% 10%;
 }
 
-#tutorial-buttons-container{
+#tutorial-buttons-container {
   display: flex;
   justify-content: space-evenly;
 }
 
-#tutorial-buttons-container button{
-  font-size: 2vh;  
+#tutorial-buttons-container button {
+  font-size: 2vh;
   background-color: lightgray;
   color: gray;
   padding: 2% 5%;

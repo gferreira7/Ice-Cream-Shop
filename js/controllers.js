@@ -96,3 +96,32 @@ const chooseFlavour = (flavourChosen) => {
       break
   }
 }
+
+const reset = () => {
+  components= [] 
+  nonCollisionComponents= [] 
+  orders= [] 
+  gameTimeLeft= 200 
+  //key triggers
+  isUpKeyPressed= false 
+  isDownKeyPressed= false 
+  isLeftKeyPressed= false 
+  isRightKeyPressed= false 
+  isActionKeyPressed= false 
+  isInstructionsKeyPressed= false 
+  isPauseKeyPressed= false 
+  //player action triggers
+  isAtCheckout= false 
+  isAtMultistorage= false 
+  isAtConeStorage= false 
+  // game states
+  isGameOver= false 
+  isGameStarted= false 
+  isGamePaused= false 
+  isAtTutorial= false 
+  isAtIntroScreen= false 
+  orderSubmitOk= false 
+  //score keeping
+  score= 0 
+  combo= 0 
+}

@@ -1,15 +1,31 @@
 document.getElementById('start-button').addEventListener('click', () => {
-  document.getElementById('start-button').style.visibility = 'none'
-  document.getElementById('tutorial-button').style.visibility = 'none'
+  // document.getElementById('start-button').style.visibility = 'none'
+  // document.getElementById('tutorial-button').style.visibility = 'none'
 
+  gameCountdown()
   startGame()
 })
 
+const gameCountdown = () => {
+  let countdown = 3
+  const gameCountdownScreen = document.getElementById('game-countdown-screen')
+  gameCountdownScreen.style.display = 'flex'
+
+  const countdownInterval = setInterval(() => {
+    gameCountdownScreen.innerHTML = `${countdown}`
+    countdown--
+  }, 1000)
+
+  setTimeout(() => {
+    clearInterval(countdownInterval)
+    gameCountdownScreen.style.display = 'none'
+  }, 4000)
+}
+
 const startGame = () => {
   gameBoard.isGameStarted = true
-
   document.getElementById('start-screen').style.display = 'none'
-  document.getElementById('main-game-container').style.display = 'flex'
+
   gameBoard.createCanvas()
 
   // creating Assets to load
@@ -135,21 +151,25 @@ const startGame = () => {
   gameBoard.components.push(bin)
   gameBoard.components.push(checkout)
 
-  const orderflowInterval = setInterval(() => {
-    if (!gameBoard.isGamePaused) {
-      updateOrders()
-      updateTimeLeft()
-      updateScore()
-      updateInventory()
-    }
-  }, 1000)
+  setTimeout(() => {
+    document.getElementById('main-game-container').style.display = 'flex'
 
-  const newOrderInterval = setInterval(() => {
-    gameBoard.addOrder()
-  }, 3000)
+    const orderflowInterval = setInterval(() => {
+      if (!gameBoard.isGamePaused && gameBoard.isGameStarted) {
+        updateOrders()
+        updateTimeLeft()
+        updateScore()
+        updateInventory()
+      }
+    }, 1000)
 
-  const refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
-  const animatePlayerInterval = setInterval(player.animate, 1000 / 10)
+    const newOrderInterval = setInterval(() => {
+      gameBoard.addOrder()
+    }, 3000)
+
+    const refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
+    const animatePlayerInterval = setInterval(player.animate, 1000 / 10)
+  }, 4000)
 }
 
 document.getElementById('tutorial-button').addEventListener('click', () => {
@@ -221,6 +241,12 @@ document.addEventListener('keydown', ({ key }) => {
       break
     case 'p':
       gameBoard.isGamePaused = true
+      gameBoard.isUpKeyPressed = false
+      gameBoard.isDownKeyPressed = false
+      gameBoard.isLeftKeyPressed = false
+      gameBoard.isRightKeyPressed = false
+      gameBoard.isActionKeyPressed = false
+      gameBoard.isInstructionsKeyPressed = false
       break
     case '1':
     case '2':

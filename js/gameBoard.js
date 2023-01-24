@@ -5,7 +5,7 @@ const gameBoard = {
   //all other items that are used for background and will always render behind the player
   nonCollisionComponents: [],
   orders: [],
-  gameTimeLeft: 200,
+  gameTimeLeft: 10,
   //key triggers
   isUpKeyPressed: false,
   isDownKeyPressed: false,
@@ -42,6 +42,10 @@ const gameBoard = {
   },
   updateCanvas: function () {
     if (gameBoard.isGamePaused) return
+
+    if(gameBoard.isGameOver){
+      reset()
+    }
 
     gameBoard.ctx.clearRect(
       0,
