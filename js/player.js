@@ -127,14 +127,12 @@ class Player extends Component {
         this.heldItems.vanilla = false
         this.heldItems.chocolate = false
         this.heldItems.strawberry = false
-        gameBoard.isAtCheckout = false
+        
         break
       case 'multistorage':
         this.isChoosingFlavour = true
-        gameBoard.isAtCheckout = false
         break
       case 'checkoutCounter':
-        gameBoard.isAtCheckout = true
         break
       default:
         break

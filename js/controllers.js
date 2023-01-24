@@ -27,6 +27,7 @@ const assembleOrder = () => {
       player.readyToDeliver = 'strawberry'
     }
   }
+  console.log( player.heldItems,player.readyToDeliver)
 }
 
 let submitFunctionRan = 0
@@ -45,6 +46,7 @@ const submitOrder = () => {
     if (orderFound === -1) {
       // order not found
       gameBoard.combo = 0
+
     } else {
       //order found
       if (gameBoard.orders[orderFound].currentTimeLeft > 15) {
@@ -58,6 +60,7 @@ const submitOrder = () => {
       submitFunctionRan = 1
     }
     // cleanup whether order is valid or not
+    console.log('are we getting here')
     player.readyToDeliver = ''
     player.heldItems.cone = false
     player.heldItems.vanilla = false

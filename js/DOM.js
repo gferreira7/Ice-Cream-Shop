@@ -110,8 +110,8 @@ const startGame = () => {
     speechBubbleImg,
     player.posX,
     player.posY,
-    200,
-    150
+    400,
+    300
   )
 
   gameBoard.nonCollisionComponents.push(iceCreamTable)
@@ -161,7 +161,7 @@ const tutorial = () => {
 
 document.getElementById('next-button').addEventListener('click', () => {
   nextSlide()
-  document.getElementById('tutorial-img').src = `./images/tutorial/tutorial${currentTutorialImage}.png`
+  document.getElementById('tutorial-img').src = `./images/tutorial/tutorial-section${currentTutorialImage}.png`
 })
 
 document.getElementById('skip-button').addEventListener('click', () => {
@@ -170,7 +170,7 @@ document.getElementById('skip-button').addEventListener('click', () => {
 })
 
 const nextSlide = () => {
-  if(currentTutorialImage === 4){
+  if(currentTutorialImage === 8){
     currentTutorialImage = 1
   } else{
     currentTutorialImage++
@@ -270,10 +270,14 @@ document.addEventListener('keyup', ({ key }) => {
     case '2':
     case '3':
       player.isChoosingFlavour = false
+
     case 'i':
       gameBoard.isInstructionsKeyPressed = false
       break
-
+      case 't':
+        testCollisions()
+        checkOrderCycle()
+        checkKeysPressed()
     case ' ':
     case 'enter':
       return

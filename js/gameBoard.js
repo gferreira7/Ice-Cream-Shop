@@ -16,7 +16,7 @@ const gameBoard = {
   isPauseKeyPressed: false,
   //player action triggers
   isAtCheckout: false,
-  isAtMultistorage:false,
+  isAtMultistorage: false,
   isAtConeStorage: false,
   // game states
   isGameOver: false,
@@ -40,7 +40,6 @@ const gameBoard = {
     }
   },
   updateCanvas: function () {
-    console.log(player.frameSkip)
     if (gameBoard.isGamePaused) return
 
     gameBoard.ctx.clearRect(
@@ -80,8 +79,6 @@ const gameBoard = {
       gameBoard.ctx.fillText('+ checkout = Cash ', 500, 200)
     }
 
-
-
     if (gameBoard.isUpKeyPressed) {
       if (player.posY > 200) {
         player.moveUp()
@@ -99,8 +96,7 @@ const gameBoard = {
     }
     if (gameBoard.isRightKeyPressed) {
       if (player.posX < gameBoard.canvas.width - 150) {
-        if(player.posX)
-        player.moveRight()
+        if (player.posX) player.moveRight()
       }
     }
     gameBoard.nonCollisionComponents.forEach((component) => {
@@ -109,15 +105,18 @@ const gameBoard = {
 
     gameBoard.components.forEach((component) => {
       component.render()
-
+   
       if (component !== player && component.checkCollision(player)) {
         if (gameBoard.isActionKeyPressed) {
+      
           player.action(component)
           assembleOrder()
           updateInventory()
-        }
-        if (gameBoard.isAtCheckout && component.name === 'checkoutCounter') {
-          submitOrder()
+          if (gameBoard.isAtCheckout ) {
+            submitOrder()
+          } else{
+            submitFunctionRan = 0
+          }
         }
       }
     })
