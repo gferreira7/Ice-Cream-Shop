@@ -63,4 +63,9 @@ class Component {
       return false
     }
   }
+  animate() {
+    if (this.name === 'dollars') {
+      this.posY -= 10
+    }
+  }
 }

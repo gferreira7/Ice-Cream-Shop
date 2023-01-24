@@ -24,6 +24,7 @@ const gameBoard = {
   isGamePaused: false,
   isAtTutorial: false,
   isAtIntroScreen: false,
+  orderSubmitOk: false,
   //score keeping
   score: 0,
   combo: 0,
@@ -105,20 +106,28 @@ const gameBoard = {
 
     gameBoard.components.forEach((component) => {
       component.render()
-   
+
       if (component !== player && component.checkCollision(player)) {
         if (gameBoard.isActionKeyPressed) {
-      
           player.action(component)
           assembleOrder()
           updateInventory()
-          if (gameBoard.isAtCheckout ) {
+          if (gameBoard.isAtCheckout) {
             submitOrder()
-          } else{
+          } else {
             submitFunctionRan = 0
           }
         }
       }
     })
+
+    if (gameBoard.orderSubmitOk) {
+      if (dollars.posY > -150) {
+        dollars.animate()
+      } else {
+        dollars.posY = 500
+        gameBoard.orderSubmitOk = false
+      }
+    }
   },
 }

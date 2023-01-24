@@ -11,3 +11,4 @@
 // 1. incorrect orders
 // 2. getting the flavor before the cone
 // (garbage bin moves)
+// 3. dollar signs when order is ok

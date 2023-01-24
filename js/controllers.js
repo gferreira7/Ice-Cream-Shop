@@ -1,5 +1,5 @@
 let player
-
+let dollars
 let playerImg = new Image()
 playerImg.src = './images/heroImages/idle/spritesheet.png'
 
@@ -27,7 +27,6 @@ const assembleOrder = () => {
       player.readyToDeliver = 'strawberry'
     }
   }
-  console.log( player.heldItems,player.readyToDeliver)
 }
 
 let submitFunctionRan = 0
@@ -55,12 +54,15 @@ const submitOrder = () => {
       gameBoard.orders.splice(orderFound, 1)
 
       gameBoard.score += 20 + gameBoard.combo
+
       updateOrders()
       updateScore()
+      
+      gameBoard.orderSubmitOk = true
+      
       submitFunctionRan = 1
     }
     // cleanup whether order is valid or not
-    console.log('are we getting here')
     player.readyToDeliver = ''
     player.heldItems.cone = false
     player.heldItems.vanilla = false

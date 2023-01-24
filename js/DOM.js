@@ -3,14 +3,12 @@ document.getElementById('start-button').addEventListener('click', () => {
   document.getElementById('tutorial-button').style.visibility = 'none'
 
   startGame()
-
-  })
+})
 
 const startGame = () => {
   gameBoard.isGameStarted = true
 
   document.getElementById('start-screen').style.display = 'none'
-
   document.getElementById('main-game-container').style.display = 'flex'
   gameBoard.createCanvas()
 
@@ -48,6 +46,9 @@ const startGame = () => {
   const speechBubbleImg = new Image()
   speechBubbleImg.src = './images/speechbubble.png'
 
+  const dollarSignsImg = new Image()
+  dollarSignsImg.src = './images/dollars.png'
+
   const iceCreamTable = new Component(
     'icecreamtable',
     tableImg,
@@ -75,6 +76,7 @@ const startGame = () => {
   const tray5 = new Component('tray5', trayImg, 265, 203, 100, 20)
 
   const bin = new Component('bin', binImg, 770, 350, 140, 150)
+  dollars = new Component('dollars', dollarSignsImg, 900, 500, 150, 70)
   const wallSign = new Component(
     'wallsign',
     wallSignImg,
@@ -129,6 +131,7 @@ const startGame = () => {
   //
   gameBoard.components.push(player)
   gameBoard.components.push(speech)
+  gameBoard.components.push(dollars)
   gameBoard.components.push(bin)
   gameBoard.components.push(checkout)
 
@@ -147,7 +150,6 @@ const startGame = () => {
 
   const refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
   const animatePlayerInterval = setInterval(player.animate, 1000 / 10)
-
 }
 
 document.getElementById('tutorial-button').addEventListener('click', () => {
@@ -161,7 +163,9 @@ const tutorial = () => {
 
 document.getElementById('next-button').addEventListener('click', () => {
   nextSlide()
-  document.getElementById('tutorial-img').src = `./images/tutorial/tutorial-section${currentTutorialImage}.png`
+  document.getElementById(
+    'tutorial-img'
+  ).src = `./images/tutorial/tutorial-section${currentTutorialImage}.png`
 })
 
 document.getElementById('skip-button').addEventListener('click', () => {
@@ -170,14 +174,12 @@ document.getElementById('skip-button').addEventListener('click', () => {
 })
 
 const nextSlide = () => {
-  if(currentTutorialImage === 8){
+  if (currentTutorialImage === 8) {
     currentTutorialImage = 1
-  } else{
+  } else {
     currentTutorialImage++
   }
 }
-
-
 
 //handle Movement Keys
 document.addEventListener('keydown', ({ key }) => {
@@ -274,10 +276,10 @@ document.addEventListener('keyup', ({ key }) => {
     case 'i':
       gameBoard.isInstructionsKeyPressed = false
       break
-      case 't':
-        testCollisions()
-        checkOrderCycle()
-        checkKeysPressed()
+    case 't':
+      testCollisions()
+      checkOrderCycle()
+      checkKeysPressed()
     case ' ':
     case 'enter':
       return
