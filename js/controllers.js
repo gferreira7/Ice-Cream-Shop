@@ -8,7 +8,57 @@ let flavourOptions = ['vanilla', 'chocolate', 'strawberry']
 let ceramicBacksplash
 let purpleFloor
 
-let currentTutorialImage = 1 
+let currentTutorialImage = 1
+
+ // creating Assets to load
+ purpleFloor = new Image()
+ purpleFloor.src = './images/purplefloor.png'
+
+ ceramicBacksplash = new Image()
+ ceramicBacksplash.src = './images/brightpurplebacksplash.png'
+
+ const tableImg = new Image()
+ tableImg.src = './images/table.png'
+
+ const iceCreamMachineImg = new Image()
+ iceCreamMachineImg.src = './images/icecreammachine.png'
+
+ const coneStorageImg = new Image()
+ coneStorageImg.src = './images/waffle.png'
+
+ const binImg = new Image()
+ binImg.src = './images/bin.png'
+
+ const wallSignImg = new Image()
+ wallSignImg.src = './images/wallsign.png'
+
+ const trayImg = new Image()
+ trayImg.src = './images/bakingtray.png'
+
+ const dishesImg = new Image()
+ dishesImg.src = './images/dishes.png'
+
+ const checkoutImg = new Image()
+ checkoutImg.src = './images/counter.png'
+
+ const speechBubbleImg = new Image()
+ speechBubbleImg.src = './images/speechbubble.png'
+
+ const dollarSignsImg = new Image()
+ dollarSignsImg.src = './images/dollars.png'
+
+const mainGame = document.getElementById('main-game-container')
+const gameOverScreen = document.getElementById('gameover-screen')
+const scoreDisplay = document.getElementById('score-display')
+const timeLeftDisplay = document.getElementById('time-left-display')
+const inventory = document.getElementById('inventory-list')
+const pendingOrdersDisplay = document.getElementById('pending-orders-display')
+
+let orderflowInterval
+let newOrderInterval
+let refreshRate
+let animatePlayerInterval
+
 
 const generateNewOrder = () => {
   let randomFlavour = Math.floor(Math.random() * 3)
@@ -45,7 +95,6 @@ const submitOrder = () => {
     if (orderFound === -1) {
       // order not found
       gameBoard.combo = 0
-
     } else {
       //order found
       if (gameBoard.orders[orderFound].currentTimeLeft > 15) {
@@ -57,9 +106,9 @@ const submitOrder = () => {
 
       updateOrders()
       updateScore()
-      
+
       gameBoard.orderSubmitOk = true
-      
+
       submitFunctionRan = 1
     }
     // cleanup whether order is valid or not
@@ -98,30 +147,42 @@ const chooseFlavour = (flavourChosen) => {
 }
 
 const reset = () => {
-  components= [] 
-  nonCollisionComponents= [] 
-  orders= [] 
-  gameTimeLeft= 200 
+
+  gameBoard.components = []
+  gameBoard.nonCollisionComponents = []
+  gameBoard.orders = []
+  gameBoard.gameTimeLeft = 10
+  gameBoard.ctx.clearRect(0,0,gameBoard.canvas.width, gameBoard.canvas.height)
   //key triggers
-  isUpKeyPressed= false 
-  isDownKeyPressed= false 
-  isLeftKeyPressed= false 
-  isRightKeyPressed= false 
-  isActionKeyPressed= false 
-  isInstructionsKeyPressed= false 
-  isPauseKeyPressed= false 
+  gameBoard.isUpKeyPressed = false
+  gameBoard.isDownKeyPressed = false
+  gameBoard.isLeftKeyPressed = false
+  gameBoard.isRightKeyPressed = false
+  gameBoard.isActionKeyPressed = false
+  gameBoard.isInstructionsKeyPressed = false
+  gameBoard.isPauseKeyPressed = false
   //player action triggers
-  isAtCheckout= false 
-  isAtMultistorage= false 
-  isAtConeStorage= false 
+  gameBoard.isAtCheckout = false
+  gameBoard.isAtMultistorage = false
+  gameBoard.isAtConeStorage = false
   // game states
-  isGameOver= false 
-  isGameStarted= false 
-  isGamePaused= false 
-  isAtTutorial= false 
-  isAtIntroScreen= false 
-  orderSubmitOk= false 
+  gameBoard.isGameOver = false
   //score keeping
-  score= 0 
-  combo= 0 
+  gameBoard.score = 0
+  gameBoard.combo = 0
+
+  // player Reset
+  player.heldItems = {
+    cone: false,
+    vanilla: false,
+    chocolate: false,
+    strawberry: false,
+  }
+  player.readyToDeliver = ''
+  player.isChoosingFlavour = false
+
+  updateOrders()
+  updateInventory()
+  updateScore()
+  updateTimeLeft()
 }

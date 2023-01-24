@@ -32,8 +32,7 @@ const gameBoard = {
     this.canvas.width = 1200
     this.canvas.height = 500
     this.ctx = this.canvas.getContext('2d')
-    const mainDiv = document.getElementById('main-game-container')
-    mainDiv.appendChild(this.canvas)
+    mainGame.appendChild(this.canvas)
   },
   addOrder: function () {
     if (gameBoard.orders.length < 4) {
@@ -42,7 +41,9 @@ const gameBoard = {
   },
   updateCanvas: function () {
     if (gameBoard.isGamePaused) return
-
+    if (gameBoard.isGameOver) {
+      gameOver()
+    }
     gameBoard.ctx.clearRect(
       0,
       0,

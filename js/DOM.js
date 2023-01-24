@@ -1,69 +1,32 @@
 document.getElementById('start-button').addEventListener('click', () => {
-  // document.getElementById('start-button').style.visibility = 'none'
-  // document.getElementById('tutorial-button').style.visibility = 'none'
-
   gameCountdown()
-  startGame()
 })
 
 const gameCountdown = () => {
   let countdown = 3
   const gameCountdownScreen = document.getElementById('game-countdown-screen')
+  document.getElementById('start-screen').style.display = 'none'
+
+  //preventing flash of previous value on restart
+  gameCountdownScreen.innerHTML = `${countdown}`
   gameCountdownScreen.style.display = 'flex'
 
   const countdownInterval = setInterval(() => {
-    gameCountdownScreen.innerHTML = `${countdown}`
     countdown--
+    gameCountdownScreen.innerHTML = `${countdown}`
   }, 1000)
 
   setTimeout(() => {
     clearInterval(countdownInterval)
     gameCountdownScreen.style.display = 'none'
+    startGame()
   }, 4000)
 }
 
 const startGame = () => {
   gameBoard.isGameStarted = true
-  document.getElementById('start-screen').style.display = 'none'
 
   gameBoard.createCanvas()
-
-  // creating Assets to load
-  purpleFloor = new Image()
-  purpleFloor.src = './images/purplefloor.png'
-
-  ceramicBacksplash = new Image()
-  ceramicBacksplash.src = './images/brightpurplebacksplash.png'
-
-  const tableImg = new Image()
-  tableImg.src = './images/table.png'
-
-  const iceCreamMachineImg = new Image()
-  iceCreamMachineImg.src = './images/icecreammachine.png'
-
-  const coneStorageImg = new Image()
-  coneStorageImg.src = './images/waffle.png'
-
-  const binImg = new Image()
-  binImg.src = './images/bin.png'
-
-  const wallSignImg = new Image()
-  wallSignImg.src = './images/wallsign.png'
-
-  const trayImg = new Image()
-  trayImg.src = './images/bakingtray.png'
-
-  const dishesImg = new Image()
-  dishesImg.src = './images/dishes.png'
-
-  const checkoutImg = new Image()
-  checkoutImg.src = './images/counter.png'
-
-  const speechBubbleImg = new Image()
-  speechBubbleImg.src = './images/speechbubble.png'
-
-  const dollarSignsImg = new Image()
-  dollarSignsImg.src = './images/dollars.png'
 
   const iceCreamTable = new Component(
     'icecreamtable',
@@ -151,10 +114,10 @@ const startGame = () => {
   gameBoard.components.push(bin)
   gameBoard.components.push(checkout)
 
-  setTimeout(() => {
-    document.getElementById('main-game-container').style.display = 'flex'
+  document.getElementById('main-game-container').style.display = 'flex'
 
-    const orderflowInterval = setInterval(() => {
+  if (!gameBoard.isGameOver) {
+    orderflowInterval = setInterval(() => {
       if (!gameBoard.isGamePaused && gameBoard.isGameStarted) {
         updateOrders()
         updateTimeLeft()
@@ -162,14 +125,13 @@ const startGame = () => {
         updateInventory()
       }
     }, 1000)
-
-    const newOrderInterval = setInterval(() => {
+    newOrderInterval = setInterval(() => {
       gameBoard.addOrder()
     }, 3000)
-
-    const refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
-    const animatePlayerInterval = setInterval(player.animate, 1000 / 10)
-  }, 4000)
+    console.log(gameBoard.isGameOver)
+    refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
+    animatePlayerInterval = setInterval(player.animate, 1000 / 10)
+  }
 }
 
 document.getElementById('tutorial-button').addEventListener('click', () => {
@@ -190,7 +152,7 @@ document.getElementById('next-button').addEventListener('click', () => {
 
 document.getElementById('skip-button').addEventListener('click', () => {
   document.getElementById('tutorial-screen').style.display = 'none'
-  startGame()
+  gameCountdown()
 })
 
 const nextSlide = () => {
@@ -258,6 +220,9 @@ document.addEventListener('keydown', ({ key }) => {
     case 'i':
       gameBoard.isInstructionsKeyPressed = true
       break
+    case 'k':
+      reset()
+      break
     case ' ':
     case 'enter':
       return
@@ -315,7 +280,6 @@ document.addEventListener('keyup', ({ key }) => {
 })
 
 const updateOrders = () => {
-  const pendingOrdersDisplay = document.getElementById('pending-orders-display')
   if (gameBoard.orders.length === 0) {
     pendingOrdersDisplay.innerHTML = '<p>No Orders to deliver</p>'
   } else {
@@ -353,7 +317,6 @@ const updateOrders = () => {
 }
 
 const updateInventory = () => {
-  const inventory = document.getElementById('inventory-list')
   inventory.innerHTML = ''
   for (let key in player.heldItems) {
     if (player.heldItems[key]) {
@@ -366,11 +329,11 @@ const updateInventory = () => {
 }
 
 const updateTimeLeft = () => {
+  console.log('updated time')
   gameBoard.gameTimeLeft--
   if (gameBoard.gameTimeLeft <= 0) {
     gameBoard.isGameOver = true
   }
-  const timeLeftDisplay = document.getElementById('time-left-display')
   timeLeftDisplay.innerHTML = ''
   timeLeftDisplay.innerHTML = gameBoard.isGameOver
     ? `<h3>GAME OVER</h3>`
@@ -378,8 +341,30 @@ const updateTimeLeft = () => {
 }
 
 const updateScore = () => {
-  const scoreDisplay = document.getElementById('score-display')
   scoreDisplay.innerHTML = ''
   scoreDisplay.innerHTML = `<h3>SCORE ${gameBoard.score}$</h3>
   <h3>COMBO: ${gameBoard.combo}</h3>`
 }
+
+const gameOver = () => {
+  gameOverScreen.style.display = 'flex'
+  clearInterval(orderflowInterval)
+  clearInterval(newOrderInterval)
+  clearInterval(refreshRate)
+  clearInterval(animatePlayerInterval)
+}
+
+document.getElementById('restart-button').addEventListener('click', () => {
+  reset()
+  gameBoard.isGameOver = false
+  gameOverScreen.style.display = 'none'
+  gameCountdown()
+})
+document.getElementById('home-button').addEventListener('click', () => {
+  reset()
+  gameBoard.isGameOver = false
+  gameOverScreen.style.display = 'none'
+  mainGame.style.display = 'none'
+  document.getElementById('start-screen').style.display = 'flex'
+
+})
