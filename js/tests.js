@@ -12,7 +12,7 @@ const checkOrderCycle = () => {
     console.log(`Player has Cone? ${player.heldItems.cone}`)
     console.log(`Player Has Ice cream? ${player.heldItems.vanilla || player.heldItems.chocolate || player.heldItems.strawberry}`)
     console.log(`Ready to Deliver: ${player.readyToDeliver}`)
-    console.log(`Delivered? ${player.readyToDeliver}`)
+    console.log(`Delivered? ${gameBoard.orderSubmitOk}`)
     console.groupEnd()
 }
 

@@ -31,35 +31,13 @@ class Component {
     //offset of 70px for collision each side roughly
     //spritesheet made of 256x256 blocks
     if (
-      this.posX < otherComponent.posX + 70 + (otherComponent.width - 70) &&
-      this.posX + this.width > otherComponent.posX + 70 &&
+      this.posX + 70 < otherComponent.posX + otherComponent.width &&
+      this.posX + (this.width - 70) > otherComponent.posX &&
       this.posY < otherComponent.posY + otherComponent.height &&
       this.posY + this.height > otherComponent.posY
     ) {
-      switch (this.name) {
-        case 'coneStorage':
-          gameBoard.isAtConeStorage = true
-          gameBoard.isAtMultistorage = false
-          gameBoard.isAtCheckout = false
-          break
-        case 'multistorage':
-          gameBoard.isAtConeStorage = false
-          gameBoard.isAtMultistorage = true
-          gameBoard.isAtCheckout = false
-          break
-        case 'checkoutCounter':
-          gameBoard.isAtConeStorage = false
-          gameBoard.isAtMultistorage = false
-          gameBoard.isAtCheckout = true
-          break
-        default:
-          break
-      }
       return true
     } else {
-      gameBoard.isAtConeStorage = false
-      gameBoard.isAtMultistorage = false
-      gameBoard.isAtCheckout = false
       return false
     }
   }

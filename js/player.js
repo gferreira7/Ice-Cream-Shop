@@ -1,8 +1,8 @@
 class Player extends Component {
   constructor(name, img, posX, posY, width, height) {
     super(name, img, posX, posY, width, height)
-    this.ySpeed = 4
-    this.xSpeed = 4
+    this.ySpeed = 6
+    this.xSpeed = 6
     this.heldItems = {
       cone: false,
       vanilla: false,
@@ -123,16 +123,18 @@ class Player extends Component {
   action(component) {
     switch (component.name) {
       case 'coneStorage':
-        this.heldItems.cone = true
-        this.heldItems.vanilla = false
-        this.heldItems.chocolate = false
-        this.heldItems.strawberry = false
-        
+        if (gameBoard.isAtConeStorage) {
+          console.log('this is where cone gets truthy')
+          this.heldItems.cone = true
+          this.heldItems.vanilla = false
+          this.heldItems.chocolate = false
+          this.heldItems.strawberry = false
+        }
         break
       case 'multistorage':
-        this.isChoosingFlavour = true
-        break
-      case 'checkoutCounter':
+        if (gameBoard.isAtMultistorage) {
+          this.isChoosingFlavour = true
+        }
         break
       default:
         break

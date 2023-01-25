@@ -79,10 +79,9 @@ const assembleOrder = () => {
   }
 }
 
-let submitFunctionRan = 0
 
 const submitOrder = () => {
-  if (submitFunctionRan > 0) {
+  if (gameBoard.orderSubmitOk) {
     return
   } else {
     let pendingOrders = []
@@ -109,7 +108,6 @@ const submitOrder = () => {
 
       gameBoard.orderSubmitOk = true
 
-      submitFunctionRan = 1
     }
     // cleanup whether order is valid or not
     player.readyToDeliver = ''
@@ -151,7 +149,7 @@ const reset = () => {
   gameBoard.components = []
   gameBoard.nonCollisionComponents = []
   gameBoard.orders = []
-  gameBoard.gameTimeLeft = 10
+  gameBoard.gameTimeLeft = 100
   gameBoard.ctx.clearRect(0,0,gameBoard.canvas.width, gameBoard.canvas.height)
   //key triggers
   gameBoard.isUpKeyPressed = false
@@ -170,16 +168,6 @@ const reset = () => {
   //score keeping
   gameBoard.score = 0
   gameBoard.combo = 0
-
-  // player Reset
-  player.heldItems = {
-    cone: false,
-    vanilla: false,
-    chocolate: false,
-    strawberry: false,
-  }
-  player.readyToDeliver = ''
-  player.isChoosingFlavour = false
 
   updateOrders()
   updateInventory()

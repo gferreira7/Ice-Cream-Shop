@@ -270,7 +270,7 @@ document.addEventListener('keyup', ({ key }) => {
     case 't':
       testCollisions()
       checkOrderCycle()
-      checkKeysPressed()
+      // checkKeysPressed()
     case ' ':
     case 'enter':
       return
@@ -356,13 +356,11 @@ const gameOver = () => {
 
 document.getElementById('restart-button').addEventListener('click', () => {
   reset()
-  gameBoard.isGameOver = false
   gameOverScreen.style.display = 'none'
   gameCountdown()
 })
 document.getElementById('home-button').addEventListener('click', () => {
   reset()
-  gameBoard.isGameOver = false
   gameOverScreen.style.display = 'none'
   mainGame.style.display = 'none'
   document.getElementById('start-screen').style.display = 'flex'
