@@ -2,7 +2,8 @@ class Player extends Component {
   constructor(name, img, posX, posY, width, height) {
     super(name, img, posX, posY, width, height)
     this.ySpeed = 6
-    this.xSpeed = 6
+    this.xSpeed = 6 
+    this.speedBoost = 0
     this.heldItems = {
       cone: false,
       vanilla: false,
@@ -103,13 +104,13 @@ class Player extends Component {
   moveLeft() {
     this.isFacingLeft = true
     this.isFacingRight = false
-    this.posX -= this.xSpeed
+    this.posX -= this.xSpeed + this.speedBoost
   }
 
   moveRight() {
     this.isFacingLeft = false
     this.isFacingRight = true
-    this.posX += this.xSpeed
+    this.posX += this.xSpeed + this.speedBoost
   }
 
   moveUp() {
@@ -136,6 +137,7 @@ class Player extends Component {
 
           } else{
             gameBoard.hasError = 0
+            player.speedBoost = 0
           }
         } 
         break

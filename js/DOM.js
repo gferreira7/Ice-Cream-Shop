@@ -288,6 +288,7 @@ const updateOrders = () => {
     if (order.currentTimeLeft === 0) {
       gameBoard.orders.shift()
       gameBoard.hasError = 3
+      player.speedBoost = 0
       gameBoard.combo = 0
     }
   })

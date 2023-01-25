@@ -90,6 +90,7 @@ const submitOrder = () => {
 
     if (player.readyToDeliver === '') {
       gameBoard.hasError = 1
+      player.speedBoost = 0
       player.emptyInventory()
       gameBoard.hasAttemptedSubmit = true
       return
@@ -99,6 +100,7 @@ const submitOrder = () => {
         // order not found
         gameBoard.combo = 0
         gameBoard.hasError = 2
+        player.speedBoost = 0
         player.emptyInventory()
         gameBoard.hasAttemptedSubmit = true
         return
@@ -115,6 +117,8 @@ const submitOrder = () => {
         updateScore()
         gameBoard.hasAttemptedSubmit = true
         gameBoard.orderSubmitOk = true
+        gameBoard.hasError = -1
+        player.speedBoost += 1
       }
     }
 
@@ -181,15 +185,13 @@ const reset = () => {
 }
 
 const alertPlayerError = (errorIndex) => {
-  
   gameBoard.ctx.font = '40px Roboto Mono'
   gameBoard.ctx.fillStyle = 'yellow'
 
   //create conditions for error to dissapear
-  if(errorIndex === 4){
+  if (errorIndex === 4) {
     gameBoard.ctx.fillText(gameBoard.errorMessages[errorIndex], 50, 100)
-    
-  } else{
+  } else {
     gameBoard.ctx.fillText(gameBoard.errorMessages[errorIndex], 400, 100)
   }
 }

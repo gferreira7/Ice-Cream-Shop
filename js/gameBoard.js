@@ -80,11 +80,11 @@ const gameBoard = {
     if (gameBoard.hasError !== -1) {
       alertPlayerError(gameBoard.hasError)
     }
+    gameBoard.ctx.font = '32px Roboto Mono'
+    gameBoard.ctx.fillStyle = 'yellow'
+    gameBoard.ctx.fillText(`SPEED BOOST: ${player.speedBoost}`, 0, gameBoard.canvas.height - 20)
 
     if (gameBoard.isInstructionsKeyPressed) {
-      gameBoard.ctx.font = '32px Roboto Mono'
-      gameBoard.ctx.fillStyle = 'yellow'
-
       gameBoard.ctx.fillText('Flavors', 100, 350)
       gameBoard.ctx.fillText('Cones', 300, 350)
       gameBoard.ctx.fillText('Checkout', 1050, 300)
