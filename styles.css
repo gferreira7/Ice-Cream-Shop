@@ -15,7 +15,6 @@
 }
 .jumbotext {
   font-size: 15vh;
-  animation: blinker 1s linear infinite;
 }
 
 button {
@@ -51,6 +50,9 @@ button {
   align-items: center;
   height: 100vh;
   font-size: 25vh;
+}
+
+.blinker{
   animation: blinker 1s linear infinite;
 }
 

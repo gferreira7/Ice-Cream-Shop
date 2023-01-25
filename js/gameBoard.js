@@ -25,6 +25,16 @@ const gameBoard = {
   isAtTutorial: false,
   isAtIntroScreen: false,
   orderSubmitOk: false,
+  hasAttemptedSubmit: false,
+  //alerts for player
+  errorMessages: [
+    'I NEED A CONE', //tries to get icecream before cone
+    'THERE IS NOTHING TO DELIVER', //tries to deliver incomplete order
+    'NO ONE ORDERED THIS', //tries to deliver incomplete order
+    'ORDER EXPIRED', //triggers when expired orders are removed from array
+    'HURRY UP!', //will flash when game time is almost up
+  ],
+  hasError: -1,
   //score keeping
   score: 0,
   combo: 0,
@@ -44,12 +54,13 @@ const gameBoard = {
     if (gameBoard.isGameOver) {
       gameOver()
     }
-    gameBoard.ctx.clearRect(
-      0,
-      0,
-      gameBoard.canvas.width,
-      gameBoard.canvas.height
-    )
+
+    // gameBoard.ctx.clearRect(
+    //   0,
+    //   0,
+    //   gameBoard.canvas.width,
+    //   gameBoard.canvas.height
+    // )
 
     gameBoard.ctx.drawImage(
       purpleFloor,
@@ -65,6 +76,10 @@ const gameBoard = {
       gameBoard.canvas.width,
       gameBoard.canvas.height - 95
     )
+
+    if (gameBoard.hasError !== -1) {
+      alertPlayerError(gameBoard.hasError)
+    }
 
     if (gameBoard.isInstructionsKeyPressed) {
       gameBoard.ctx.font = '32px Roboto Mono'
@@ -107,30 +122,45 @@ const gameBoard = {
 
     gameBoard.components.forEach((component) => {
       component.render()
-      if (component !== player && player.checkCollision(component)) {
-        if (component.name === 'coneStorage') {
-          gameBoard.isAtConeStorage = true
-          gameBoard.isAtMultistorage = false
-          gameBoard.isAtCheckout = false
-        } else if (component.name === 'multistorage') {
-          gameBoard.isAtConeStorage = false
-          gameBoard.isAtMultistorage = true
-          gameBoard.isAtCheckout = false
-        } else if (component.name === 'checkoutCounter') {
-          gameBoard.isAtConeStorage = false
-          gameBoard.isAtMultistorage = false
-          gameBoard.isAtCheckout = true
+      if (component !== player) {
+        if (player.checkCollision(component)) {
+          if (component.name === 'coneStorage') {
+            gameBoard.isAtConeStorage = true
+          } else if (component.name === 'multistorage') {
+            gameBoard.isAtMultistorage = true
+          } else if (component.name === 'checkoutCounter') {
+            gameBoard.isAtCheckout = true
+          }
+        } else {
+          if (component.name === 'coneStorage') {
+            gameBoard.isAtConeStorage = false
+          } else if (component.name === 'multistorage') {
+            gameBoard.isAtMultistorage = false
+          } else if (component.name === 'checkoutCounter') {
+            gameBoard.isAtCheckout = false
+          }
         }
       }
-      if(gameBoard.isActionKeyPressed){
-        player.action(component)
-        assembleOrder()
-        updateInventory()
+      if (gameBoard.isActionKeyPressed) {
+        if (
+          !gameBoard.isAtCheckout &&
+          !gameBoard.isAtConeStorage &&
+          !gameBoard.isAtMultistorage
+        ) {
+        } else {
+          player.action(component)
+          assembleOrder()
+          updateInventory()
+        }
       }
     })
 
-    if(gameBoard.isAtCheckout && gameBoard.isActionKeyPressed){
-      submitOrder()
+    if (gameBoard.isAtCheckout) {
+      if (gameBoard.isActionKeyPressed) {
+        submitOrder()
+      }
+    } else {
+      gameBoard.hasAttemptedSubmit = false
     }
 
     if (gameBoard.orderSubmitOk) {
@@ -141,7 +171,8 @@ const gameBoard = {
         gameBoard.orderSubmitOk = false
       }
     }
-
-    console.log(player.heldItems.cone)
+    if (!gameBoard.isAtMultistorage) {
+      player.isChoosingFlavour = false
+    }
   },
 }

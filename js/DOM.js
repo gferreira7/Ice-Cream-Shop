@@ -127,8 +127,7 @@ const startGame = () => {
     }, 1000)
     newOrderInterval = setInterval(() => {
       gameBoard.addOrder()
-    }, 3000)
-    console.log(gameBoard.isGameOver)
+    }, 4000)
     refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
     animatePlayerInterval = setInterval(player.animate, 1000 / 10)
   }
@@ -270,7 +269,7 @@ document.addEventListener('keyup', ({ key }) => {
     case 't':
       testCollisions()
       checkOrderCycle()
-      // checkKeysPressed()
+    // checkKeysPressed()
     case ' ':
     case 'enter':
       return
@@ -288,6 +287,7 @@ const updateOrders = () => {
   gameBoard.orders.forEach((order) => {
     if (order.currentTimeLeft === 0) {
       gameBoard.orders.shift()
+      gameBoard.hasError = 3
       gameBoard.combo = 0
     }
   })
@@ -303,7 +303,10 @@ const updateOrders = () => {
     progressBar.style.height = '10px'
     progressBar.style.width = `${order.currentTimeLeft}%`
     if (order.currentTimeLeft <= order.timerRedZone) {
+      gameBoard.hasError = 4
       progressBar.style.backgroundColor = 'red'
+      singlePendingOrderDiv.style.backgroundColor = 'purple'
+      singlePendingOrderDiv.classList.add('blinker')
     } else {
       progressBar.style.backgroundColor = 'green'
     }
@@ -329,7 +332,6 @@ const updateInventory = () => {
 }
 
 const updateTimeLeft = () => {
-  console.log('updated time')
   gameBoard.gameTimeLeft--
   if (gameBoard.gameTimeLeft <= 0) {
     gameBoard.isGameOver = true
@@ -364,5 +366,4 @@ document.getElementById('home-button').addEventListener('click', () => {
   gameOverScreen.style.display = 'none'
   mainGame.style.display = 'none'
   document.getElementById('start-screen').style.display = 'flex'
-
 })

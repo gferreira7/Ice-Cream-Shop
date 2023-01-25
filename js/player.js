@@ -10,7 +10,6 @@ class Player extends Component {
       strawberry: false,
     }
     this.readyToDeliver = ''
-    this.speechBubble = ''
     this.isChoosingFlavour = false
     this.isPlayerMoving = false
     this.isFacingLeft = false
@@ -124,7 +123,6 @@ class Player extends Component {
     switch (component.name) {
       case 'coneStorage':
         if (gameBoard.isAtConeStorage) {
-          console.log('this is where cone gets truthy')
           this.heldItems.cone = true
           this.heldItems.vanilla = false
           this.heldItems.chocolate = false
@@ -133,11 +131,23 @@ class Player extends Component {
         break
       case 'multistorage':
         if (gameBoard.isAtMultistorage) {
-          this.isChoosingFlavour = true
-        }
+          if(this.heldItems.cone){
+            this.isChoosingFlavour = true
+
+          } else{
+            gameBoard.hasError = 0
+          }
+        } 
         break
       default:
         break
     }
+  }
+  emptyInventory(){
+    this.readyToDeliver = ''
+    this.heldItems.cone = false
+    this.heldItems.vanilla = false
+    this.heldItems.chocolate = false
+    this.heldItems.strawberry = false
   }
 }

@@ -5,7 +5,7 @@ class Order {
         this.img = img
         // Render progress bar in the DOM dynamically
         // so it can be tweaked later for hard mode or special events 
-        this.timePerOrder = 40
+        this.timePerOrder = 30
         this.secondsElapsed = 0
         this.percentageDecrement = 100/this.timePerOrder
         this.currentTimeLeft = 100 //starts at 100 and drops percentage Decrement per secondsElapsed%

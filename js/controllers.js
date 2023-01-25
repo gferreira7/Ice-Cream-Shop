@@ -10,42 +10,42 @@ let purpleFloor
 
 let currentTutorialImage = 1
 
- // creating Assets to load
- purpleFloor = new Image()
- purpleFloor.src = './images/purplefloor.png'
+// creating Assets to load
+purpleFloor = new Image()
+purpleFloor.src = './images/purplefloor.png'
 
- ceramicBacksplash = new Image()
- ceramicBacksplash.src = './images/brightpurplebacksplash.png'
+ceramicBacksplash = new Image()
+ceramicBacksplash.src = './images/brightpurplebacksplash.png'
 
- const tableImg = new Image()
- tableImg.src = './images/table.png'
+const tableImg = new Image()
+tableImg.src = './images/table.png'
 
- const iceCreamMachineImg = new Image()
- iceCreamMachineImg.src = './images/icecreammachine.png'
+const iceCreamMachineImg = new Image()
+iceCreamMachineImg.src = './images/icecreammachine.png'
 
- const coneStorageImg = new Image()
- coneStorageImg.src = './images/waffle.png'
+const coneStorageImg = new Image()
+coneStorageImg.src = './images/waffle.png'
 
- const binImg = new Image()
- binImg.src = './images/bin.png'
+const binImg = new Image()
+binImg.src = './images/bin.png'
 
- const wallSignImg = new Image()
- wallSignImg.src = './images/wallsign.png'
+const wallSignImg = new Image()
+wallSignImg.src = './images/wallsign.png'
 
- const trayImg = new Image()
- trayImg.src = './images/bakingtray.png'
+const trayImg = new Image()
+trayImg.src = './images/bakingtray.png'
 
- const dishesImg = new Image()
- dishesImg.src = './images/dishes.png'
+const dishesImg = new Image()
+dishesImg.src = './images/dishes.png'
 
- const checkoutImg = new Image()
- checkoutImg.src = './images/counter.png'
+const checkoutImg = new Image()
+checkoutImg.src = './images/counter.png'
 
- const speechBubbleImg = new Image()
- speechBubbleImg.src = './images/speechbubble.png'
+const speechBubbleImg = new Image()
+speechBubbleImg.src = './images/speechbubble.png'
 
- const dollarSignsImg = new Image()
- dollarSignsImg.src = './images/dollars.png'
+const dollarSignsImg = new Image()
+dollarSignsImg.src = './images/dollars.png'
 
 const mainGame = document.getElementById('main-game-container')
 const gameOverScreen = document.getElementById('gameover-screen')
@@ -58,7 +58,6 @@ let orderflowInterval
 let newOrderInterval
 let refreshRate
 let animatePlayerInterval
-
 
 const generateNewOrder = () => {
   let randomFlavour = Math.floor(Math.random() * 3)
@@ -79,9 +78,8 @@ const assembleOrder = () => {
   }
 }
 
-
 const submitOrder = () => {
-  if (gameBoard.orderSubmitOk) {
+  if (gameBoard.hasAttemptedSubmit) {
     return
   } else {
     let pendingOrders = []
@@ -90,31 +88,39 @@ const submitOrder = () => {
       pendingOrders.push(order.flavour)
     })
 
-    let orderFound = pendingOrders.indexOf(player.readyToDeliver)
-    if (orderFound === -1) {
-      // order not found
-      gameBoard.combo = 0
+    if (player.readyToDeliver === '') {
+      gameBoard.hasError = 1
+      player.emptyInventory()
+      gameBoard.hasAttemptedSubmit = true
+      return
     } else {
-      //order found
-      if (gameBoard.orders[orderFound].currentTimeLeft > 15) {
-        gameBoard.combo++
+      let orderFound = pendingOrders.indexOf(player.readyToDeliver)
+      if (orderFound === -1) {
+        // order not found
+        gameBoard.combo = 0
+        gameBoard.hasError = 2
+        player.emptyInventory()
+        gameBoard.hasAttemptedSubmit = true
+        return
+      } else {
+        //order found
+        if (gameBoard.orders[orderFound].currentTimeLeft > 15) {
+          gameBoard.combo++
+        }
+        gameBoard.orders.splice(orderFound, 1)
+
+        gameBoard.score += 20 + gameBoard.combo
+
+        updateOrders()
+        updateScore()
+        gameBoard.hasAttemptedSubmit = true
+        gameBoard.orderSubmitOk = true
       }
-      gameBoard.orders.splice(orderFound, 1)
-
-      gameBoard.score += 20 + gameBoard.combo
-
-      updateOrders()
-      updateScore()
-
-      gameBoard.orderSubmitOk = true
-
     }
+
     // cleanup whether order is valid or not
-    player.readyToDeliver = ''
-    player.heldItems.cone = false
-    player.heldItems.vanilla = false
-    player.heldItems.chocolate = false
-    player.heldItems.strawberry = false
+    player.emptyInventory()
+    gameBoard.hasAttemptedSubmit = true
   }
 }
 
@@ -145,12 +151,11 @@ const chooseFlavour = (flavourChosen) => {
 }
 
 const reset = () => {
-
   gameBoard.components = []
   gameBoard.nonCollisionComponents = []
   gameBoard.orders = []
   gameBoard.gameTimeLeft = 100
-  gameBoard.ctx.clearRect(0,0,gameBoard.canvas.width, gameBoard.canvas.height)
+  gameBoard.ctx.clearRect(0, 0, gameBoard.canvas.width, gameBoard.canvas.height)
   //key triggers
   gameBoard.isUpKeyPressed = false
   gameBoard.isDownKeyPressed = false
@@ -168,9 +173,23 @@ const reset = () => {
   //score keeping
   gameBoard.score = 0
   gameBoard.combo = 0
-
+  gameBoard.hasError = -1
   updateOrders()
   updateInventory()
   updateScore()
   updateTimeLeft()
+}
+
+const alertPlayerError = (errorIndex) => {
+  
+  gameBoard.ctx.font = '40px Roboto Mono'
+  gameBoard.ctx.fillStyle = 'yellow'
+
+  //create conditions for error to dissapear
+  if(errorIndex === 4){
+    gameBoard.ctx.fillText(gameBoard.errorMessages[errorIndex], 50, 100)
+    
+  } else{
+    gameBoard.ctx.fillText(gameBoard.errorMessages[errorIndex], 400, 100)
+  }
 }
