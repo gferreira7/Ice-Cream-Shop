@@ -5,7 +5,7 @@ const gameBoard = {
   //all other items that are used for background and will always render behind the player
   nonCollisionComponents: [],
   orders: [],
-  gameTimeLeft: 100,
+  gameTimeLeft: 60,
   //key triggers
   isUpKeyPressed: false,
   isDownKeyPressed: false,

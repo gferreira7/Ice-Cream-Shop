@@ -127,7 +127,7 @@ const startGame = () => {
     }, 1000)
     newOrderInterval = setInterval(() => {
       gameBoard.addOrder()
-    }, 4000)
+    }, 2000)
     refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
     animatePlayerInterval = setInterval(player.animate, 1000 / 10)
   }
@@ -355,6 +355,20 @@ const gameOver = () => {
   clearInterval(newOrderInterval)
   clearInterval(refreshRate)
   clearInterval(animatePlayerInterval)
+
+  document.addEventListener('keyup', ({ key }) => {
+    if(key === 'r'){
+      reset()
+      gameOverScreen.style.display = 'none'
+      gameCountdown()
+    }
+    if(key === 'q'){
+      reset()
+      gameOverScreen.style.display = 'none'
+      mainGame.style.display = 'none'
+      document.getElementById('start-screen').style.display = 'flex'
+    }
+  })
 }
 
 document.getElementById('restart-button').addEventListener('click', () => {

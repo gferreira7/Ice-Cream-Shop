@@ -158,7 +158,7 @@ const reset = () => {
   gameBoard.components = []
   gameBoard.nonCollisionComponents = []
   gameBoard.orders = []
-  gameBoard.gameTimeLeft = 100
+  gameBoard.gameTimeLeft = 60
   gameBoard.ctx.clearRect(0, 0, gameBoard.canvas.width, gameBoard.canvas.height)
   //key triggers
   gameBoard.isUpKeyPressed = false
@@ -188,7 +188,6 @@ const alertPlayerError = (errorIndex) => {
   gameBoard.ctx.font = '40px Roboto Mono'
   gameBoard.ctx.fillStyle = 'yellow'
 
-  //create conditions for error to dissapear
   if (errorIndex === 4) {
     gameBoard.ctx.fillText(gameBoard.errorMessages[errorIndex], 50, 100)
   } else {

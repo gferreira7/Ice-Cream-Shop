@@ -24,5 +24,6 @@
 //Speed BOOST done = resets on player errors
 // add some enemies or obstacles (random fires, mice)
 // randomise ingredients, add toppings to ice cream or change to pizzas and burguers
-
+//HIGH SCORES
+// MAX COMBO, MAX BOOST
 
