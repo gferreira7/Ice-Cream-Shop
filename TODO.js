@@ -8,6 +8,7 @@
 // - restart DONE
 //TIMER DONE
 //COMBO IS BROKEN = RESOLVED
+//game timer flash when near end
 
 // alerts for:
 // 1. incorrect orders - - (garbage bin moves)
@@ -21,7 +22,7 @@
 <!-- README HAS TO BE DONE BY THURSDAY -->
 
 <!-- BACKLOG -->
-//Speed BOOST done = resets on player errors
+//Speed BOOST = resets on player errors
 // add some enemies or obstacles (random fires, mice)
 // randomise ingredients, add toppings to ice cream or change to pizzas and burguers
 //HIGH SCORES

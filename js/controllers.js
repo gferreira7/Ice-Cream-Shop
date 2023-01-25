@@ -1,7 +1,13 @@
 let player
+
+//mouse spawn, left or right
+let mouse
+let randomSpawnX
+
 let dollars
+
 let playerImg = new Image()
-playerImg.src = './images/heroImages/idle/spritesheet.png'
+playerImg.src = './images/heroImages/full-spritesheet.png'
 
 let flavourOptions = ['vanilla', 'chocolate', 'strawberry']
 
@@ -16,6 +22,9 @@ purpleFloor.src = './images/purplefloor.png'
 
 ceramicBacksplash = new Image()
 ceramicBacksplash.src = './images/brightpurplebacksplash.png'
+
+mouseImg = new Image()
+mouseImg.src = './images/mouse.png'
 
 const tableImg = new Image()
 tableImg.src = './images/table.png'
@@ -58,6 +67,7 @@ let orderflowInterval
 let newOrderInterval
 let refreshRate
 let animatePlayerInterval
+let mouseSpawnInterval
 
 const generateNewOrder = () => {
   let randomFlavour = Math.floor(Math.random() * 3)
@@ -178,6 +188,7 @@ const reset = () => {
   gameBoard.score = 0
   gameBoard.combo = 0
   gameBoard.hasError = -1
+  gameBoard.orderSubmitOk = false
   updateOrders()
   updateInventory()
   updateScore()

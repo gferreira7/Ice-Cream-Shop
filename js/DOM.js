@@ -76,6 +76,7 @@ const startGame = () => {
 
   const dishes = new Component('dishes', dishesImg, 35, 205, 85, 60)
   player = new Player('player', playerImg, 450, 225, 256, 256)
+  mouse = new Mouse('mouse', mouseImg, 770, 425, 50, 50)
 
   const checkout = new Component(
     'checkoutCounter',
@@ -108,6 +109,7 @@ const startGame = () => {
   gameBoard.nonCollisionComponents.push(tray5)
   gameBoard.nonCollisionComponents.push(wallSign)
   //
+  gameBoard.components.push(mouse)
   gameBoard.components.push(player)
   gameBoard.components.push(speech)
   gameBoard.components.push(dollars)
@@ -128,6 +130,9 @@ const startGame = () => {
     newOrderInterval = setInterval(() => {
       gameBoard.addOrder()
     }, 2000)
+    mouseSpawnInterval = setInterval(() => {
+      gameBoard.spawnMouse()
+    }, 7000)
     refreshRate = setInterval(gameBoard.updateCanvas, 1000 / 60)
     animatePlayerInterval = setInterval(player.animate, 1000 / 10)
   }
@@ -223,6 +228,8 @@ document.addEventListener('keydown', ({ key }) => {
       reset()
       break
     case ' ':
+      gameBoard.isJumpKeyPressed = true
+      break
     case 'enter':
       return
     default:
@@ -271,6 +278,8 @@ document.addEventListener('keyup', ({ key }) => {
       checkOrderCycle()
     // checkKeysPressed()
     case ' ':
+      gameBoard.isJumpKeyPressed = false
+      break
     case 'enter':
       return
     default:
@@ -355,6 +364,8 @@ const gameOver = () => {
   clearInterval(newOrderInterval)
   clearInterval(refreshRate)
   clearInterval(animatePlayerInterval)
+  clearInterval(mouseSpawnInterval)
+
 
   document.addEventListener('keyup', ({ key }) => {
     if(key === 'r'){

@@ -5,7 +5,7 @@ const gameBoard = {
   //all other items that are used for background and will always render behind the player
   nonCollisionComponents: [],
   orders: [],
-  gameTimeLeft: 60,
+  gameTimeLeft: 100,
   //key triggers
   isUpKeyPressed: false,
   isDownKeyPressed: false,
@@ -14,6 +14,7 @@ const gameBoard = {
   isActionKeyPressed: false,
   isInstructionsKeyPressed: false,
   isPauseKeyPressed: false,
+  isJumpKeyPressed: false,
   //player action triggers
   isAtCheckout: false,
   isAtMultistorage: false,
@@ -49,18 +50,23 @@ const gameBoard = {
       generateNewOrder()
     }
   },
+  spawnMouse: function () {
+    randomSpawnX = Math.floor(Math.random() * 2) * gameBoard.canvas.width
+    mouse.posX = randomSpawnX
+  },
   updateCanvas: function () {
     if (gameBoard.isGamePaused) return
     if (gameBoard.isGameOver) {
       gameOver()
     }
 
-    // gameBoard.ctx.clearRect(
-    //   0,
-    //   0,
-    //   gameBoard.canvas.width,
-    //   gameBoard.canvas.height
-    // )
+    if (randomSpawnX === 0) {
+      mouse.direction = 'right'
+      mouse.moveRight()
+    } else {
+      mouse.direction = 'left'
+      mouse.moveLeft()
+    }
 
     gameBoard.ctx.drawImage(
       purpleFloor,
@@ -80,9 +86,9 @@ const gameBoard = {
     if (gameBoard.hasError !== -1) {
       alertPlayerError(gameBoard.hasError)
     }
+
     gameBoard.ctx.font = '32px Roboto Mono'
     gameBoard.ctx.fillStyle = 'yellow'
-    gameBoard.ctx.fillText(`SPEED BOOST: ${player.speedBoost}`, 0, gameBoard.canvas.height - 20)
 
     if (gameBoard.isInstructionsKeyPressed) {
       gameBoard.ctx.fillText('Flavors', 100, 350)
@@ -92,20 +98,28 @@ const gameBoard = {
       gameBoard.ctx.fillText('WASD to Move', 500, 40)
       gameBoard.ctx.fillText('E to pick up Items', 500, 80)
       gameBoard.ctx.fillText('E then 1,2,3 for flavor', 500, 120)
-      gameBoard.ctx.fillText('Cone + Flavour', 500, 160)
-      gameBoard.ctx.fillText('+ checkout = Cash ', 500, 200)
+      gameBoard.ctx.fillText('Space to Jump', 500, 160)
     }
 
-    if (gameBoard.isUpKeyPressed) {
-      if (player.posY > 200) {
-        player.moveUp()
+    if (player.posY < 200) {
+      player.ySpeed = player.ySpeed - player.gravity
+      player.posY -= player.ySpeed
+    } else {
+      player.hasJumped = false
+    }
+
+    if (gameBoard.isJumpKeyPressed) {
+      if (!player.hasJumped) {
+        player.jump()
       }
     }
-    if (gameBoard.isDownKeyPressed) {
-      if (player.posY < gameBoard.canvas.height - 250) {
-        player.moveDown()
-      }
+
+    if (player.ySpeed < 0) {
+      player.gravity = 0.7
+    } else {
+      player.gravity = 0.3
     }
+
     if (gameBoard.isLeftKeyPressed) {
       if (player.posX > -50) {
         player.moveLeft()
@@ -173,6 +187,10 @@ const gameBoard = {
     }
     if (!gameBoard.isAtMultistorage) {
       player.isChoosingFlavour = false
+    }
+
+    if (player.checkCollision(mouse) && mouse.posX < 600) {
+      gameBoard.combo = 0
     }
   },
 }
