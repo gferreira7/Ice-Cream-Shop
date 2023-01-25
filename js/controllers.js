@@ -117,7 +117,7 @@ const submitOrder = () => {
       } else {
         //order found
         if (gameBoard.orders[orderFound].currentTimeLeft > 15) {
-          gameBoard.combo++
+          gameBoard.combo+=5
         }
         gameBoard.orders.splice(orderFound, 1)
 
