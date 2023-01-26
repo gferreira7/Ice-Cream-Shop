@@ -31,16 +31,19 @@
   </head>
   <body>
     <div id="start-screen">
-      <h1 class="jumbotext blinker">Ice Cream Shop</h1>
+      <h1 class="jumbotext">Ice Cream Shop</h1>
       <button id="start-button">START</button>
       <button id="tutorial-button">Tutorial</button>
       <button id="high-scores">HIGH SCORES</button>
     </div>
     <div id="high-scores-screen">
       <h1 class="blinker">HIGH SCORES</h1>
+      <div id="high-scores-container"></div>
+      <button id="back-button">BACK</button>
       <video autoplay muted loop id="background-video">
         <source src="./video/high-score-background.mp4" type="video/mp4">
       </video>
+      <audio id="high-scores-theme" src="./audio/triumph.mp3"></audio>
     </div>
     <div id="tutorial-screen">
       <img

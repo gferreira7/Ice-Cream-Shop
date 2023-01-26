@@ -172,18 +172,25 @@ const nextSlide = () => {
 }
 
 document.getElementById('high-scores').addEventListener('click', () => {
+  
   highScores()
+
 })
 
 const highScores = () => {
   document.getElementById('start-screen').style.display = 'none'
   highScoresPage.style.display = 'flex'
 
+  highScoresTheme = document.getElementById('high-scores-theme')
+  highScoresTheme.play()
+  highScoresTheme.loop = true
   let highScoresArray = JSON.parse(window.localStorage.getItem('highScores'))
   if (!highScoresArray) {
     highScoresArray = []
   }
 
+  let highScoresContainer = document.getElementById('high-scores-container')
+  highScoresContainer.innerHTML = ''
   let newList = document.createElement('ul')
   highScoresArray
     .sort((a, b) => b.score - a.score)
@@ -192,9 +199,14 @@ const highScores = () => {
       newListItem.innerHTML = `${player.name} - ${player.score}`
       newList.appendChild(newListItem)
     })
-  highScoresPage.appendChild(newList)
+    highScoresContainer.appendChild(newList)
 
+  document.getElementById('back-button').addEventListener('click', () => {
+    highScoresPage.style.display = 'none'
+    document.getElementById('start-screen').style.display = 'flex'
+    highScoresTheme.pause()
 
+  })
 }
 //handle Movement Keys
 document.addEventListener('keydown', ({ key }) => {

@@ -1,5 +1,7 @@
 let gameOverTheme
+let highScoresTheme
 let gameTheme
+
 let player
 
 //mouse spawn, left or right

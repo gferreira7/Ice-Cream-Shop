@@ -99,7 +99,7 @@ button {
   z-index: 2;
   opacity: 0.9;
   font-weight: 700;
-  font-size: 1.5em;
+  font-size: 1.8em;
   text-transform: capitalize;
 }
 
@@ -112,6 +112,18 @@ button {
   z-index: -1;
   opacity: 0.5;
 }
+
+
+#back-button{
+  position: absolute;
+  bottom: 3vh;
+  padding: 2% 4%;
+  border-radius: 4px;
+  font-size: 17px;
+  font-weight: 700;
+  color: purple;
+}
+
 #main-game-container {
   display: none;
   position: relative;
