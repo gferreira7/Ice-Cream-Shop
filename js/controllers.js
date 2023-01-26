@@ -170,7 +170,7 @@ const reset = () => {
   gameBoard.components = []
   gameBoard.nonCollisionComponents = []
   gameBoard.orders = []
-  gameBoard.gameTimeLeft = 60
+  gameBoard.gameTimeLeft = 100
   gameBoard.ctx.clearRect(0, 0, gameBoard.canvas.width, gameBoard.canvas.height)
   //key triggers
   gameBoard.isUpKeyPressed = false
