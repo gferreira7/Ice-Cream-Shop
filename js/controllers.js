@@ -1,3 +1,5 @@
+let gameOverTheme
+let gameTheme
 let player
 
 //mouse spawn, left or right
@@ -189,6 +191,8 @@ const reset = () => {
   gameBoard.combo = 0
   gameBoard.hasError = -1
   gameBoard.orderSubmitOk = false
+
+  gameOverTheme.pause()
   updateOrders()
   updateInventory()
   updateScore()
@@ -205,3 +209,7 @@ const alertPlayerError = (errorIndex) => {
     gameBoard.ctx.fillText(gameBoard.errorMessages[errorIndex], 400, 100)
   }
 }
+
+
+
+

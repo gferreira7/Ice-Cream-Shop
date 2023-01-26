@@ -24,6 +24,11 @@ const gameCountdown = () => {
 }
 
 const startGame = () => {
+
+  
+  gameTheme = document.getElementById('game-theme')
+  gameTheme.loop = true
+  gameTheme.play()
   gameBoard.isGameStarted = true
 
   gameBoard.createCanvas()
@@ -360,20 +365,45 @@ const updateScore = () => {
 
 const gameOver = () => {
   gameOverScreen.style.display = 'flex'
+
+  gameTheme.pause()
+  gameOverTheme = document.getElementById('game-over-theme')
+  gameOverTheme.loop = true
+  gameOverTheme.play()
+
   clearInterval(orderflowInterval)
   clearInterval(newOrderInterval)
   clearInterval(refreshRate)
   clearInterval(animatePlayerInterval)
   clearInterval(mouseSpawnInterval)
 
+  let highScoresArray = JSON.parse(window.localStorage.getItem('highScores'))
+  if (!highScoresArray) {
+    highScoresArray = []
+  }
+  const playerDataToStore = {
+    name: prompt('Enter your name:'),
+    score: gameBoard.score,
+  }
 
+  highScoresArray.push(playerDataToStore)
+  window.localStorage.setItem('highScores', JSON.stringify(highScoresArray))
+
+  highScoresArray.sort((a,b) => b.score - a.score)
+  const highScoreHolder = highScoresArray[0]
+
+  // console.log(highScoresArray)
+
+  document.getElementById('game-over-score').innerHTML = `SCORE: ${gameBoard.score}` 
+  document.getElementById('highest-score').innerHTML = `HIGHSCORE: ${highScoreHolder.name} - ${highScoreHolder.score}` 
+  
   document.addEventListener('keyup', ({ key }) => {
-    if(key === 'r'){
+    if (key === 'r' && gameBoard.isGameOver) {
       reset()
       gameOverScreen.style.display = 'none'
       gameCountdown()
     }
-    if(key === 'q'){
+    if (key === 'q' && gameBoard.isGameOver) {
       reset()
       gameOverScreen.style.display = 'none'
       mainGame.style.display = 'none'

@@ -50,6 +50,7 @@
     <div id="game-countdown-screen" class="blinker">
     </div>
     <div id="main-game-container">
+      <audio id="game-theme" src="./audio/01_main_screen_trailer.wav"></audio>
       <div id="top-panel">
         <div id="pending-orders-display"></div>
         <div id="inventory-container">
@@ -70,7 +71,11 @@
         
       </div>
       <div id="gameover-screen">
+        <audio src="./audio/lighthouse-keeper-pt1.ogg" id="game-over-theme"></audio>
         <h1 class="jumbotext">GAME OVER</h1>
+        <h2 id="game-over-score"></h2>
+        <h2 id="highest-score"></h2>
+        <div>HIGH SCORES</div>
         <button id="restart-button">RESTART (R)</button>
         <button id="home-button">HOME (Q)</button>
       </div>

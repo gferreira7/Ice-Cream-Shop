@@ -5,7 +5,7 @@ const gameBoard = {
   //all other items that are used for background and will always render behind the player
   nonCollisionComponents: [],
   orders: [],
-  gameTimeLeft: 100,
+  gameTimeLeft: 5,
   //key triggers
   isUpKeyPressed: false,
   isDownKeyPressed: false,
@@ -191,6 +191,7 @@ const gameBoard = {
 
     if (player.checkCollision(mouse) && mouse.posX < 600) {
       gameBoard.combo = 0
+      gameBoard.gameTimeLeft -= 1
     }
   },
 }

@@ -162,13 +162,12 @@ button {
   height: 100vh;
   width: 100%;
   background-color: purple;
+  color: white;
   opacity: 0.9;
   z-index: 2;
 }
 
-#gameover-screen h1 {
-  color: white;
-} 
+
 
 #gameover-screen button {
   padding: 4% 6%;
