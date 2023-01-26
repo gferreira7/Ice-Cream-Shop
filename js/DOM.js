@@ -172,9 +172,7 @@ const nextSlide = () => {
 }
 
 document.getElementById('high-scores').addEventListener('click', () => {
-  
   highScores()
-
 })
 
 const highScores = () => {
@@ -199,13 +197,12 @@ const highScores = () => {
       newListItem.innerHTML = `${player.name} - ${player.score}`
       newList.appendChild(newListItem)
     })
-    highScoresContainer.appendChild(newList)
+  highScoresContainer.appendChild(newList)
 
   document.getElementById('back-button').addEventListener('click', () => {
     highScoresPage.style.display = 'none'
     document.getElementById('start-screen').style.display = 'flex'
     highScoresTheme.pause()
-
   })
 }
 //handle Movement Keys
@@ -224,20 +221,24 @@ document.addEventListener('keydown', ({ key }) => {
 
   switch (key) {
     case 'w':
+    case 'ArrowUp':
       gameBoard.isUpKeyPressed = true
       player.isPlayerMoving = true
       break
     case 's':
+    case 'ArrowDown':
       gameBoard.isDownKeyPressed = true
       player.isPlayerMoving = true
       break
     case 'a':
+    case 'ArrowLeft':
       gameBoard.isLeftKeyPressed = true
       player.isPlayerMoving = true
       player.isFacingLeft = true
       player.isFacingRight = false
       break
     case 'd':
+    case 'ArrowRight':
       gameBoard.isRightKeyPressed = true
       player.isPlayerMoving = true
       player.isFacingLeft = false
@@ -275,6 +276,7 @@ document.addEventListener('keydown', ({ key }) => {
     case 'enter':
       return
     default:
+      console.log(key)
       return
   }
 })
@@ -289,18 +291,22 @@ document.addEventListener('keyup', ({ key }) => {
   }
   switch (key) {
     case 'w':
+    case 'ArrowUp':
       gameBoard.isUpKeyPressed = false
       player.isPlayerMoving = false
       break
     case 's':
+    case 'ArrowDown':
       gameBoard.isDownKeyPressed = false
       player.isPlayerMoving = false
       break
     case 'a':
+    case 'ArrowLeft':
       gameBoard.isLeftKeyPressed = false
       player.isPlayerMoving = false
       break
     case 'd':
+    case 'ArrowRight':
       gameBoard.isRightKeyPressed = false
       player.isPlayerMoving = false
       break
@@ -424,9 +430,10 @@ const gameOver = () => {
   }
 
   highScoresArray.push(playerDataToStore)
+  highScoresArray.sort((a, b) => b.score - a.score).splice(5)
   window.localStorage.setItem('highScores', JSON.stringify(highScoresArray))
 
-  highScoresArray.sort((a, b) => b.score - a.score)
+  
   const highScoreHolder = highScoresArray[0]
 
   // console.log(highScoresArray)
