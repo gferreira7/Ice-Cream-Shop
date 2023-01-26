@@ -228,9 +228,17 @@ button {
 }
 
 #gameover-screen button {
-  padding: 4% 6%;
+  padding: 2% 2%;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   color: purple;
+}
+
+#game-over-score{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
 }

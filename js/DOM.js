@@ -448,9 +448,9 @@ const gameOver = () => {
 
   document.getElementById(
     'game-over-score'
-  ).innerHTML = `SCORE: ${gameBoard.score}
-  BIGGEST COMBO: ${gameBoard.highestCombo}
-  MOUSE HITS: ${gameBoard.mouseCollisions}`
+  ).innerHTML = `<p>SCORE: ${gameBoard.score} </p>
+  <p>BIGGEST COMBO: ${gameBoard.highestCombo}</p>
+  <p>MOUSE HITS: ${gameBoard.mouseCollisions}</p>`
   document.getElementById(
     'highest-score'
   ).innerHTML = `HIGHSCORE: ${highScoreHolder.name} - ${highScoreHolder.score}`
