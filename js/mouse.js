@@ -35,6 +35,7 @@ class Mouse extends Component {
   bite(){
     gameBoard.combo = 0
     gameBoard.gameTimeLeft -= 10
+    gameBoard.mouseCollisions++
     player.hasBeenBitten = true
   }
 }

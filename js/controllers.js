@@ -2,10 +2,15 @@
 let gameOverTheme = document.getElementById('game-over-theme')
 let highScoresTheme = document.getElementById('high-scores-theme')
 let gameTheme = document.getElementById('game-theme')
+gameTheme.volume='0.5'
 let cashRegister = document.getElementById('cash-register')
+let jump = document.getElementById('jump')
+let thrash = document.getElementById('thrash')
+let ouch = document.getElementById('ouch')
 let isGameMuted = false
 
 let player
+
 
 //mouse spawn, left or right
 let mouse
@@ -108,6 +113,9 @@ const submitOrder = () => {
 
     if (player.readyToDeliver === '') {
       gameBoard.hasError = 1
+      if(player.heldItems.cone){
+        thrash.play() 
+      }
       player.speedBoost = 0
       player.emptyInventory()
       gameBoard.hasAttemptedSubmit = true
@@ -118,6 +126,7 @@ const submitOrder = () => {
         // order not found
         gameBoard.combo = 0
         gameBoard.hasError = 2
+        thrash.play()
         player.speedBoost = 0
         player.emptyInventory()
         gameBoard.hasAttemptedSubmit = true
@@ -126,6 +135,9 @@ const submitOrder = () => {
         //order found
         if (gameBoard.orders[orderFound].currentTimeLeft > 15) {
           gameBoard.combo += 5
+          if(gameBoard.combo > gameBoard.highestCombo){
+            gameBoard.highestCombo = gameBoard.combo
+          }
         }
         gameBoard.orders.splice(orderFound, 1)
 
@@ -187,7 +199,7 @@ const reset = () => {
   gameBoard.isActionKeyPressed = false
   gameBoard.isInstructionsKeyPressed = false
   gameBoard.isPauseKeyPressed = false
-  //player action triggers
+  //player action triggers)
   gameBoard.isAtCheckout = false
   gameBoard.isAtMultistorage = false
   gameBoard.isAtConeStorage = false
@@ -198,8 +210,10 @@ const reset = () => {
   gameBoard.combo = 0
   gameBoard.hasError = -1
   gameBoard.orderSubmitOk = false
-
+  highestCombo= 0
+  mouseCollisions= 0
   gameOverTheme.pause()
+  gameOverTheme.currentTime = 0
   updateOrders()
   updateInventory()
   updateScore()

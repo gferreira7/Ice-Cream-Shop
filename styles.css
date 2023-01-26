@@ -18,7 +18,7 @@
 }
 
 #mute-button:hover{
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 #start-screen {
@@ -46,9 +46,9 @@ button {
   margin: 5px;
   font-weight: bold;
   padding: 10px 0 10px 10px;
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  -o-border-radius: 7px;
+  /* -webkit-border-radius: 7px; */
+  /* -moz-border-radius: 7px; */
+  /* -o-border-radius: 7px; */
   border-radius: 7px;
   box-shadow: 0 0.2em gray;
   text-shadow: -1px -1px black, 1px 1px white;
@@ -82,9 +82,10 @@ button {
 @keyframes blinker {
   50% {
     opacity: 0;
-    -webkit-transform: scale(0.99);
-    -moz-transform: scale(0.99);
-    -o-transform: scale(0.99);
+    /* -webkit-transform: scale(0.99); */
+    /* -moz-transform: scale(0.99); */
+    /* -o-transform: scale(0.99); */
+    transform: scale(0.95);
   }
 }
 #tutorial-screen {

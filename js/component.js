@@ -45,5 +45,10 @@ class Component {
     if (this.name === 'dollars') {
       this.posY -= 10
     }
+    if(this.name === 'bin'){
+      gameBoard.ctx.save();
+      gameBoard.ctx.translate(0, 2); 
+      gameBoard.ctx.restore();
+    }
   }
 }

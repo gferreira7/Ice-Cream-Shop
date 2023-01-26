@@ -39,6 +39,8 @@ const gameBoard = {
   //score keeping
   score: 0,
   combo: 0,
+  highestCombo: 0,
+  mouseCollisions: 0,
   createCanvas: function () {
     this.canvas.width = 1200
     this.canvas.height = 500
@@ -108,11 +110,14 @@ const gameBoard = {
       player.posY -= player.ySpeed
     } else {
       player.hasJumped = false
+      jump.pause()
+      jump.currentTime = 0
     }
 
     if (gameBoard.isJumpKeyPressed) {
       if (!player.hasJumped) {
         player.jump()
+        jump.play()
       }
     }
 
@@ -194,7 +199,8 @@ const gameBoard = {
     
     if (player.checkCollision(mouse) && mouse.posX < 600) {
       if(!player.hasBeenBitten){
-        mouse.bite() 
+        mouse.bite()
+        ouch.play() 
       }
     } else{
       player.hasBeenBitten = false

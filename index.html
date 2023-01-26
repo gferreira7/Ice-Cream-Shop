@@ -76,6 +76,21 @@
     <div id="main-game-container">
       <audio
         preload="auto"
+        id="ouch"
+        src="./audio/hurt2.mp3"
+      ></audio>
+      <audio
+        preload="auto"
+        id="jump"
+        src="./audio/oomph-jump.mp3"
+      ></audio>
+      <audio
+        preload="auto"
+        id="thrash"
+        src="./audio/thrash.mp3"
+      ></audio>
+      <audio
+        preload="auto"
         id="game-theme"
         src="./audio/01_main_screen_trailer.wav"
       ></audio>
@@ -109,7 +124,7 @@
         <h1 class="jumbotext">GAME OVER</h1>
         <h2 id="game-over-score"></h2>
         <h2 id="highest-score"></h2>
-        <div>HIGH SCORES</div>
+        
         <button id="restart-button">RESTART (R)</button>
         <button id="home-button">HOME (Q)</button>
       </div>

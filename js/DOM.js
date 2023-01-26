@@ -59,7 +59,7 @@ const startGame = () => {
   const tray4 = new Component('tray4', trayImg, 265, 213, 100, 20)
   const tray5 = new Component('tray5', trayImg, 265, 203, 100, 20)
 
-  const bin = new Component('bin', binImg, 770, 350, 140, 150)
+  const bin = new Component('bin', binImg, 770, 320, 140, 150)
   dollars = new Component('dollars', dollarSignsImg, 900, 500, 150, 70)
   const wallSign = new Component(
     'wallsign',
@@ -80,15 +80,15 @@ const startGame = () => {
   )
 
   const dishes = new Component('dishes', dishesImg, 35, 205, 85, 60)
-  player = new Player('player', playerImg, 450, 225, 256, 256)
-  mouse = new Mouse('mouse', mouseImg, 770, 425, 50, 50)
+  player = new Player('player', playerImg, 450, 215, 256, 256)
+  mouse = new Mouse('mouse', mouseImg, 770, 430, 50, 50)
   highScoresMouse = new Mouse('mouse', mouseImg, 770, 425, 50, 50)
 
   const checkout = new Component(
     'checkoutCounter',
     checkoutImg,
     gameBoard.canvas.width - 300,
-    240,
+    190,
     300,
     300
   )
@@ -115,12 +115,12 @@ const startGame = () => {
   gameBoard.nonCollisionComponents.push(tray5)
   gameBoard.nonCollisionComponents.push(wallSign)
   //
-  gameBoard.components.push(mouse)
   gameBoard.components.push(player)
   gameBoard.components.push(speech)
   gameBoard.components.push(dollars)
   gameBoard.components.push(bin)
   gameBoard.components.push(checkout)
+  gameBoard.components.push(mouse)
 
   document.getElementById('main-game-container').style.display = 'flex'
 
@@ -206,6 +206,7 @@ const highScores = () => {
     highScoresPage.style.display = 'none'
     document.getElementById('start-screen').style.display = 'flex'
     highScoresTheme.pause()
+    highScoresTheme.currentTime = 0
   })
 }
 //handle Movement Keys
@@ -271,8 +272,8 @@ document.addEventListener('keydown', (e) => {
       gameBoard.isInstructionsKeyPressed = true
       break
     case 'k':
-      reset()
-      break
+      bin.animate()
+    break
     case ' ':
       gameBoard.isJumpKeyPressed = true
       e.preventDefault()
@@ -415,6 +416,7 @@ const gameOver = () => {
   gameOverScreen.style.display = 'flex'
 
   gameTheme.pause()
+  gameTheme.currentTime = 0
 
   gameOverTheme.loop = true
   if (!isGameMuted) {
@@ -446,7 +448,9 @@ const gameOver = () => {
 
   document.getElementById(
     'game-over-score'
-  ).innerHTML = `SCORE: ${gameBoard.score}`
+  ).innerHTML = `SCORE: ${gameBoard.score}
+  BIGGEST COMBO: ${gameBoard.highestCombo}
+  MOUSE HITS: ${gameBoard.mouseCollisions}`
   document.getElementById(
     'highest-score'
   ).innerHTML = `HIGHSCORE: ${highScoreHolder.name} - ${highScoreHolder.score}`
