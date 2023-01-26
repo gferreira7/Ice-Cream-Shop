@@ -397,6 +397,19 @@ const updateInventory = () => {
 
 const updateTimeLeft = () => {
   gameBoard.gameTimeLeft--
+  if(gameBoard.gameTimeLeft < 20){
+    timeLeftDisplay.classList.add('blinker')
+    gameTheme.playbackRate = 1.4
+  } else if(gameBoard.gameTimeLeft < 40){
+    gameTheme.playbackRate = 1.3
+  } else if(gameBoard.gameTimeLeft < 60){
+    gameTheme.playbackRate = 1.2
+  } else if(gameBoard.gameTimeLeft < 80){
+    gameTheme.playbackRate = 1.1
+  } 
+
+
+
   if (gameBoard.gameTimeLeft <= 0) {
     gameBoard.isGameOver = true
   }
