@@ -16,6 +16,7 @@ class Player extends Component {
     this.isPlayerMoving = false
     this.isPlayerJumping = false
     this.hasJumped = false
+    this.hasBeenBitten = false
     this.isFacingLeft = false
     this.isFacingRight = true
     this.frameSkip = 0

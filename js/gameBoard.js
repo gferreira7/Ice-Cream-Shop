@@ -5,7 +5,7 @@ const gameBoard = {
   //all other items that are used for background and will always render behind the player
   nonCollisionComponents: [],
   orders: [],
-  gameTimeLeft: 5,
+  gameTimeLeft: 100,
   //key triggers
   isUpKeyPressed: false,
   isDownKeyPressed: false,
@@ -55,6 +55,8 @@ const gameBoard = {
     mouse.posX = randomSpawnX
   },
   updateCanvas: function () {
+
+    
     if (gameBoard.isGamePaused) return
     if (gameBoard.isGameOver) {
       gameOver()
@@ -189,9 +191,14 @@ const gameBoard = {
       player.isChoosingFlavour = false
     }
 
+    
     if (player.checkCollision(mouse) && mouse.posX < 600) {
-      gameBoard.combo = 0
-      gameBoard.gameTimeLeft -= 1
+      if(!player.hasBeenBitten){
+        mouse.bite() 
+      }
+    } else{
+      player.hasBeenBitten = false
     }
+
   },
 }

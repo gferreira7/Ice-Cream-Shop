@@ -32,4 +32,9 @@ class Mouse extends Component {
   moveRight() {
     this.posX += this.xSpeed
   }
+  bite(){
+    gameBoard.combo = 0
+    gameBoard.gameTimeLeft -= 10
+    player.hasBeenBitten = true
+  }
 }

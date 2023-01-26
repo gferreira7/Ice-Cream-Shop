@@ -23,8 +23,8 @@
 
 <!-- BACKLOG -->
 //Speed BOOST = resets on player errors
-// add some enemies or obstacles (random fires, mice)
+// add some enemies or obstacles (random fires, mice) DONE
 // randomise ingredients, add toppings to ice cream or change to pizzas and burguers
-//HIGH SCORES
+//HIGH SCORES = halfway
 // MAX COMBO, MAX BOOST
 
