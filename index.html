@@ -30,6 +30,7 @@
     <title>Ice Cream Shop</title>
   </head>
   <body>
+  <input id="mute-button" type="image" src="./images/unmuted.png" />
     <div id="start-screen">
       <h1 class="jumbotext">Ice Cream Shop</h1>
       <button id="start-button">START</button>
@@ -40,10 +41,22 @@
       <h1 class="blinker">HIGH SCORES</h1>
       <div id="high-scores-container"></div>
       <button id="back-button">BACK</button>
-      <video autoplay muted loop id="background-video">
-        <source src="./video/high-score-background.mp4" type="video/mp4">
+      <video
+        autoplay
+        muted
+        loop
+        id="background-video"
+      >
+        <source
+          src="./video/high-score-background.mp4"
+          type="video/mp4"
+        />
       </video>
-      <audio id="high-scores-theme" src="./audio/triumph.mp3"></audio>
+      <audio
+        preload="auto"
+        id="high-scores-theme"
+        src="./audio/triumph.mp3"
+      ></audio>
     </div>
     <div id="tutorial-screen">
       <img
@@ -62,8 +75,14 @@
     ></div>
     <div id="main-game-container">
       <audio
+        preload="auto"
         id="game-theme"
         src="./audio/01_main_screen_trailer.wav"
+      ></audio>
+      <audio
+        preload="auto"
+        id="cash-register"
+        src="./audio/cash-register.mp3"
       ></audio>
       <div id="top-panel">
         <div id="pending-orders-display"></div>
@@ -83,6 +102,7 @@
       </div>
       <div id="gameover-screen">
         <audio
+          preload="auto"
           src="./audio/lighthouse-keeper-pt1.mp3"
           id="game-over-theme"
         ></audio>

@@ -6,16 +6,38 @@
   overflow: hidden;
 }
 
+#mute-button{
+  width: 5vw;
+  position: fixed;
+  bottom: 3vh;
+  left:  3vw;
+  z-index: 4;
+  background-color: lightgray;
+  border-radius: 100px;
+  padding: 1%;
+}
+
+#mute-button:hover{
+  transform: scale(1.1);
+}
+
 #start-screen {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   height: 100vh;
+  background-image: url('./images/brightpurplebacksplash.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .jumbotext {
   font-size: 15vh;
   text-align: center;
+  color: lightgrey;
+  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+    1px 1px 0 #000;
 }
 
 button {
@@ -53,7 +75,7 @@ button {
   font-size: 25vh;
 }
 
-.blinker{
+.blinker {
   animation: blinker 1s linear infinite;
 }
 
@@ -86,8 +108,7 @@ button {
   padding: 2% 5%;
 }
 
-#high-scores-screen
-{
+#high-scores-screen {
   display: none;
   flex-direction: column;
   justify-content: space-evenly;
@@ -113,8 +134,7 @@ button {
   opacity: 0.5;
 }
 
-
-#back-button{
+#back-button {
   position: absolute;
   bottom: 3vh;
   padding: 2% 4%;
@@ -206,13 +226,10 @@ button {
   z-index: 2;
 }
 
-
-
 #gameover-screen button {
   padding: 4% 6%;
   border-radius: 5px;
   font-size: 16px;
   font-weight: 700;
   color: purple;
-  
 }

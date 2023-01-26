@@ -26,7 +26,9 @@ const gameCountdown = () => {
 const startGame = () => {
   gameTheme = document.getElementById('game-theme')
   gameTheme.loop = true
-  gameTheme.play()
+  if (!isGameMuted) {
+    gameTheme.play()
+  }
   gameBoard.isGameStarted = true
 
   gameBoard.createCanvas()
@@ -179,8 +181,9 @@ const highScores = () => {
   document.getElementById('start-screen').style.display = 'none'
   highScoresPage.style.display = 'flex'
 
-  highScoresTheme = document.getElementById('high-scores-theme')
-  highScoresTheme.play()
+  if (!isGameMuted) {
+    highScoresTheme.play()
+  }
   highScoresTheme.loop = true
   let highScoresArray = JSON.parse(window.localStorage.getItem('highScores'))
   if (!highScoresArray) {
@@ -206,20 +209,20 @@ const highScores = () => {
   })
 }
 //handle Movement Keys
-document.addEventListener('keydown', ({ key }) => {
+document.addEventListener('keydown', (e) => {
   if (
     !gameBoard.isGameStarted ||
     gameBoard.isGameOver ||
     gameBoard.isGamePaused
   ) {
-    if (key === 'p') {
+    if (e.key === 'p') {
       gameBoard.isGamePaused = false
     }
 
     return
   }
 
-  switch (key) {
+  switch (e.key) {
     case 'w':
     case 'ArrowUp':
       gameBoard.isUpKeyPressed = true
@@ -261,7 +264,7 @@ document.addEventListener('keydown', ({ key }) => {
     case '2':
     case '3':
       if (player.isChoosingFlavour) {
-        chooseFlavour(key)
+        chooseFlavour(e.key)
       }
       break
     case 'i':
@@ -272,11 +275,13 @@ document.addEventListener('keydown', ({ key }) => {
       break
     case ' ':
       gameBoard.isJumpKeyPressed = true
+      e.preventDefault()
+
       break
     case 'enter':
       return
     default:
-      console.log(key)
+      console.log(e.key)
       return
   }
 })
@@ -410,9 +415,11 @@ const gameOver = () => {
   gameOverScreen.style.display = 'flex'
 
   gameTheme.pause()
-  gameOverTheme = document.getElementById('game-over-theme')
+
   gameOverTheme.loop = true
-  gameOverTheme.play()
+  if (!isGameMuted) {
+    gameOverTheme.play()
+  }
 
   clearInterval(orderflowInterval)
   clearInterval(newOrderInterval)
@@ -421,7 +428,7 @@ const gameOver = () => {
   clearInterval(mouseSpawnInterval)
 
   let highScoresArray = JSON.parse(window.localStorage.getItem('highScores'))
-  if (highScoresArray.length === '0') {
+  if (highScoresArray === null) {
     highScoresArray = []
   }
   const playerDataToStore = {
@@ -433,7 +440,6 @@ const gameOver = () => {
   highScoresArray.sort((a, b) => b.score - a.score).splice(5)
   window.localStorage.setItem('highScores', JSON.stringify(highScoresArray))
 
-  
   const highScoreHolder = highScoresArray[0]
 
   // console.log(highScoresArray)
@@ -470,4 +476,22 @@ document.getElementById('home-button').addEventListener('click', () => {
   gameOverScreen.style.display = 'none'
   mainGame.style.display = 'none'
   document.getElementById('start-screen').style.display = 'flex'
+})
+
+const muteButton = document.getElementById('mute-button')
+
+muteButton.addEventListener('click', () => {
+  isGameMuted = !isGameMuted
+  gameOverTheme.muted = isGameMuted
+  highScoresTheme.muted = isGameMuted
+  gameTheme.muted = isGameMuted
+  cashRegister.muted = isGameMuted
+
+  if (isGameMuted) {
+    muteButton.src = './images/muted.png'
+    console.log(muteButton)
+  } else {
+    muteButton.src = './images/unmuted.png'
+    console.log(muteButton)
+  }
 })

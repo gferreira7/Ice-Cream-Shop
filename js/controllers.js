@@ -1,6 +1,9 @@
-let gameOverTheme
-let highScoresTheme
-let gameTheme
+// audio
+let gameOverTheme = document.getElementById('game-over-theme')
+let highScoresTheme = document.getElementById('high-scores-theme')
+let gameTheme = document.getElementById('game-theme')
+let cashRegister = document.getElementById('cash-register')
+let isGameMuted = false
 
 let player
 
@@ -122,7 +125,7 @@ const submitOrder = () => {
       } else {
         //order found
         if (gameBoard.orders[orderFound].currentTimeLeft > 15) {
-          gameBoard.combo+=5
+          gameBoard.combo += 5
         }
         gameBoard.orders.splice(orderFound, 1)
 
@@ -134,6 +137,7 @@ const submitOrder = () => {
         gameBoard.orderSubmitOk = true
         gameBoard.hasError = -1
         player.speedBoost += 1
+        cashRegister.play()
       }
     }
 
@@ -212,7 +216,3 @@ const alertPlayerError = (errorIndex) => {
     gameBoard.ctx.fillText(gameBoard.errorMessages[errorIndex], 400, 100)
   }
 }
-
-
-
-
