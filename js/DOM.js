@@ -24,8 +24,6 @@ const gameCountdown = () => {
 }
 
 const startGame = () => {
-
-  
   gameTheme = document.getElementById('game-theme')
   gameTheme.loop = true
   gameTheme.play()
@@ -82,6 +80,7 @@ const startGame = () => {
   const dishes = new Component('dishes', dishesImg, 35, 205, 85, 60)
   player = new Player('player', playerImg, 450, 225, 256, 256)
   mouse = new Mouse('mouse', mouseImg, 770, 425, 50, 50)
+  highScoresMouse = new Mouse('mouse', mouseImg, 770, 425, 50, 50)
 
   const checkout = new Component(
     'checkoutCounter',
@@ -172,6 +171,31 @@ const nextSlide = () => {
   }
 }
 
+document.getElementById('high-scores').addEventListener('click', () => {
+  highScores()
+})
+
+const highScores = () => {
+  document.getElementById('start-screen').style.display = 'none'
+  highScoresPage.style.display = 'flex'
+
+  let highScoresArray = JSON.parse(window.localStorage.getItem('highScores'))
+  if (!highScoresArray) {
+    highScoresArray = []
+  }
+
+  let newList = document.createElement('ul')
+  highScoresArray
+    .sort((a, b) => b.score - a.score)
+    .forEach((player) => {
+      let newListItem = document.createElement('li')
+      newListItem.innerHTML = `${player.name} - ${player.score}`
+      newList.appendChild(newListItem)
+    })
+  highScoresPage.appendChild(newList)
+
+
+}
 //handle Movement Keys
 document.addEventListener('keydown', ({ key }) => {
   if (
@@ -218,6 +242,7 @@ document.addEventListener('keydown', ({ key }) => {
       gameBoard.isRightKeyPressed = false
       gameBoard.isActionKeyPressed = false
       gameBoard.isInstructionsKeyPressed = false
+      gameBoard.isJumpKeyPressed = false
       break
     case '1':
     case '2':
@@ -389,14 +414,18 @@ const gameOver = () => {
   highScoresArray.push(playerDataToStore)
   window.localStorage.setItem('highScores', JSON.stringify(highScoresArray))
 
-  highScoresArray.sort((a,b) => b.score - a.score)
+  highScoresArray.sort((a, b) => b.score - a.score)
   const highScoreHolder = highScoresArray[0]
 
   // console.log(highScoresArray)
 
-  document.getElementById('game-over-score').innerHTML = `SCORE: ${gameBoard.score}` 
-  document.getElementById('highest-score').innerHTML = `HIGHSCORE: ${highScoreHolder.name} - ${highScoreHolder.score}` 
-  
+  document.getElementById(
+    'game-over-score'
+  ).innerHTML = `SCORE: ${gameBoard.score}`
+  document.getElementById(
+    'highest-score'
+  ).innerHTML = `HIGHSCORE: ${highScoreHolder.name} - ${highScoreHolder.score}`
+
   document.addEventListener('keyup', ({ key }) => {
     if (key === 'r' && gameBoard.isGameOver) {
       reset()

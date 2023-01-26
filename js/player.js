@@ -23,7 +23,7 @@ class Player extends Component {
   }
 
   render() {
-    if (gameBoard.isLeftKeyPressed) {
+    if (gameBoard.isLeftKeyPressed && !gameBoard.isJumpKeyPressed) {
       gameBoard.ctx.save()
       gameBoard.ctx.scale(-1, 1)
       gameBoard.ctx.drawImage(
@@ -38,7 +38,7 @@ class Player extends Component {
         this.height
       )
       gameBoard.ctx.restore()
-    } else if (gameBoard.isRightKeyPressed) {
+    } else if (gameBoard.isRightKeyPressed && !gameBoard.isJumpKeyPressed) {
       gameBoard.ctx.drawImage(
         player.img,
         (this.img.width * this.frameSkip) / 9,

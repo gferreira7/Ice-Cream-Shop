@@ -37,7 +37,10 @@
       <button id="high-scores">HIGH SCORES</button>
     </div>
     <div id="high-scores-screen">
-      
+      <h1 class="blinker">HIGH SCORES</h1>
+      <video autoplay muted loop id="background-video">
+        <source src="./video/high-score-background.mp4" type="video/mp4">
+      </video>
     </div>
     <div id="tutorial-screen">
       <img
@@ -50,10 +53,15 @@
         <button id="next-button">Next</button>
       </div>
     </div>
-    <div id="game-countdown-screen" class="blinker">
-    </div>
+    <div
+      id="game-countdown-screen"
+      class="blinker"
+    ></div>
     <div id="main-game-container">
-      <audio id="game-theme" src="./audio/01_main_screen_trailer.wav"></audio>
+      <audio
+        id="game-theme"
+        src="./audio/01_main_screen_trailer.wav"
+      ></audio>
       <div id="top-panel">
         <div id="pending-orders-display"></div>
         <div id="inventory-container">
@@ -65,16 +73,16 @@
             <h3>TIME LEFT</h3>
           </div>
           <div id="score-display">
-            <h3>
-              SCORE: 0$
-            </h3>
+            <h3>SCORE: 0$</h3>
             <h3>COMBO: 0</h3>
           </div>
         </div>
-        
       </div>
       <div id="gameover-screen">
-        <audio src="./audio/lighthouse-keeper-pt1.ogg" id="game-over-theme"></audio>
+        <audio
+          src="./audio/lighthouse-keeper-pt1.mp3"
+          id="game-over-theme"
+        ></audio>
         <h1 class="jumbotext">GAME OVER</h1>
         <h2 id="game-over-score"></h2>
         <h2 id="highest-score"></h2>
@@ -88,6 +96,7 @@
       type="text/javascript"
       src="./js/gameBoard.js"
     ></script>
+
     <script
       type="text/javascript"
       src="./js/order.js"
@@ -100,7 +109,10 @@
       type="text/javascript"
       src="./js/component.js"
     ></script>
-    <script type="text/javascript" src="./js/mouse.js"></script>
+    <script
+      type="text/javascript"
+      src="./js/mouse.js"
+    ></script>
     <script
       type="text/javascript"
       src="./js/player.js"

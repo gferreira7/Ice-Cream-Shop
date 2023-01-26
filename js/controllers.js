@@ -58,6 +58,7 @@ speechBubbleImg.src = './images/speechbubble.png'
 const dollarSignsImg = new Image()
 dollarSignsImg.src = './images/dollars.png'
 
+const highScoresPage = document.getElementById('high-scores-screen')
 const mainGame = document.getElementById('main-game-container')
 const gameOverScreen = document.getElementById('gameover-screen')
 const scoreDisplay = document.getElementById('score-display')
