@@ -421,7 +421,7 @@ const gameOver = () => {
   clearInterval(mouseSpawnInterval)
 
   let highScoresArray = JSON.parse(window.localStorage.getItem('highScores'))
-  if (!highScoresArray) {
+  if (highScoresArray.length === '0') {
     highScoresArray = []
   }
   const playerDataToStore = {
