@@ -25,7 +25,15 @@ class Component {
       this.posX = gameBoard.canvas.width + 300
       this.posY = gameBoard.canvas.height + 300
     }
+
+    if (this.name === 'bin' && gameBoard.badDelivery) {
+      gameBoard.ctx.save()
+      ctx.scale(1, 0.95);
+      }
+
     ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height)
+    gameBoard.ctx.restore()
+    gameBoard.badDelivery= false
   }
   checkCollision(otherComponent) {
     //offset of 70px for collision each side roughly
@@ -44,11 +52,6 @@ class Component {
   animate() {
     if (this.name === 'dollars') {
       this.posY -= 10
-    }
-    if(this.name === 'bin'){
-      gameBoard.ctx.save();
-      gameBoard.ctx.translate(0, 2); 
-      gameBoard.ctx.restore();
     }
   }
 }

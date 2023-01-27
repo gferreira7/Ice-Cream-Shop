@@ -81,7 +81,7 @@ const startGame = () => {
 
   const dishes = new Component('dishes', dishesImg, 35, 205, 85, 60)
   player = new Player('player', playerImg, 450, 215, 256, 256)
-  mouse = new Mouse('mouse', mouseImg, 770, 430, 50, 50)
+  mouse = new Mouse('mouse', mouseImg, 50, 430, 50, 50)
   highScoresMouse = new Mouse('mouse', mouseImg, 770, 425, 50, 50)
 
   const checkout = new Component(
@@ -270,14 +270,11 @@ document.addEventListener('keydown', (e) => {
       break
     case 'i':
       gameBoard.isInstructionsKeyPressed = true
-      break
-    case 'k':
-      bin.animate()
+
     break
     case ' ':
       gameBoard.isJumpKeyPressed = true
       e.preventDefault()
-
       break
     case 'enter':
       return
@@ -331,6 +328,7 @@ document.addEventListener('keyup', ({ key }) => {
       testCollisions()
       checkOrderCycle()
     // checkKeysPressed()
+
     case ' ':
       gameBoard.isJumpKeyPressed = false
       break
@@ -397,18 +395,16 @@ const updateInventory = () => {
 
 const updateTimeLeft = () => {
   gameBoard.gameTimeLeft--
-  if(gameBoard.gameTimeLeft < 20){
+  if (gameBoard.gameTimeLeft < 20) {
     timeLeftDisplay.classList.add('blinker')
     gameTheme.playbackRate = 1.4
-  } else if(gameBoard.gameTimeLeft < 40){
+  } else if (gameBoard.gameTimeLeft < 40) {
     gameTheme.playbackRate = 1.3
-  } else if(gameBoard.gameTimeLeft < 60){
+  } else if (gameBoard.gameTimeLeft < 60) {
     gameTheme.playbackRate = 1.2
-  } else if(gameBoard.gameTimeLeft < 80){
+  } else if (gameBoard.gameTimeLeft < 80) {
     gameTheme.playbackRate = 1.1
-  } 
-
-
+  }
 
   if (gameBoard.gameTimeLeft <= 0) {
     gameBoard.isGameOver = true
@@ -499,10 +495,14 @@ const muteButton = document.getElementById('mute-button')
 
 muteButton.addEventListener('click', () => {
   isGameMuted = !isGameMuted
+  
   gameOverTheme.muted = isGameMuted
   highScoresTheme.muted = isGameMuted
   gameTheme.muted = isGameMuted
   cashRegister.muted = isGameMuted
+  ouch.muted = isGameMuted
+  jump.muted = isGameMuted
+  thrash.muted = isGameMuted
 
   if (isGameMuted) {
     muteButton.src = './images/muted.png'

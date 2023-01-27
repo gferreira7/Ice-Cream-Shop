@@ -115,6 +115,7 @@ const submitOrder = () => {
       gameBoard.hasError = 1
       if(player.heldItems.cone){
         thrash.play() 
+        gameBoard.badDelivery = true
       }
       player.speedBoost = 0
       player.emptyInventory()
@@ -127,6 +128,7 @@ const submitOrder = () => {
         gameBoard.combo = 0
         gameBoard.hasError = 2
         thrash.play()
+        gameBoard.badDelivery = true
         player.speedBoost = 0
         player.emptyInventory()
         gameBoard.hasAttemptedSubmit = true

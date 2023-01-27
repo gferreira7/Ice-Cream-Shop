@@ -19,6 +19,7 @@ const gameBoard = {
   isAtCheckout: false,
   isAtMultistorage: false,
   isAtConeStorage: false,
+  badDelivery: false,
   // game states
   isGameOver: false,
   isGameStarted: false,
