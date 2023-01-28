@@ -41,7 +41,7 @@ Order
 - Decrement Time function to update the width of the progress rendered in the top menu
 
 
-## States y States Transitions
+## States/States Transitions
 Main Menu
 - Start Game - starts a countdown to get ready and then renders the canvas
 - Tutorial - Overview of the rules and Keys needed to play the game - added due to overwhelming popular demand! 
@@ -58,7 +58,7 @@ Combo points added to Correct orders but also if delivered within x time elapsed
 
 ## Links
 
-- [Trello Link](https://trello.com)
+<!-- - [Trello Link](https://trello.com) -->
 - [Slides Link](http://slides.com)
-- [Github repository Link](http://github.com)
-- [Deployment Link](http://github.com)
+- [Github repository Link](https://github.com/gferreira7/overcooked.git)
+- [Deployment Link](https://gferreira7.github.io/overcooked/)

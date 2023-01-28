@@ -404,6 +404,8 @@ const updateTimeLeft = () => {
     gameTheme.playbackRate = 1.2
   } else if (gameBoard.gameTimeLeft < 80) {
     gameTheme.playbackRate = 1.1
+  } else {
+    gameTheme.playbackRate = 1
   }
 
   if (gameBoard.gameTimeLeft <= 0) {

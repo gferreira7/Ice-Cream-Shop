@@ -26,14 +26,9 @@ class Component {
       this.posY = gameBoard.canvas.height + 300
     }
 
-    if (this.name === 'bin' && gameBoard.badDelivery) {
-      gameBoard.ctx.save()
-      ctx.scale(1, 0.95);
-      }
+ 
 
     ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height)
-    gameBoard.ctx.restore()
-    gameBoard.badDelivery= false
   }
   checkCollision(otherComponent) {
     //offset of 70px for collision each side roughly
