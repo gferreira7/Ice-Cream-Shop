@@ -10,7 +10,7 @@ You run an a little shop and have to fulfil customer's orders in a given time.
 The main goal of the game is to achieve the highest score before the time run's out.
 You get increasingly higher tips (combo) the more correct orders you submit.
 
-The combo goes back to zero if you deliver the wrong order or if you get bitten by Francis, the mouse. Francis will also cost 10s of game time so try to jump over it! 
+The combo goes back to zero if you deliver the wrong order or if you get bitten by Francis, the mouse. Francis will also cost -10s of game time so try to jump over it! 
 
 ## Backlog
 The original idea did not include ice-cream, but pizzas or burguers. The decision was made due to the short timelime for the project but I will come back to this and add more levels with different foods.
