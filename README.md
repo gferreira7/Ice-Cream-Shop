@@ -1,6 +1,6 @@
 # Ice Cream Shop
 
-[Click here to see deployed game](https://gferreira7.github.io/overcooked/)
+[Click here to see deployed game](https://gferreira7.github.io/Ice-Cream-Shop/)
 
 ## Description
 You run an a little shop and have to fulfil customer's orders in a given time.
