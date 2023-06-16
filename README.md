@@ -1,8 +1,13 @@
 # Ice Cream Shop
 
+![preview](https://github.com/gferreira7/Ice-Cream-Shop/assets/104030930/0a90c683-c39d-44fa-b7e7-35a6fa0db447)
+
 [Click here to see deployed game](https://gferreira7.github.io/Ice-Cream-Shop/)
 
 ## Description
+
+https://github.com/gferreira7/Ice-Cream-Shop/assets/104030930/e4828774-f4ee-42e7-b830-d7df373b96a9
+
 You run an a little shop and have to fulfil customer's orders in a given time.
 
 
